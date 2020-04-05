@@ -1,23 +1,17 @@
-{% extends 'forum/base.html' %}
-{% load static %}
-{% block content %}
-<html>
-<head>
-    <title>home</title>
-</head>
-<body class="body">
+<h2>congratulations succesfully saved form,</h2>
+<form action="#" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input name="signbtn" type="submit" value="Register" />
 
-    <div class="row">
-        <div class="col-lg-3">
-            {% include 'forum/sidebar.html' %}
-        </div>
-        <div class="col-lg-9">
-            <br>
-            {% include 'forum/feed.html' %}
-        </div>
-    </div>
 
-</body>
-</html>
+</form>
+<form action="#" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input name="loginbtn" type="submit" value="Register" />
 
-{% endblock %}
+
+</form>
+
+

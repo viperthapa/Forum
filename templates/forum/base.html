@@ -26,7 +26,7 @@
           
    
     <div class="mynav">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <a style="margin-left:130px;" class="navbar-brand" href="#">Forum</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
@@ -48,9 +48,19 @@
                 </form>
                 
               </ul>
-                <a style = "margin-left: 10em;"><button type="button" class="btn btn-dark mr-8 pr-2">Add questions</button></a>
-                <a style = "margin-left: 20px;font-size: 30px;color: black;" href="{% url 'forumapp:loginregister' %}"><i class="fa fa-user-circle"></i></a>
+              {% if user.is_authenticated %}
+                <div>
+                  <a style = "margin-left: 10em;"><button type="button" class="btn btn-dark pr-2">Add questions</button></a>
 
+                  <a style = "margin-left: 15px;font-size: 30px;color: black;" href="{% url 'forumapp:register' %}"><i class="fa fa-user-circle"></i></a>
+                </div>
+              {% else %}
+                <div>
+                  <a href="{% url 'forumapp:register' %}" style = "margin-left: 16em;"><button type="button" class="btn btn-dark">Signup</button></a>
+                  <a href="{% url 'forumapp:login' %}"><button type="button" class="btn btn-dark">Log In</button></a>
+
+                </div>
+              {% endif %}
             </div>
 
             <!-- sidebar  -->

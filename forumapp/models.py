@@ -32,11 +32,11 @@ class Category(models.Model):
 
 #question 
 class Question(models.Model):
-    normal_user = models.ForeignKey(NormalUser,on_delete = models.CASCADE)
+    normal_user = models.ForeignKey(NormalUser,on_delete = models.CASCADE,null=True)
     category = models.ForeignKey(Category,on_delete = models.CASCADE)
-    question = models.TextField()
-    image = models.ImageField(upload_to='question')
-    description = models.TextField()
+    question = models.TextField(null=True,blank=True)
+    image = models.ImageField(upload_to='question',null=True,blank=True)
+    description = models.TextField(null=True,blank=True)
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)
     

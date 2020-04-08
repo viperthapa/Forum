@@ -16,6 +16,9 @@
 
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
+
 
  </head>
  <body>
@@ -31,7 +34,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
                 <li class="nav-item active pl-4">
-                  <a class="nav-link" href="#"><i class="fa fa-home fa-lg"></i>Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url 'forumapp:home' %}"><i class="fa fa-home fa-lg"></i>Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active pl-3">
                   <a class="nav-link" href="#"><i class="fa fa-edit fa-lg"></i>Answer</a>
@@ -49,11 +52,11 @@
                 
               </ul>
               {% if user.is_authenticated %}
-                <div>
-                  <a style = "margin-left: 10em;"><button type="button" class="btn btn-dark pr-2">Add questions</button></a>
+                
+                  <a href="{% url 'forumapp:questionadd' %}" style = "margin-left: 14em;"><button type="button" class="btn btn-dark pr-2">Add questions</button></a>
 
                   <a style = "margin-left: 15px;font-size: 30px;color: black;" href="{% url 'forumapp:register' %}"><i class="fa fa-user-circle"></i></a>
-                </div>
+                
               {% else %}
                 <div>
                   <a href="{% url 'forumapp:register' %}" style = "margin-left: 16em;"><button type="button" class="btn btn-dark">Signup</button></a>

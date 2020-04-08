@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 
 #register form
@@ -47,3 +48,23 @@ class UserForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Enter your username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password'})) 
+
+#question asked
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['category','question']
+        widgets = {
+            
+            'category': forms.Select(attrs={
+                'placeholder':"choose",
+                'id': "catgory",
+                'class': 'form-control',
+            }),
+            'question': SummernoteWidget(),
+            # 'question': SummernoteInplaceWidget(),
+
+
+
+
+        }

@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect,reverse
 from django.views.generic import *
-from .forms import UserForm,LoginForm
+from .forms import UserForm,LoginForm,QuestionForm
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from .models import *
@@ -15,9 +15,6 @@ class HomeView(TemplateView):
     template_name = 'forum/home.html'
 
 
-
-class TestView(TemplateView):
-    template_name = "forum/test.html"
 ####################### login form ###############
 class LoginRegisterView(TemplateView):
     template_name = 'user/userlogin.html'
@@ -80,20 +77,45 @@ def LoginFormView(request):
         print(form)
         return render(request,'user/login.html',{'form':form})
     
+class QuestionAddView(CreateView):
+    template_name = "question/questioncreate.html"
+    form_class = QuestionForm
+    success_url = reverse_lazy('forumapp:home')
 
-# class RegisterView(CreateView):
-#     template_name = 'forum/test.html'
-#     print('hshshshsh')
-#     form_class = UserForm
-#     print('8888')
-#     success_url = reverse_lazy('forumapp:home')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        context['categorys'] = category
+        print('get connccbchcikckjck')
+        return context
 
-#     def form_valid(self, form):
-#         u_name = form.cleaned_data['username']
-#         pword = form.cleaned_data['password']
-#         # email = form.cleaned_data['email']
+    def form_valid(self,form):
+        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
+        usr = self.request.user
+        print('user = ',usr)
+        # catgry = self.request.get('dropdown',None)
+        # print('catgru=',catgry)
+        # category = Category.objects.get(name=catgry)
+        # form.instance.category = category
+        question_user = NormalUser.objects.get(user = usr)
+        print('question user',question_user)
+        form.instance.normal_user = question_user
+        return super().form_valid(form)
 
-#         user = User.objects.create_user(u_name,pword)
-#         form.instance.user = user
-#         # login(self.request, user)
-#         return super().form_valid(form)
+
+
+# def QuestionCreateView(request):
+#     if request.method == 'GET':
+#         form = QuestionForm
+#         category = Category.objects.all()
+#         # print(customerform,"88888")
+#         return render(request, 'question/questioncreate.html',{'category':category , 'form':form})
+#     else:
+#         catgry = request.POST.get('dropdown',None)
+#         print(cid,'|||||||||||||')
+#         customer = NormalUser.objects.get(=catgry)
+#         products = list(Product.objects.all())
+#         if customer is not None:
+#             return render(request, 'sales/test.html', {'customer': customer, 'products': products})
+#         else:
+#             return messages.error(request, "Error!")

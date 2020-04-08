@@ -1,0 +1,51 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% block content %}
+<html>
+<head>
+    <title>home</title>
+    <style>
+        .body{
+            background-color: #fcfcfc;
+        }
+    </style>
+</head>
+<body class="body">
+
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'forum/sidebar.html' %}
+        </div>
+        <div class="col-lg-9">
+            <br>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>Select the category:</h2>
+                <select name="dropdown" class="btn btn-success btn-md">
+                    <option selected="selected" disabled>Select a category</option>
+                    {% for category in  categorys %}
+                        <option>{{ category.name  }}</option>
+                    {% endfor %}
+                    
+                </select>
+
+                <!-- <h3 style="width: 65%;">Select the category:{{ form.category }}</h3> -->
+                <br>
+                <h4>{% autoescape on %}Add question:{{ form.question|safe }}{% endautoescape %} </h4>
+                <button class="btn btn-info">Add question</button>
+
+                <!-- <p id="question">question:{{ form.question|safe }}</p> -->
+
+                
+
+            </form>
+        </div>
+    </div>
+    <script>
+        $('#question').summernote();
+    </script>    
+
+</body>
+</html>
+
+{% endblock %}

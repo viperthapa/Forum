@@ -1,6 +1,8 @@
-{% extends 'forum/base.html' %}
+
+{% load widget_tweaks %}
+
 {% load static %}
-{% block content %}
+
 <html>
 <head>
     <title>home</title>
@@ -12,40 +14,48 @@
 </head>
 <body class="body">
 
-    <div class="row">
-        <div class="col-lg-3">
-            {% include 'forum/sidebar.html' %}
-        </div>
-        <div class="col-lg-9">
-            <br>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <h2>Select the category:</h2>
-                <select name="dropdown" class="btn btn-success btn-md">
-                    <option selected="selected" disabled>Select a category</option>
-                    {% for category in  categorys %}
-                        <option>{{ category.name  }}</option>
-                    {% endfor %}
-                    
-                </select>
+  <form method="post" action="#" enctype="multipart/form-data">
+    {% csrf_token %}
 
-                <!-- <h3 style="width: 65%;">Select the category:{{ form.category }}</h3> -->
-                <br>
-                <h4>{% autoescape on %}Add question:{{ form.question|safe }}{% endautoescape %} </h4>
-                <button class="btn btn-info">Add question</button>
+    <div class="modal-header" style="background-color: whitesmoke;">
+     <div style="border-radius: 50px"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px"></div> 
+      &nbsp;&nbsp;&nbsp;<h4 class="modal-title">{{ request.user }}</h4>
+      <div style="width:5px;height:4px;float: left;" class="user"></div>
 
-                <!-- <p id="question">question:{{ form.question|safe }}</p> -->
-
-                
-
-            </form>
-        </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    <script>
-        $('#question').summernote();
-    </script>    
 
+    <div class="modal-body">
+
+      <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+        {% for error in form.non_field_errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+
+      {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {% render_field field class="form-control" placeholder=field.label %}
+          <div class="{% if field.errors %} invalid{% endif %}">
+            {% for error in field.errors %}
+              <p class="help-block">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="modal-footer" style="background-color: whitesmoke;">
+      <button type="button" class="submit-btn btn btn-primary" formnovalidate="formnovalidate">Add</button>
+    </div>
+
+  </form>
+
+   
 </body>
 </html>
 
-{% endblock %}
+

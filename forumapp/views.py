@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from .models import *
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
-
+from bootstrap_modal_forms.generic import BSModalCreateView
 # Create your views here.
 
 
@@ -77,17 +77,16 @@ def LoginFormView(request):
         print(form)
         return render(request,'user/login.html',{'form':form})
     
-class QuestionAddView(CreateView):
+class QuestionAddView(BSModalCreateView):
+    print('i have great')
     template_name = "question/questioncreate.html"
     form_class = QuestionForm
+    print('below form class')
+    success_message = "Question has been added"
+    print('this is below success')
     success_url = reverse_lazy('forumapp:home')
+    print('888888')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category = Category.objects.all()
-        context['categorys'] = category
-        print('get connccbchcikckjck')
-        return context
 
     def form_valid(self,form):
         print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'forumapp',
+    'bootstrap_modal_forms',
+    'widget_tweaks',
     'django_summernote',
 ]
 

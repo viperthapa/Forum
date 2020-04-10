@@ -1,6 +1,8 @@
 from django import forms
 from .models import *
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+# from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
+from bootstrap_modal_forms.forms import BSModalForm
 
 
 #register form
@@ -50,21 +52,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password'})) 
 
 #question asked
-class QuestionForm(forms.ModelForm):
+class QuestionForm(BSModalForm):
     class Meta:
         model = Question
-        fields = ['category','question']
-        widgets = {
-            
-            'category': forms.Select(attrs={
-                'placeholder':"choose",
-                'id': "catgory",
-                'class': 'form-control',
-            }),
-            'question': SummernoteWidget(),
-            # 'question': SummernoteInplaceWidget(),
-
-
-
-
-        }
+        fields = ['category','question','image']
+       

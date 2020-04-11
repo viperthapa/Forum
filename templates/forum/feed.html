@@ -166,16 +166,23 @@
     <!-- top bar  -->
     <div class="col-md-8 bootstrap snippets">
         <!-- ask questions   -->
+       <a><a class="add-btn">
+            <div class="card">
+                
+                <div class="card-body">
+                    <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+                    <h4 class="card-text text-dark">What is your questions ?</h4>
+                    
+                </div>
+            </div>
+            
+        <a> </a>  
+       
         <div class="panel">
           <div class="panel-body">
-            <!-- <a style = "margin-left: 20px;font-size: 30px;"><i class="fa fa-user-circle"></i></a> -->
-            <textarea  class="form-control" rows="2"  placeholder="What is your question?"></textarea>
-            <div class="mar-top clearfix">
-              <button class="btn btn-sm btn-primary pull-right" type="submit"> Share</button>
-              <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
-              <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
-              <a class="btn btn-trans btn-icon fa fa-file add-tooltip" href="#"></a>
-            </div>
+
+            <!-- <i style = "margin-left: 20px;font-size: 30px;"><i class="fa fa-user-circle"></i></a> -->
+           
           </div>
         </div>
 
@@ -304,7 +311,14 @@
             </div>   
         </div>            
          
-    </div>
+    </a>
+    <script type="text/javascript">
+        $(function () {
+          // Log in & Sign up buttons
+          $(".add-btn").modalForm({formURL: "{% url 'forumapp:questionadd' %}"});
+            
+        });
+    </script>
         
    
 </body>

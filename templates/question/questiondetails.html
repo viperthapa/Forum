@@ -1,0 +1,54 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% block content %}
+<html>
+<head>
+    <title>home</title>
+    <style>
+        .body{
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+<body class="body">
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mt-5" style="margin-left: 140px;">
+                <h5 class="card-header bg-secondary text-white">Question</h5>
+                <div class="card-body">
+                  <h3 class="card-title">{{ questions.id }}.{{ questions.question }}</h3><hr>
+                  <span class="card-text mt-0">posted on: {{ questions.date_created|date:"d M,Y"  }} </span><br><br><br><br><br>
+                  <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.normal_user.fname }}</b></p>
+                </div>
+              </div>
+
+        </div>
+        <div class="col-lg-4">
+            <br>
+            <div class="card" style="width: 25rem;margin-top:24px;margin-left: 70px;">
+                <div class="card-header bg-secondary text-white">
+                  Related Questions
+                </div>
+                <div class="ml-4 text-dark">
+                    <p>1.what is best movie in tollywood?</p>
+                    <p>2.what is best movie in tollywood?</p>
+                    <p>3.what is best movie in tollywood?</p>
+                    <p>4.what is best movie in tollywood?</p>
+                    <p>5.what is best movie in tollywood?</p>
+                    <p>6.what is best movie in tollywood?</p>
+                    <p>7.what is best movie in tollywood?</p>
+                    <p>8.what is best movie in tollywood?</p>
+                    <p>9.what is best movie in tollywood?</p>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect,reverse
 from django.views.generic import *
-from .forms import UserForm,LoginForm,QuestionForm
+from .forms import UserForm,LoginForm,QuestionForm,AnswerForm
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from .models import *
@@ -11,11 +11,29 @@ from bootstrap_modal_forms.generic import BSModalCreateView
 # Create your views here.
 
 
+"""
+Homepage
+
+"""
 class HomeView(TemplateView):
     template_name = 'forum/home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['questions'] = Question.objects.all()
+        print(context['questions'],'*****')
+        context['form'] = AnswerForm()
+        
+        return context
+
+        # {% if question.image %}<div class="user"><img src="{{ question.normal_user.image.url }}"></div>{% endif %} 
 
 ####################### login form ###############
+
+"""
+login form
+
+"""
 class LoginRegisterView(TemplateView):
     template_name = 'user/userlogin.html'
 # def RegisterView(request):
@@ -36,7 +54,10 @@ class LoginRegisterView(TemplateView):
 
 
 
-#sign up view
+"""
+register form
+
+"""
 class RegisterView(CreateView):
     template_name = 'user/userlogin.html'
     form_class = UserForm
@@ -55,7 +76,11 @@ class RegisterView(CreateView):
 
 
 
-#login form
+
+"""
+login form
+
+"""
 def LoginFormView(request):
     if request.method == "POST":
         uname = request.POST.get('username')
@@ -77,6 +102,13 @@ def LoginFormView(request):
         print(form)
         return render(request,'user/login.html',{'form':form})
     
+
+
+
+"""
+Question add
+
+"""
 class QuestionAddView(BSModalCreateView):
     print('i have great')
     template_name = "question/questioncreate.html"
@@ -102,19 +134,14 @@ class QuestionAddView(BSModalCreateView):
         return super().form_valid(form)
 
 
+"""
+details of question
 
-# def QuestionCreateView(request):
-#     if request.method == 'GET':
-#         form = QuestionForm
-#         category = Category.objects.all()
-#         # print(customerform,"88888")
-#         return render(request, 'question/questioncreate.html',{'category':category , 'form':form})
-#     else:
-#         catgry = request.POST.get('dropdown',None)
-#         print(cid,'|||||||||||||')
-#         customer = NormalUser.objects.get(=catgry)
-#         products = list(Product.objects.all())
-#         if customer is not None:
-#             return render(request, 'sales/test.html', {'customer': customer, 'products': products})
-#         else:
-#             return messages.error(request, "Error!")
+"""
+class QuestionDetailView(DetailView):
+    template_name = 'question/questiondetails.html'
+    
+    model = Question
+    context_object_name = 'questions'
+
+    

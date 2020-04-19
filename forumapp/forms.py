@@ -5,7 +5,11 @@ from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from bootstrap_modal_forms.forms import BSModalForm
 
 
-#register form
+
+"""=======================================
+-------------Register Form------------------
+======================================="""
+
 class UserForm(forms.ModelForm):
     fname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your first name'}))
     lname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your last name'}))
@@ -46,14 +50,38 @@ class UserForm(forms.ModelForm):
 
 
 
-#login form
+"""=======================================
+-------------Login Form------------------
+======================================="""
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Enter your username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter your password'})) 
 
 #question asked
+
+
+
+
+"""=======================================
+-------------Question Asked Form------------------
+======================================="""
 class QuestionForm(BSModalForm):
     class Meta:
         model = Question
         fields = ['category','question','image']
+
+
+"""=======================================
+-------------Answer Form------------------
+======================================="""
+
+class AnswerForm(forms.ModelForm):
+    answer= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'write a comment.....','style':'width:500px;height:37px;border-radius:8px;'}))    
+    class Meta:
+        model = Answer
+        fields = ('answer',)
+
+
+
+
        

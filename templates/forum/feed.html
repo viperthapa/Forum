@@ -170,7 +170,10 @@
             <div class="card">
                 
                 <div class="card-body">
+                   {% if user.is_authenticated %} 
+
                     <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+                   {% endif %} 
                     <h4 class="card-text text-dark">What is your questions ?</h4>
                     
                 </div>
@@ -193,9 +196,11 @@
 
                 <div class="tab-content p-0">
                     <!-- begin #profile-post tab -->
+                {% for question in questions %}
+
                     <div class="tab-pane fade active show" id="profile-post">
                     <!-- begin timeline -->
-                    <ul class="timeline">
+                        <ul class="timeline">
                             <li>
                             <!-- begin timeline-time -->
                                 
@@ -206,110 +211,46 @@
                                 <!-- begin timeline-body -->
                                 <div class="timeline-body">
                                     <div class="timeline-header">
-                                        <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></span>
-                                        <span class="username"><a href="javascript:;">Sean Ngu</a> <small></small></span>
+                                        <span class="userimage"><img src="{{ question.normal_user.image.url }}" alt=""></span>
+                                        <span class="username"><a href="javascript:;">{{ question.normal_user.fname }}</a> <small></small></span>
+                                        <br><span style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
+
                                         <span class="pull-right text-muted">18 Views</span>
                                     </div>
                                     <div class="timeline-content">
+
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis quis tincidunt luctus.
-                                        Nam sagittis dui in nunc consequat, in imperdiet nunc sagittis.
+                                        <a class="text-dark" href="{% url 'forumapp:questiondetail' question.id %}">{{ question.question }}</a>
                                     </p>
+                                    {% if question.image %}<img class="card-img-top" src="{{ question.normal_user.image.url }}" alt="Card image cap">{% endif  %}
+
                                     </div>
                                     <div class="timeline-likes">
                                     <div class="stats-right">
                                         <!-- <span class="stats-text">259 Shares</span> -->
-                                        <span class="stats-text">21 Comments</span>
                                     </div>
-                                    <div class="stats">
 
-                                        <span class="fa-stack fa-fw stats-icon">
-                                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                        <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <span class="stats-total">4.3k</span>
-                                    </div>
                                     </div>
                                     <div class="timeline-footer">
-                                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-arrow-up fa-fw fa-lg m-r-3"></i> upvote</a>&nbsp;&nbsp;
-                                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                        <a href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 10px;padding-right: 200px;"><i class="fa fa-arrow-up fa-fw fa-lg m-r-3"></i> upvote</a>&nbsp;&nbsp;
+                                        <a href="#comment" class="m-r-15 text-inverse-lighter" style="padding-right: 160px;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                        <a href="#comment" class="m-r-15 text-inverse-lighter"><i class="fa fa-eye fa-fw fa-lg m-r-3"></i> Views</a> 
+
                                          <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a> -->
                                     </div>
-                                    <div class="timeline-comment-box">
-                                        <div class="user"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
-                                        <div class="input">
-                                            <form action="">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control rounded-corner" placeholder="Write a comment...">
-                                                    <span class="input-group-btn p-l-10">
-                                                    <button class="btn btn-primary f-s-12 rounded-corner" type="button">Comment</button>
-                                                    </span>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    
                                     
                                 </div>
                                 <!-- image related  -->
                             
-                                <div class="timeline-body">
-                                    <div class="timeline-header">
-                                        <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></span>
-                                        <span class="username"><a href="javascript:;">Sean Ngu</a> <small></small></span>
-                                        <span class="pull-right text-muted">18 Views</span>
-                                    </div>
-                                    <div class="timeline-content">
-   
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis quis tincidunt luctus.
-                                        Nam sagittis dui in nunc consequat, in imperdiet nunc sagittis.
-                                    </p>
-                                    <img class="card-img-top" src="{% static 'images/rrr.png' %}" alt="Card image cap">
-
-                                    </div>
-                                    <div class="timeline-likes">
-                                    <div class="stats-right">
-                                        <span class="stats-text">259 Shares</span>
-                                        <span class="stats-text">21 Comments</span>
-                                    </div>
-                                    <div class="stats">
-                                        <span class="fa-stack fa-fw stats-icon">
-                                        <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                                        <i class="fa fa-heart fa-stack-1x fa-inverse t-plus-1"></i>
-                                        </span>
-                                        <span class="fa-stack fa-fw stats-icon">
-                                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                        <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <span class="stats-total">4.3k</span>
-                                    </div>
-                                    </div>
-                                    <div class="timeline-footer">
-                                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
-                                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
-                                         <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
-                                    </div>
-                                    <div class="timeline-comment-box">
-                                        <div class="user"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
-                                        <div class="input">
-                                            <form action="">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control rounded-corner" placeholder="Write a comment...">
-                                                    <span class="input-group-btn p-l-10">
-                                                    <button class="btn btn-primary f-s-12 rounded-corner" type="button">Comment</button>
-                                                    </span>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
+                               
                             </li> 
                         </ul>
                     </div> 
                 </div>    
+                {% endfor %}
             </div>   
-        </div>            
+        </div>  
          
     </a>
     <script type="text/javascript">

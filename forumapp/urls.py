@@ -11,7 +11,10 @@ urlpatterns = [
     # path("login/",LoginView.as_view(),name = "login"),
     path("login/user/",views.LoginFormView,name = 'login'), #user login page
     path('question/add/',QuestionAddView.as_view(),name = "questionadd"),
-    # path('question/create/',views.QuestionCreateView,name='questioncreate'),
+    path('question/<int:pk>/details/',
+         QuestionDetailView.as_view(), name='questiondetail'),
+
+    
 
 
 ]

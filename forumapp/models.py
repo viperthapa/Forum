@@ -48,6 +48,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question,on_delete = models.CASCADE)
     user = models.ForeignKey(NormalUser,on_delete = models.CASCADE)
+    reply = models.ForeignKey('Answer',null=True,related_name="replies",on_delete = models.CASCADE,blank=True)
     answer = models.TextField()
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)

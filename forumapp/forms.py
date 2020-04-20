@@ -76,7 +76,8 @@ class QuestionForm(BSModalForm):
 ======================================="""
 
 class AnswerForm(forms.ModelForm):
-    answer= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'write a comment.....','style':'width:500px;height:37px;border-radius:8px;'}))    
+    answer = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'post your aswer....', 'rows':'4', 'cols':'50'}))
+
     class Meta:
         model = Answer
         fields = ('answer',)

@@ -1,5 +1,5 @@
 
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.views.generic import *
 from .forms import UserForm,LoginForm,QuestionForm,AnswerForm
 from django.contrib.auth import login, authenticate, logout
@@ -138,10 +138,67 @@ class QuestionAddView(BSModalCreateView):
 details of question
 
 """
+
+
+def QuestionDetailView(request,pk):
+    print('fbv')
+    questions = get_object_or_404(Question,pk=pk)
+    answers = Answer.objects.filter(question=questions).order_by('-id')
+    
+    if request.method == 'POST':
+        print('appear only after form submitted')
+        answer_form = AnswerForm(request.POST or None)
+        if answer_form.is_valid():
+            answer = request.POST.get('answer')
+            print('%%%%%%%%%%%%%%%%%%',request.user)
+            user_first = NormalUser.objects.get(user = request.user)
+            print(user_first,'@@@@@@@@@@@@@')
+            answer = Answer.objects.create(question=questions, user=user_first, answer=answer)
+            print('asnwer',answer)
+            answer.save()
+            # return reverse('forumapp:questiondetail')
+            return redirect('forumapp:questiondetail', pk=pk)
+
+            # return HttpResponseRedirect(post.get_absolute_url())
+    else:
+        answerform= AnswerForm()
+
+    context = {
+        'questions': questions,
+        'answers':answers,
+        'answerform1':answerform,
+    }
+    
+
+    return render(request, 'question/questiondetails.html', context)
+
+
+##################### class based views #############
+'''
 class QuestionDetailView(DetailView):
     template_name = 'question/questiondetails.html'
     
     model = Question
     context_object_name = 'questions'
 
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['answers'] = Answer.objects.filter(question=self.object.pk)
+        context['answerform'] = AnswerForm()
+        print(context['answerform'],'******************')
+
+        print(context['answers'],'******************')
+        print('pk=',self.object.pk)
+        return context
     
+    ############form validation ############
+    def form_valid(self,form):
+        print('this is form valid method')
+        new_answer = form.cleaned_data['answer']
+        answer = Answer.objects.create(question=self.object.pk,user=self.request.user,answer=new_answer)
+        form.instance.answer = answer
+        return super().form_valid(form)
+
+'''

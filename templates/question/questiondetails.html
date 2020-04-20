@@ -21,7 +21,37 @@
                   <span class="card-text mt-0">posted on: {{ questions.date_created|date:"d M,Y"  }} </span><br><br><br><br><br>
                   <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.normal_user.fname }}</b></p>
                 </div>
-              </div>
+            </div><br><br>
+            <div style="margin-left: 150px;">
+
+                <!--form-->
+                <form method="post">
+                    {% csrf_token %}
+                    {{ answerform1.as_p }}
+                    {% if request.user.is_authenticated %}
+                        <input type="submit" value="Submit" class="btn btn-outline-success">
+                    {% else %}
+                        <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
+                    {% endif %}
+
+
+                </form>
+
+
+                </form>
+
+                <br><br>
+                {{ answers.count }} Comment{{ answers|pluralize }}
+                {% for answer in answers %}
+                    <blockquote class="blockquote">
+                        <p class="mb-0"><small>{{ answer.answer }}</small></p>
+                        <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ answer.user|capfirst }}</cite></small>
+                        <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2">Reply</button>
+                        </footer>
+                    </blockquote>
+                {% endfor %}
+            </div>
+
 
         </div>
         <div class="col-lg-4">

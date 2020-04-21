@@ -92,6 +92,13 @@
         $(".add-btn").modalForm({formURL: "{% url 'forumapp:questionadd' %}"});
           
       });
+
+
+      //this is cool effect when users click the reply button
+      $('.reply-btn').click(function() {
+          $(this).parent().parent().next('.reply-next').fadeToggle()
+        });
+
     </script>
 
 {% block content %}    

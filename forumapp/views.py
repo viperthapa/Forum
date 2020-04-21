@@ -62,7 +62,6 @@ class RegisterView(CreateView):
     template_name = 'user/userlogin.html'
     form_class = UserForm
     success_url = reverse_lazy('forumapp:login')
-    print('this is upper')
 
     def form_valid(self, form):
         print('this is form')
@@ -110,14 +109,10 @@ Question add
 
 """
 class QuestionAddView(BSModalCreateView):
-    print('i have great')
     template_name = "question/questioncreate.html"
     form_class = QuestionForm
-    print('below form class')
     success_message = "Question has been added"
-    print('this is below success')
     success_url = reverse_lazy('forumapp:home')
-    print('888888')
 
 
     def form_valid(self,form):
@@ -143,7 +138,8 @@ details of question
 def QuestionDetailView(request,pk):
     print('fbv')
     questions = get_object_or_404(Question,pk=pk)
-    answers = Answer.objects.filter(question=questions).order_by('-id')
+    print('first question ',questions)
+    answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
     
     if request.method == 'POST':
         print('appear only after form submitted')
@@ -153,7 +149,13 @@ def QuestionDetailView(request,pk):
             print('%%%%%%%%%%%%%%%%%%',request.user)
             user_first = NormalUser.objects.get(user = request.user)
             print(user_first,'@@@@@@@@@@@@@')
-            answer = Answer.objects.create(question=questions, user=user_first, answer=answer)
+            reply_id = request.POST.get('answer_id')
+            print('reply id',reply_id)
+            reply_qs = None
+            if reply_id:
+                reply_qs = Answer.objects.get(id = reply_id)
+                print('reply_qs = ',reply_qs)
+            answer = Answer.objects.create(question=questions, user=user_first, answer=answer,reply=reply_qs)
             print('asnwer',answer)
             answer.save()
             # return reverse('forumapp:questiondetail')

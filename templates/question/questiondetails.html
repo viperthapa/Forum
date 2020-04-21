@@ -22,35 +22,7 @@
                   <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.normal_user.fname }}</b></p>
                 </div>
             </div><br><br>
-            <div style="margin-left: 150px;">
-
-                <!--form-->
-                <form method="post">
-                    {% csrf_token %}
-                    {{ answerform1.as_p }}
-                    {% if request.user.is_authenticated %}
-                        <input type="submit" value="Submit" class="btn btn-outline-success">
-                    {% else %}
-                        <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
-                    {% endif %}
-
-
-                </form>
-
-
-                </form>
-
-                <br><br>
-                {{ answers.count }} Comment{{ answers|pluralize }}
-                {% for answer in answers %}
-                    <blockquote class="blockquote">
-                        <p class="mb-0"><small>{{ answer.answer }}</small></p>
-                        <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ answer.user|capfirst }}</cite></small>
-                        <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2">Reply</button>
-                        </footer>
-                    </blockquote>
-                {% endfor %}
-            </div>
+           {% include 'question/comment.html' %}
 
 
         </div>
@@ -78,6 +50,16 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        
+  
+  
+        //this is cool effect when users click the reply button
+        $('.reply-btn').click(function() {
+            $(this).parent().parent().next('.reply-next').fadeToggle()
+          });
+  
+      </script>
 </body>
 </html>
 

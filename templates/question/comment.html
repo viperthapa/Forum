@@ -1,7 +1,7 @@
 <div style="margin-left: 150px;">
 
     <!--form-->
-    <form method="post">
+    <form method="post" id="answer-form" action="#">
         {% csrf_token %}
         {{ answerform1.as_p }}
         {% if request.user.is_authenticated %}
@@ -54,3 +54,28 @@
     {% endfor %}
 
 </div>
+<script type="text/javascript">
+        
+
+    //ajax calls after submit button
+    $(document).on('submit', '.comment', function(event){
+      event.preventDefault();
+      console.log('hehehehehehe');
+      console.log($(this).serialize());
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+          $('.mycomment').html(response['form']);
+          
+        },
+        error: function(rs, e) {
+          console.log(rs.responseText);
+        },
+      });
+    });
+
+
+</script>

@@ -21,8 +21,18 @@
                   <span class="card-text mt-0">posted on: {{ questions.date_created|date:"d M,Y"  }} </span><br><br><br><br><br>
                   <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.normal_user.fname }}</b></p>
                 </div>
-            </div><br><br>
-           {% include 'question/comment.html' %}
+            </div><br>
+            <!--liked button-->
+            <div style="margin-left: 140px;">
+              <form action="{% url 'forumapp:liked' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" id="like" name="question_id" value="{{ post.id }}" class="btn btn-primary">Like</button>
+
+              </form>
+            </div><br>
+            <div class="mycomment">
+               {% include 'question/comment.html' %}
+            </div>
 
 
         </div>
@@ -58,6 +68,28 @@
         $('.reply-btn').click(function() {
             $(this).parent().parent().next('.reply-next').fadeToggle()
           });
+
+
+        //ajax calls after submit button
+        $(document).on('submit', '.comment', function(event){
+          event.preventDefault();
+          console.log('hehehehehehe');
+          console.log($(this).serialize());
+          $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+              $('.mycomment').html(response['form']);
+              
+            },
+            error: function(rs, e) {
+              console.log(rs.responseText);
+            },
+          });
+        });
+
   
       </script>
 </body>

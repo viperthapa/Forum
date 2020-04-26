@@ -158,8 +158,8 @@ def QuestionDetailView(request,pk):
             answer = Answer.objects.create(question=questions, user=user_first, answer=answer,reply=reply_qs)
             print('asnwer',answer)
             answer.save()
-            # return reverse('forumapp:questiondetail')
             return redirect('forumapp:questiondetail', pk=pk)
+            
 
             # return HttpResponseRedirect(post.get_absolute_url())
     else:
@@ -170,9 +170,32 @@ def QuestionDetailView(request,pk):
         'answers':answers,
         'answerform1':answerform,
     }
+    # if request.is_ajax():
+    #     html = render_to_string('forum/comment.html', context, request=request)
+    #     return JsonResponse({'form': html})
     
 
     return render(request, 'question/questiondetails.html', context)
+
+
+
+"""
+question liked
+"""
+def LikeView(request):
+    question = get_object_or_404(Question,id = request.POST.get('like'))
+    print('question =@@@@@@@@@@@@@@@@@2 ',question)
+    current_user = request.user
+    print('current_user = ',current_user)
+
+    like = Like.objects.create(question = question,user = current_user)
+    return redirect('forumapp:questiondetail', pk=pk)
+
+
+
+
+
+
 
 
 ##################### class based views #############

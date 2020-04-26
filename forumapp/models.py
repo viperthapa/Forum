@@ -74,6 +74,20 @@ class Comment(models.Model):
         return self.comment_text
 
 
+
+'''
+add likes
+'''
+class Like(models.Model):
+    user = models.ForeignKey(User,on_delete = models.CASCADE)
+    answer = models.ForeignKey(Answer,on_delete = models.CASCADE)
+    question = models.ForeignKey(Question,on_delete = models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_read = models.BooleanField()
+
+    def __str__(self):
+        return self.user.username
+
 #admin
 # class Admin(models.Model):
 #     admin = models.OneToOneField(User,on_delete = models.CASCADE)

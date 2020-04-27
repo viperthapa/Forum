@@ -24,7 +24,7 @@
             </div><br>
             <!--liked button-->
             <div style="margin-left: 140px;">
-              <form action="{% url 'forumapp:liked' %}" method="post">
+              <form action="{% url 'forumapp:liked' questions.pk %}" method="post">
                 {% csrf_token %}
                 <button type="submit" id="like" name="question_id" value="{{ post.id }}" class="btn btn-primary">Like</button>
 

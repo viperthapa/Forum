@@ -39,7 +39,10 @@ class Question(models.Model):
     description = models.TextField(null=True,blank=True)
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)
-    
+    like_question = models.ManyToManyField(User, related_name='likes', blank=True)
+
+
+
     def __str__(self):
         return self.question
 
@@ -80,10 +83,10 @@ add likes
 '''
 class Like(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)
-    answer = models.ForeignKey(Answer,on_delete = models.CASCADE)
-    question = models.ForeignKey(Question,on_delete = models.CASCADE)
+    answer = models.ForeignKey(Answer,on_delete = models.CASCADE,null = True,blank = True)
+    question = models.ForeignKey(Question,on_delete = models.CASCADE,null = True,blank = True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_read = models.BooleanField()
+    is_read = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username

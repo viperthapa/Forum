@@ -15,7 +15,7 @@ urlpatterns = [
     path('question/<int:pk>/details',views.QuestionDetailView,name = "questiondetail"),
 
     #like button
-    path('user/like/',views.LikeView,name="liked")
+    path('user/<int:pk>/like/',views.LikeView,name="liked")
     
 
     

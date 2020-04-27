@@ -140,6 +140,7 @@ def QuestionDetailView(request,pk):
     questions = get_object_or_404(Question,pk=pk)
     print('first question ',questions)
     answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
+    print("answeerrr=",answers)
     
     if request.method == 'POST':
         print('appear only after form submitted')
@@ -182,13 +183,15 @@ def QuestionDetailView(request,pk):
 """
 question liked
 """
-def LikeView(request):
-    question = get_object_or_404(Question,id = request.POST.get('like'))
-    print('question =@@@@@@@@@@@@@@@@@2 ',question)
-    current_user = request.user
-    print('current_user = ',current_user)
+def LikeView(request,pk):
+    questions_id = get_object_or_404(Question,pk=pk)
+    print('questions = ######',questions_id)
+    user = request.user
+    like_created = Like.objects.create(question = questions_id,user = user)
+    print("like created",like_created)
 
-    like = Like.objects.create(question = question,user = current_user)
+    # questions_id.like_question.set = user
+   
     return redirect('forumapp:questiondetail', pk=pk)
 
 

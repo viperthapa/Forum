@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User,Group
+from django.urls import reverse
+
 
 # Create your models here.
 
@@ -35,16 +37,27 @@ class Question(models.Model):
     normal_user = models.ForeignKey(NormalUser,on_delete = models.CASCADE,null=True)
     category = models.ForeignKey(Category,on_delete = models.CASCADE)
     question = models.CharField(max_length = 350,null=True)
+    like_question = models.ManyToManyField(User, related_name='likes',default=None,blank=True)
     image = models.ImageField(upload_to='question',blank=True)
     description = models.TextField(null=True,blank=True)
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)
-    like_question = models.ManyToManyField(User, related_name='likes', blank=True)
+    # is_read = models.BooleanField(default=False)
+
 
 
 
     def __str__(self):
-        return self.question
+        return str(self.question)
+    
+    def num_likes(self):
+        return self.like_question.all().count()
+
+
+    def get_absolute_url(self):
+        return reverse("forumapp:questiondetail", args=[self.id])
+    
+
 
 
 #answer
@@ -81,12 +94,17 @@ class Comment(models.Model):
 '''
 add likes
 '''
+LIKE_CHOICES = ( 
+    ("like", "like"), 
+    ("Unlike", "Unlike")
+) 
 class Like(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)
     answer = models.ForeignKey(Answer,on_delete = models.CASCADE,null = True,blank = True)
     question = models.ForeignKey(Question,on_delete = models.CASCADE,null = True,blank = True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_read = models.BooleanField(default=True)
+    value = models.CharField(max_length = 20,choices = LIKE_CHOICES, default = 'like') 
+    # is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

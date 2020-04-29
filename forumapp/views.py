@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.views.generic import *
-from .forms import UserForm,LoginForm,QuestionForm,AnswerForm
+from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from .models import *
@@ -138,9 +138,24 @@ details of question
 def QuestionDetailView(request,pk):
     print('fbv')
     questions = get_object_or_404(Question,pk=pk)
-    print('first question ',questions)
+    is_liked = False
+
+    # print("questions is read",questions.is_read)  
+    if questions.like_question.filter(id=request.user.id).exists():
+        print("this is if in question detail view")
+        questions.like_question.remove(request.user)
+        is_liked = True
+
+
+   
     answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
-    print("answeerrr=",answers)
+    # print("answeerrr=",answers)
+    
+
+    # like = Like.objects.get(id = questions)
+    # if like.is_read = False:
+
+
     
     if request.method == 'POST':
         print('appear only after form submitted')
@@ -159,7 +174,9 @@ def QuestionDetailView(request,pk):
             answer = Answer.objects.create(question=questions, user=user_first, answer=answer,reply=reply_qs)
             print('asnwer',answer)
             answer.save()
-            return redirect('forumapp:questiondetail', pk=pk)
+            # return redirect('forumapp:questiondetail', pk=pk)
+            return HttpResponseRedirect(questions.get_absolute_url())
+
             
 
             # return HttpResponseRedirect(post.get_absolute_url())
@@ -170,6 +187,9 @@ def QuestionDetailView(request,pk):
         'questions': questions,
         'answers':answers,
         'answerform1':answerform,
+        'is_liked': is_liked,
+
+        
     }
     # if request.is_ajax():
     #     html = render_to_string('forum/comment.html', context, request=request)
@@ -183,16 +203,71 @@ def QuestionDetailView(request,pk):
 """
 question liked
 """
-def LikeView(request,pk):
-    questions_id = get_object_or_404(Question,pk=pk)
-    print('questions = ######',questions_id)
-    user = request.user
-    like_created = Like.objects.create(question = questions_id,user = user)
-    print("like created",like_created)
+def LikeView(request):
+    print('this is like view')
+    # questions = get_object_or_404(Question,pk=pk)
 
-    # questions_id.like_question.set = user
+    
+    questions = get_object_or_404(Question, id=request.POST.get('question_id'))
+    print('questions = ######',questions)
+    print('questions = ######',questions.id)
+
+    is_liked = False
+
+    if questions.like_question.filter(id = request.user.id).exists():
+        print('this is like in if')
+
+        questions.like_question.remove(request.user)
+        is_liked = False
+    else:
+        print('this is like in else')
+        # questions.like_question.username = request.user
+        # questions.is_read = True
+        # questions.save()
+        user = User.objects.get(id = request.user.id)
+        print('user =',user)
+        print('user = ',user)
+        # user.question_set.add(questions)
+        questions.like_question.add(request.user)
+
+        # q1 = questions.like_question.add(user)
+        print('q1 = ',questions)
+        print('q1 = ',questions.id)
+
+        print('q1 = ',questions.like_question.all())
+
+        # questions.like_question.add(user)
+        # print('many ti many field at last = ',questions.id)
+        # print('many ti many field at last = ',questions.like_question.all())
+        # q1.save()
+
+
+
+        # task.users.add(form.cleaned_data['user'])
+        # questions.like_question.set(user)
+        
+
+
+        # questions.save()
+
+
+        is_liked = True
+    return HttpResponseRedirect(questions.get_absolute_url())
+
+    # return redirect('forumapp:questiondetail', pk=pk)
+    
+        # questions.like_question.add(True)
+
+
+
+
+
+
+    # user = request.user
+    # like_created = Like.objects.create(question = questions_id,user = user,is_read = True)
+    # print("like created",like_created)
+
    
-    return redirect('forumapp:questiondetail', pk=pk)
 
 
 

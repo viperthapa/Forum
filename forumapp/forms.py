@@ -84,5 +84,13 @@ class AnswerForm(forms.ModelForm):
 
 
 
+"""=======================================
+-------------Question Asked Form------------------
+======================================="""
+class QuestionLikeForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['like_question']
+
 
        

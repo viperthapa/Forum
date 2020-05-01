@@ -11,14 +11,14 @@ from bootstrap_modal_forms.forms import BSModalForm
 ======================================="""
 
 class UserForm(forms.ModelForm):
-    fname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your first name'}))
-    lname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your last name'}))
-    email= forms.EmailField(widget= forms.EmailInput(attrs={'placeholder':'Enter your email'}))
     username= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your username'}))
     password= forms.CharField(widget= forms.PasswordInput(attrs={'placeholder':'Enter your password'}))
     confirm_password= forms.CharField(widget= forms.PasswordInput(attrs={'placeholder':'Enter confirm password'}))
-
-    # username = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'username'}))
+    fname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your first name'}))
+    lname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your last name'}))
+    email= forms.EmailField(widget= forms.EmailInput(attrs={'placeholder':'Enter your email'}))
+    image = forms.ImageField()
+        # username = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'username'}))
     # password = forms.CharField(widget = forms.PasswordInput(attrs={'placeholder': 'password'}))
     # confirm_password = forms.CharField(widget = forms.PasswordInput(attrs={'placeholder': 'confirm password'}))
     # fname = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'first name'}))
@@ -28,7 +28,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = NormalUser
-        fields = ['fname','lname','email','username','password','confirm_password']
+        fields = ['username','password','confirm_password','fname','lname','email','image']
 
     #check the username 
     def clean_username(self):

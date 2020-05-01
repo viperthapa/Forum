@@ -19,7 +19,7 @@
     <br><br>
     <!-- comment within a comment  -->
 
-    {{ answers.count }} Comment{{ answers|pluralize }}
+    {{ answer_count.count }} Comment{{ answers|pluralize }}
     {% for answer in answers %}
         <blockquote class="blockquote">
             <p class="mb-0"><small>{{ answer.answer }}</small></p>

@@ -73,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myforum.wsgi.application'
 
-
+# AUTH_USER_MODEL = 'forumapp.Question'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 

@@ -171,7 +171,7 @@
                 
                 <div class="card-body">
                    {% if user.is_authenticated %} 
-
+                    <!-- {{ profile }} -->
                     <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
                    {% endif %} 
                     <h4 class="card-text text-dark">What is your questions ?</h4>
@@ -197,7 +197,6 @@
                 <div class="tab-content p-0">
                     <!-- begin #profile-post tab -->
                 {% for question in questions %}
-
                     <div class="tab-pane fade active show" id="profile-post">
                     <!-- begin timeline -->
                         <ul class="timeline">
@@ -211,11 +210,11 @@
                                 <!-- begin timeline-body -->
                                 <div class="timeline-body">
                                     <div class="timeline-header">
-                                        <span class="userimage"><img src="{{ question.normal_user.image.url }}" alt=""></span>
+                                        {% if question.normal_user.image %}<span class="userimage"><img src="{{ question.normal_user.image.url }}" alt=""></span>{% endif %}
                                         <span class="username"><a href="javascript:;">{{ question.normal_user.fname }}</a> <small></small></span>
                                         <br><span style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
 
-                                        <span class="pull-right text-muted">18 Views</span>
+                                        <span class="pull-right text-muted">5 likes</span>
                                     </div>
                                     <div class="timeline-content">
 
@@ -232,10 +231,13 @@
 
                                     </div>
                                     <div class="timeline-footer">
-                                        <a href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 10px;padding-right: 200px;"><i class="fa fa-arrow-up fa-fw fa-lg m-r-3"></i> upvote</a>&nbsp;&nbsp;
-                                        <a href="#comment" class="m-r-15 text-inverse-lighter" style="padding-right: 160px;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
-                                        <a href="#comment" class="m-r-15 text-inverse-lighter"><i class="fa fa-eye fa-fw fa-lg m-r-3"></i> Views</a> 
+                                        <!-- results.part_set.count() -->
 
+                                        
+                                            <a href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 10px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp;
+                                                
+                                        <a href="#comment" class="m-r-15 text-inverse-lighter" style="padding-right: 160px;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i>  {{ question.related_question.all.count }} Comments</a> 
+                                        <a href="#comment" class="m-r-15 text-inverse-lighter"><i class="fa fa-eye fa-fw fa-lg m-r-3"></i> {{ question.views }} views</a> 
                                          <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a> -->
                                     </div>
                                     

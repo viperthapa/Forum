@@ -8,6 +8,8 @@ from .models import *
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from bootstrap_modal_forms.generic import BSModalCreateView
+from django.db.models import Count
+
 # Create your views here.
 
 
@@ -21,8 +23,14 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['questions'] = Question.objects.all()
+        context['answers'] = Answer.objects.all()
+
+        # context['answer-count'] = Question.objects.annotate(number_of_answers=Count('answer'))
+
         print(context['questions'],'*****')
+        # context['profile'] = NormalUser.objects.get(id = self.request.user.id)
         context['form'] = AnswerForm()
+        
         
         return context
 
@@ -64,13 +72,12 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('forumapp:login')
 
     def form_valid(self, form):
-        print('this is form')
-        uname = form.cleaned_data['username']
+        u_name = form.cleaned_data['username']
         pword = form.cleaned_data['password']
-        print('uname= ',uname)
-        user = User.objects.create_user(uname,pword)
+        print("pword",pword)
+        user = User.objects.create_user(u_name, '', pword)
         form.instance.user = user
-        # messages.info(request,'Profile details updated.')
+        # login(self.request, user)
         return super().form_valid(form)
 
 
@@ -85,13 +92,14 @@ def LoginFormView(request):
         uname = request.POST.get('username')
         pword = request.POST.get('password')
         user = authenticate(username=uname,password=pword)
+        print("user = ",user)
         if user:
             if user is not None:
                 login(request,user)
                 return HttpResponseRedirect(reverse('forumapp:home'))
         else:
             return render(request,'user/login.html',{
-                'messages': 'your username doesnot exist',
+                'messages': 'your username doesnot exist 11',
                 'form': LoginForm
             })
             # return HttpResponse("your username did not match")
@@ -138,6 +146,7 @@ details of question
 def QuestionDetailView(request,pk):
     print('fbv')
     questions = get_object_or_404(Question,pk=pk)
+    print('sakalalalalala',questions.id)
     is_liked = False
 
     # print("questions is read",questions.is_read)  
@@ -149,6 +158,16 @@ def QuestionDetailView(request,pk):
 
    
     answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
+
+    answer_count = Answer.objects.filter(question=questions) #count the answers
+
+    q_id_up = questions
+    print('q id',q_id_up.id)
+    q_id = Question.objects.get(id=q_id_up.id)
+    q_id.views += 1
+    q_id.save()
+    # q_id.
+
     # print("answeerrr=",answers)
     
 
@@ -188,6 +207,7 @@ def QuestionDetailView(request,pk):
         'answers':answers,
         'answerform1':answerform,
         'is_liked': is_liked,
+        'answer_count':answer_count,
 
         
     }
@@ -205,56 +225,50 @@ question liked
 """
 def LikeView(request):
     print('this is like view')
-    # questions = get_object_or_404(Question,pk=pk)
+    user = request.user
+    user1 = User.objects.get(id = user.id)
+    print("usereeeee=",user)
+    if request.method == "POST":
+        # question_id = request.POST.get('question_id')
+        question_id = get_object_or_404(Question, id=request.POST.get('question_id'))
 
-    
-    questions = get_object_or_404(Question, id=request.POST.get('question_id'))
-    print('questions = ######',questions)
-    print('questions = ######',questions.id)
+        print('question id',question_id)
+        question_obj = Question.objects.get(id = question_id.id)
+        print('question_obj =============== ',question_obj)
+       
 
-    is_liked = False
-
-    if questions.like_question.filter(id = request.user.id).exists():
-        print('this is like in if')
-
-        questions.like_question.remove(request.user)
-        is_liked = False
-    else:
-        print('this is like in else')
-        # questions.like_question.username = request.user
-        # questions.is_read = True
-        # questions.save()
-        user = User.objects.get(id = request.user.id)
-        print('user =',user)
-        print('user = ',user)
-        # user.question_set.add(questions)
-        questions.like_question.add(request.user)
-
-        # q1 = questions.like_question.add(user)
-        print('q1 = ',questions)
-        print('q1 = ',questions.id)
-
-        print('q1 = ',questions.like_question.all())
-
-        # questions.like_question.add(user)
-        # print('many ti many field at last = ',questions.id)
-        # print('many ti many field at last = ',questions.like_question.all())
-        # q1.save()
-
-
-
-        # task.users.add(form.cleaned_data['user'])
-        # questions.like_question.set(user)
         
+        if user in question_obj.like_question.all():
+            question_obj.like_question.remove(user)
+        else:
+            print('hello from else')
+            print("user",user)
+            print("user1",user1)
+
+            
+            question_obj.like_question.add(user1)
+            
+            print('this is bottom of add')
+            print('question_obj = ---------------------',question_obj)
+            print('question_obj = ---------------------',question_obj.like_question)
 
 
-        # questions.save()
 
+            question_obj.save()
+        
+        like,created = Like.objects.get_or_create(user = user,question_id = question_id.id) 
+        if not created:
+            if like.value == "like":
+                like.value == "unlike"
+            else:
+                like.value == "like"
+        like.save()
+    
+    # return HttpResponseRedirect("/question/{id}/details/".format(id= question_id.id))  
 
-        is_liked = True
-    return HttpResponseRedirect(questions.get_absolute_url())
+    return HttpResponseRedirect(question_id.get_absolute_url())
 
-    # return redirect('forumapp:questiondetail', pk=pk)
+    # return redirect('forumapp:questiondetail')
     
         # questions.like_question.add(True)
 

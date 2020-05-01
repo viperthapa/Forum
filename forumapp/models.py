@@ -42,6 +42,8 @@ class Question(models.Model):
     description = models.TextField(null=True,blank=True)
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)
+    views = models.PositiveIntegerField(default=0)
+
     # is_read = models.BooleanField(default=False)
 
 
@@ -62,7 +64,7 @@ class Question(models.Model):
 
 #answer
 class Answer(models.Model):
-    question = models.ForeignKey(Question,on_delete = models.CASCADE)
+    question = models.ForeignKey(Question,on_delete = models.CASCADE,related_name="related_question")
     user = models.ForeignKey(NormalUser,on_delete = models.CASCADE)
     reply = models.ForeignKey('Answer',null=True,related_name="replies",on_delete = models.CASCADE,blank=True)
     answer = models.TextField()
@@ -70,7 +72,6 @@ class Answer(models.Model):
     date_updated = models.DateTimeField(auto_now = True)
     upvoted = models.IntegerField(default=0)
     mark_best = models.IntegerField(default=0)
-    views = models.IntegerField(default=0)
 
     def __str__(self):
         return self.answer

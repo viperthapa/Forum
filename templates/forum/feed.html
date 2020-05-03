@@ -214,7 +214,7 @@
                                         <span class="username"><a href="javascript:;">{{ question.normal_user.fname }}</a> <small></small></span>
                                         <br><span style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
 
-                                        <span class="pull-right text-muted">5 likes</span>
+                                        <span class="pull-right text-muted">{{ question.like_question.count }}likes</span>
                                     </div>
                                     <div class="timeline-content">
 
@@ -232,12 +232,31 @@
                                     </div>
                                     <div class="timeline-footer">
                                         <!-- results.part_set.count() -->
-
                                         
-                                            <a href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 10px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp;
-                                                
-                                        <a href="#comment" class="m-r-15 text-inverse-lighter" style="padding-right: 160px;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i>  {{ question.related_question.all.count }} Comments</a> 
-                                        <a href="#comment" class="m-r-15 text-inverse-lighter"><i class="fa fa-eye fa-fw fa-lg m-r-3"></i> {{ question.views }} views</a> 
+                                        <span class="#">
+                                            <form action="{% url 'forumapp:liked' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="q_id" value="{{ question.id }}">
+                                                {% if request.user not in question.like_question.all %}    
+                                                     <!-- <button type="submit" class="btn btn-primary">Like</button>  -->
+                                                    <button class="m-r-15 text-inverse-lighter" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;color:#484848;padding-right: 190px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>like</button>
+
+
+                                                     <!-- <a type="submit"  href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 5px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp; -->
+                                                {% else %}
+
+                                                    <button class="btn btn-danger" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;color:black;padding-right: 190px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>liked</button>
+                                            
+                                                {% endif %}
+                                                <a href="#comment" class="m-r-15 text-inverse-lighter" style="padding-right: 160px;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i>  {{ question.related_question.all.count }} Comments</a> 
+                                                <a href="#comment" class="m-r-15 text-inverse-lighter"><i class="fa fa-eye fa-fw fa-lg m-r-3"></i> {{ question.views }} views</a> 
+                                             <!-- <strong>{{ question.like_question.count }}likes</strong>  -->
+                                            </form>
+                                           
+                                           
+                                        </span>
+                                        <!-- <a href="#comment"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</span>&nbsp;&nbsp; -->
+                       
                                          <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a> -->
                                     </div>
                                     
@@ -266,3 +285,17 @@
    
 </body>
   <!--sidebar end-->
+<!--
+  <form action="{% url 'forumapp:liked' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="q_id" value="{{ question.id }}">
+    {% if request.user not in question.like_question.all %}    
+         <a href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 5px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp;
+     <button type="submit" class="btn btn-primary">Like</button> 
+    {% else %}
+      <button type="submit" class="btn btn-danger">Dislike</button>
+
+    {% endif %}
+ <strong>{{ question.like_question.count }}likes</strong> 
+</form>
+-->

@@ -147,23 +147,15 @@ def QuestionDetailView(request,pk):
     print('fbv')
     questions = get_object_or_404(Question,pk=pk)
     print('sakalalalalala',questions.id)
-    is_liked = False
+    print('sakalalalalala count',questions.like_question)
 
-    # print("questions is read",questions.is_read)  
-    if questions.like_question.filter(id=request.user.id).exists():
-        print("this is if in question detail view")
-        questions.like_question.remove(request.user)
-        is_liked = True
-
-
-   
     answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
 
     answer_count = Answer.objects.filter(question=questions) #count the answers
 
-    q_id_up = questions
-    print('q id',q_id_up.id)
-    q_id = Question.objects.get(id=q_id_up.id)
+    q_id = questions #count the number of views
+    # print('q id',q_id_up.id)
+    # q_id = Question.objects.get(id=q_id_up.id)
     q_id.views += 1
     q_id.save()
     # q_id.
@@ -206,7 +198,7 @@ def QuestionDetailView(request,pk):
         'questions': questions,
         'answers':answers,
         'answerform1':answerform,
-        'is_liked': is_liked,
+        # 'is_liked': is_liked,
         'answer_count':answer_count,
 
         
@@ -224,51 +216,35 @@ def QuestionDetailView(request,pk):
 question liked
 """
 def LikeView(request):
-    print('this is like view')
     user = request.user
-    user1 = User.objects.get(id = user.id)
-    print("usereeeee=",user)
     if request.method == "POST":
-        # question_id = request.POST.get('question_id')
-        question_id = get_object_or_404(Question, id=request.POST.get('question_id'))
+        q_id = request.POST.get('q_id')
+        print("questio i d ",q_id)
+        # q_id = get_object_or_404(Question, id=request.POST.get('question_id'))
 
-        print('question id',question_id)
-        question_obj = Question.objects.get(id = question_id.id)
-        print('question_obj =============== ',question_obj)
-       
-
-        
-        if user in question_obj.like_question.all():
-            question_obj.like_question.remove(user)
-        else:
-            print('hello from else')
-            print("user",user)
-            print("user1",user1)
-
-            
-            question_obj.like_question.add(user1)
-            
-            print('this is bottom of add')
-            print('question_obj = ---------------------',question_obj)
-            print('question_obj = ---------------------',question_obj.like_question)
+        print('b idididid',q_id)
+        question = Question.objects.get(id=q_id)
+        print('type og question',type)
 
 
-
-            question_obj.save()
-        
-        like,created = Like.objects.get_or_create(user = user,question_id = question_id.id) 
+        if user in question.like_question.all():
+            question.like_question.remove(user)
+        else:            
+            question.like_question.add(user)
+            print('blog liked',question.like_question)
+            question.save()
+        like,created = Like.objects.get_or_create(user = user,question_id = q_id) 
         if not created:
             if like.value == "like":
                 like.value == "unlike"
             else:
                 like.value == "like"
         like.save()
-    
-    # return HttpResponseRedirect("/question/{id}/details/".format(id= question_id.id))  
 
-    return HttpResponseRedirect(question_id.get_absolute_url())
 
-    # return redirect('forumapp:questiondetail')
+    # return HttpResponseRedirect(q_id.get_absolute_url())
+
+    return redirect('forumapp:home')
     
         # questions.like_question.add(True)
 
@@ -282,6 +258,13 @@ def LikeView(request):
     # print("like created",like_created)
 
    
+
+class DetailLike(DetailView):
+    template_name = 'question/like_count.html'
+    
+    model = Question
+    context_object_name = 'likes'
+
 
 
 

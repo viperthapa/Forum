@@ -143,13 +143,7 @@
 
         
         <div class="tab-content">
-            {% if messages %}
-                 <ul class="messages">
-                    {% for message in messages %}
-                        <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+           
             <div id="signup">   
                 
                 <form action="#" method="POST"  enctype="multipart/form-data">
@@ -176,6 +170,8 @@
         
                     <div class="field-wrap">
                         <p>{{ form.username }}</p>
+                        <span>{{ form.errors.username }}</span>
+
                         
                         <!-- <input class="text-secondary" name="email" type="text" value="{{ email }}" placeholder="enter email"/> -->
                     </div>

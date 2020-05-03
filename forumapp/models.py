@@ -107,7 +107,7 @@ class Like(models.Model):
     value = models.CharField(max_length = 20,choices = LIKE_CHOICES, default = 'like') 
     # is_read = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __str__(self):   
         return self.user.username
 
 #admin

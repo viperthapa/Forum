@@ -32,9 +32,12 @@ class UserForm(forms.ModelForm):
 
     #check the username 
     def clean_username(self):
+        print('this is clean username')
         username = self.cleaned_data.get('username')
         user = User.objects.filter(username = username)
+        print("user",user)
         if user.exists():
+            print('inside if statemenet')
             raise forms.ValidationError("username already exist")
         return username
     

@@ -70,8 +70,9 @@ class Answer(models.Model):
     answer = models.TextField()
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)
-    upvoted = models.IntegerField(default=0)
     mark_best = models.IntegerField(default=0)
+    like_answer = models.ManyToManyField(User, related_name='likes_answer',default=None,blank=True)
+
 
     def __str__(self):
         return self.answer

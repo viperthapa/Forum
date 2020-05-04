@@ -221,7 +221,8 @@
                                     <p>
                                         <a class="text-dark" href="{% url 'forumapp:questiondetail' question.id %}">{{ question.question }}</a>
                                     </p>
-                                    {% if question.image %}<img class="card-img-top" src="{{ question.normal_user.image.url }}" alt="Card image cap">{% endif  %}
+                                    <!-- question image  -->
+                                    {% if question.image %}<img class="card-img-top" src="{{ question.image.url }}" alt="Card image cap">{% endif  %}
 
                                     </div>
                                     <div class="timeline-likes">

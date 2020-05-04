@@ -12,13 +12,15 @@ urlpatterns = [
     path("login/user/",views.LoginFormView,name = 'login'), #user login page
     path('question/add/',QuestionAddView.as_view(),name = "questionadd"),
     # path('question/<int:pk>/details/', QuestionDetailView.as_view(), name='questiondetail'),
-    path('question/<int:pk>/details',views.QuestionDetailView,name = "questiondetail"),
+    path('question/<int:pk>/details/',views.QuestionDetailView,name = "questiondetail"),
 
     #like button
     # path('user/<int:pk>/like/',views.LikeView,name="liked")
     path('user/like/',views.LikeView,name="liked"),
 
-    path("detailview/<int:pk>/likes/",DetailLike.as_view(),name="detaillikes"),
+    path('user/like/answer/',views.LikeAnswerView,name="liked_answer"),
+
+
 
     
 

@@ -173,8 +173,8 @@ def QuestionDetailView(request,pk):
         answer_form = AnswerForm(request.POST or None)
         if answer_form.is_valid():
             answer = request.POST.get('answer')
-            print('%%%%%%%%%%%%%%%%%%',request.user)
-            user_first = NormalUser.objects.get(user = request.user)
+            print('%%%%%%%%%%%%%%%%%%',request.user.id)
+            user_first = NormalUser.objects.get(id = request.user.id)
             print(user_first,'@@@@@@@@@@@@@')
             reply_id = request.POST.get('answer_id')
             print('reply id',reply_id)
@@ -251,6 +251,43 @@ def LikeView(request):
 
 
 
+"""
+question liked
+"""
+def LikeAnswerView(request):
+    print('this is answer like view')
+    user = request.user
+    if request.method == "POST":
+        a_id = request.POST.get('a_id')
+        print("questio i d ",a_id)
+        # q_id = get_object_or_404(Question, id=request.POST.get('question_id'))
+
+        print('b idididid',a_id)
+        answer = Answer.objects.get(id=a_id)
+        print('type og question',type)
+
+
+        if user in answer.like_answer.all():
+            answer.like_answer.remove(user)
+        else:            
+            answer.like_answer.add(user)
+            print('blog liked',answer.like_answer)
+            answer.save()
+        like,created = Like.objects.get_or_create(user = user,answer_id = a_id) 
+        if not created:
+            if like.value == "like":
+                like.value == "unlike"
+            else:
+                like.value == "like"
+        like.save()
+
+
+    # return HttpResponseRedirect(q_id.get_absolute_url())
+
+    return redirect('forumapp:home')
+    
+
+
 
 
     # user = request.user
@@ -258,13 +295,6 @@ def LikeView(request):
     # print("like created",like_created)
 
    
-
-class DetailLike(DetailView):
-    template_name = 'question/like_count.html'
-    
-    model = Question
-    context_object_name = 'likes'
-
 
 
 

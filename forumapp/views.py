@@ -131,9 +131,11 @@ class QuestionAddView(BSModalCreateView):
         # print('catgru=',catgry)
         # category = Category.objects.get(name=catgry)
         # form.instance.category = category
-        question_user = NormalUser.objects.get(user = usr)
+        user1 = User.objects.get(id=usr.id)
+        print('user1',user1)
+        question_user = NormalUser.objects.get(user = user1)
         print('question user',question_user)
-        form.instance.normal_user = question_user
+        form.instance.user_a = question_user
         return super().form_valid(form)
 
 
@@ -173,16 +175,20 @@ def QuestionDetailView(request,pk):
         answer_form = AnswerForm(request.POST or None)
         if answer_form.is_valid():
             answer = request.POST.get('answer')
+            
             print('%%%%%%%%%%%%%%%%%%',request.user.id)
-            user_first = NormalUser.objects.get(id = request.user.id)
-            print(user_first,'@@@@@@@@@@@@@')
+            user1 = User.objects.get(id = request.user.id)
+            print('user1',user1.id)
+            user_norm = NormalUser.objects.get(user = user1)
+
+            print(user_norm,'@@@@@@@@@@@@@')
             reply_id = request.POST.get('answer_id')
             print('reply id',reply_id)
             reply_qs = None
             if reply_id:
                 reply_qs = Answer.objects.get(id = reply_id)
                 print('reply_qs = ',reply_qs)
-            answer = Answer.objects.create(question=questions, user=user_first, answer=answer,reply=reply_qs)
+            answer = Answer.objects.create(question=questions, user_a=user_norm, answer=answer,reply=reply_qs)
             print('asnwer',answer)
             answer.save()
             # return redirect('forumapp:questiondetail', pk=pk)

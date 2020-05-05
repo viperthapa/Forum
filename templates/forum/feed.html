@@ -197,6 +197,7 @@
                 <div class="tab-content p-0">
                     <!-- begin #profile-post tab -->
                 {% for question in questions %}
+                    {{ question.user_q.image }}
                     <div class="tab-pane fade active show" id="profile-post">
                     <!-- begin timeline -->
                         <ul class="timeline">
@@ -210,8 +211,8 @@
                                 <!-- begin timeline-body -->
                                 <div class="timeline-body">
                                     <div class="timeline-header">
-                                        {% if question.normal_user.image %}<span class="userimage"><img src="{{ question.normal_user.image.url }}" alt=""></span>{% endif %}
-                                        <span class="username"><a href="javascript:;">{{ question.normal_user.fname }}</a> <small></small></span>
+                                        {% if question.user_q.image %}<span class="userimage"><img src="{{ question.user_q.image.url }}" alt=""></span>{% endif %}
+                                        <span class="username"><a href="javascript:;">{{ question.user_q.fname }}</a> <small></small></span>
                                         <br><span style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
 
                                         <span class="pull-right text-muted">{{ question.like_question.count }}likes</span>

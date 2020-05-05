@@ -34,7 +34,7 @@ class Category(models.Model):
 
 #question 
 class Question(models.Model):
-    normal_user = models.ForeignKey(NormalUser,on_delete = models.CASCADE,null=True)
+    user_q = models.ForeignKey(NormalUser,on_delete = models.CASCADE,null=True)
     category = models.ForeignKey(Category,on_delete = models.CASCADE)
     question = models.CharField(max_length = 350,null=True)
     like_question = models.ManyToManyField(User, related_name='likes',default=None,blank=True)
@@ -65,7 +65,7 @@ class Question(models.Model):
 #answer
 class Answer(models.Model):
     question = models.ForeignKey(Question,on_delete = models.CASCADE,related_name="related_question")
-    user = models.ForeignKey(NormalUser,on_delete = models.CASCADE)
+    user_a = models.ForeignKey(NormalUser,on_delete = models.CASCADE)
     reply = models.ForeignKey('Answer',null=True,related_name="replies",on_delete = models.CASCADE,blank=True)
     answer = models.TextField()
     date_created = models.DateTimeField(auto_now = True)

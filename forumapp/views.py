@@ -133,7 +133,7 @@ class QuestionAddView(BSModalCreateView):
         # form.instance.category = category
         user1 = User.objects.get(id=usr.id)
         print('user1',user1)
-        question_user = NormalUser.objects.get(user = user1)
+        question_user = NormalUser.objects.get(user_id = user1)
         print('question user',question_user)
         form.instance.user_a = question_user
         return super().form_valid(form)
@@ -178,8 +178,7 @@ def QuestionDetailView(request,pk):
             
             print('%%%%%%%%%%%%%%%%%%',request.user.id)
             user1 = User.objects.get(id = request.user.id)
-            print('user1',user1.id)
-            user_norm = NormalUser.objects.get(user = user1)
+            user_norm = NormalUser.objects.get(user_id = user1)
 
             print(user_norm,'@@@@@@@@@@@@@')
             reply_id = request.POST.get('answer_id')

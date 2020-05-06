@@ -6,9 +6,25 @@
 
         <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
     {% else %}
-        <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">liked</button>
+        <button class="btn btn-outline-dark btn-sm ml-2">liked</button>
 
     {% endif %}
+    
     <span class="pull-right text-muted">{{ answer.like_answer.count }}likes</span>
-
+    <br>
+    <span style="margin-left: 800px;">
+        <!-- <button type="button" class="update-book btn btn-sm btn-primary" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
+            <span class="fa fa-pencil"></span>&nbsp;&nbsp;
+        <button type="button" class="update-book btn btn-sm btn-primary" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
+            <span class="fa fa-pencil"></span> -->
+        <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><p style="display:inline-block;" class="text-dark"><i class="fa fa-edit fa-1x"></i></p></a>&nbsp;&nbsp;
+        <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p>
+    </span>
 </form>
+<script type="text/javascript">
+    // Update answer buttons
+    $(".update-answer").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+</script>

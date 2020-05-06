@@ -122,7 +122,6 @@ class QuestionAddView(BSModalCreateView):
     success_message = "Question has been added"
     success_url = reverse_lazy('forumapp:home')
 
-
     def form_valid(self,form):
         print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
         usr = self.request.user
@@ -131,12 +130,25 @@ class QuestionAddView(BSModalCreateView):
         # print('catgru=',catgry)
         # category = Category.objects.get(name=catgry)
         # form.instance.category = category
-        user1 = User.objects.get(id=usr.id)
-        print('user1',user1)
-        question_user = NormalUser.objects.get(user_id = user1)
+        question_user = NormalUser.objects.get(user = usr)
         print('question user',question_user)
-        form.instance.user_a = question_user
+        form.instance.user_q = question_user
         return super().form_valid(form)
+
+    # def form_valid(self,form):
+    #     print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
+    #     usr = self.request.user
+    #     print('user = ',usr)
+    #     # catgry = self.request.get('dropdown',None)
+    #     # print('catgru=',catgry)
+    #     # category = Category.objects.get(name=catgry)
+    #     # form.instance.category = category
+    #     user1 = User.objects.get(id=usr.id)
+    #     print('user1',user1)
+    #     question_user = NormalUser.objects.get(user_id = user1)
+    #     print('question user',question_user)
+    #     form.instance.user_a = question_user
+    #     return super().form_valid(form)
 
 
 """
@@ -177,17 +189,16 @@ def QuestionDetailView(request,pk):
             answer = request.POST.get('answer')
             
             print('%%%%%%%%%%%%%%%%%%',request.user.id)
-            user1 = User.objects.get(id = request.user.id)
-            user_norm = NormalUser.objects.get(user_id = user1)
+            user_first = NormalUser.objects.get(user = request.user)
 
-            print(user_norm,'@@@@@@@@@@@@@')
+            print(user_first,'@@@@@@@@@@@@@')
             reply_id = request.POST.get('answer_id')
             print('reply id',reply_id)
             reply_qs = None
             if reply_id:
                 reply_qs = Answer.objects.get(id = reply_id)
                 print('reply_qs = ',reply_qs)
-            answer = Answer.objects.create(question=questions, user_a=user_norm, answer=answer,reply=reply_qs)
+            answer = Answer.objects.create(question=questions, user_a=user_first, answer=answer,reply=reply_qs)
             print('asnwer',answer)
             answer.save()
             # return redirect('forumapp:questiondetail', pk=pk)
@@ -257,7 +268,7 @@ def LikeView(request):
 
 
 """
-question liked
+answer liked
 """
 def LikeAnswerView(request):
     print('this is answer like view')
@@ -301,6 +312,17 @@ def LikeAnswerView(request):
 
    
 
+
+
+"""
+Answer update
+"""
+class AnswerUpdateView(UpdateView):
+    print('this is answer update')
+    template_name = 'answer/answerupdate.html'
+    model = Answer
+    form_class = AnswerForm
+    success_url = reverse_lazy("forumapp:home")
 
 
 

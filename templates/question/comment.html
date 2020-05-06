@@ -1,6 +1,13 @@
+<html>
+<head>
+    <style>
+
+    </style>    
+</head>
+<body>
 <div style="margin-left: 150px;">
 
-    <!--form-->
+    <!-- comment form-->
     <form method="post" id="answer-form" action="#">
         {% csrf_token %}
         {{ answerform1.as_p }}
@@ -14,19 +21,30 @@
     </form>
 
 
-    </form>
+    
 
     <br><br>
     <!-- comment within a comment  -->
 
-    {{ answer_count.count }} Comment{{ answers|pluralize }}
+    {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
     {% for answer in answers %}
         <blockquote class="blockquote">
             <p class="mb-0"><small>{{ answer.answer }}</small></p>
-            <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ answer.user|capfirst }}</cite></small>
-            <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2">Reply</button>
-            
-            {% include 'question/like_answer.html' %}
+
+            <!-- edit  -->
+            <!-- <p class="text-dark" href="{% url 'forumapp:answerupdate' answer.pk %}"><i class="fa fa-edit"></i></p>
+            <p class="text-dark"><i class="fa fa-trash"></i></p> -->
+            <!-- <a href="{% url 'forumapp:answerupdate' answer.pk %}"><button>edit</button></a> -->
+
+            <span>
+
+            </span>
+            <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ answer.user_a|capfirst }}</cite></small>
+                    <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2" style="display: inline-block;">Reply</button>
+                    
+                    <button style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_answer.html' %}</button>
+                    <hr>
+                
            
 
             </footer>
@@ -35,9 +53,19 @@
     <!-- comment within a comment form -->
     <div class="reply-next" style="display: none;">
         {% for reply in answer.replies.all %}
+            <!-- user:{{ reply.user_a }}<br>
+            answer:{{ reply.answer }}<br>
+            liked:{{ reply.like_answer }} -->
+
+            
+
             <blockquote class="blockquote ml-5">
-                <p class="mb-0"><small>{{ reply.answer }}</small></p>
-                <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ reply.user|capfirst }}</cite></small>
+                <p class="mb-0"><small>{{ reply.answer }}</small></p><br>
+                <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ reply.user_a|capfirst }}</cite></small>
+                    <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2" style="display: inline-block;">Reply</button>
+
+                    <button style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_reply.html' %}</button>
+                    <hr>
                 </footer>
             </blockquote>
         {% endfor %}
@@ -83,3 +111,5 @@
 
 
 </script>
+</body>
+</html>

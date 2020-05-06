@@ -11,20 +11,33 @@
     {% endif %}
     
     <span class="pull-right text-muted">{{ answer.like_answer.count }}likes</span>
+    answered:{{ answer.user_a.user.username }}
+    logged in:{{ request.user }}
+
     <br>
-    <span style="margin-left: 800px;">
-        <!-- <button type="button" class="update-book btn btn-sm btn-primary" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
-            <span class="fa fa-pencil"></span>&nbsp;&nbsp;
-        <button type="button" class="update-book btn btn-sm btn-primary" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
-            <span class="fa fa-pencil"></span> -->
-        <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><p style="display:inline-block;" class="text-dark"><i class="fa fa-edit fa-1x"></i></p></a>&nbsp;&nbsp;
-        <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p>
-    </span>
+    {% if answer.user_a.user.username == request.user.username %}
+        <span style="margin-left: 770px;">
+            <button type="button" class="update-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
+                <span class="fa fa-pencil"></span></button>
+        
+            <button type="button" class="delete-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerdelete' answer.pk %}">
+            <span class="fa fa-trash"></span></button>
+            <!-- <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><button style="display:inline-block;" class="text-default btn btn-dark"><i class="fa fa-edit fa-1x"></i></button></a>&nbsp;&nbsp; -->
+            <!-- <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p> -->
+        </span>
+    {% endif %}
+
 </form>
 <script type="text/javascript">
     // Update answer buttons
     $(".update-answer").each(function () {
         $(this).modalForm({formURL: $(this).data('id')});
     });
+
+
+    // Delete book buttons
+          $(".delete-answer").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      })
 
 </script>

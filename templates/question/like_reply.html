@@ -1,6 +1,6 @@
 <form action="/user/like/answer/" method="post">
     {% csrf_token %}
-    <input type="hidden" name="a_id" value="{{ answer.id }}">
+    <input type="hidden" name="a_id" value="{{ reply.id }}">
     {% if request.user not in reply.like_answer.all %}    
         <button class="btn btn-outline-dark btn-sm ml-2">like</button>
 
@@ -10,5 +10,28 @@
 
     {% endif %}
     <span class="pull-right text-muted">{{ reply.like_answer.count }}likes</span>
+    <br>
+    <span style="margin-left: 720px;">
+        <button type="button" class="update-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerupdate' reply.pk %}">
+            <span class="fa fa-pencil"></span></button>
+       
+        <button type="button" class="delete-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerdelete' reply.pk %}">
+        <span class="fa fa-trash"></span></button>
+        <!-- <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><button style="display:inline-block;" class="text-default btn btn-dark"><i class="fa fa-edit fa-1x"></i></button></a>&nbsp;&nbsp; -->
+        <!-- <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p> -->
+    </span>
 
 </form>
+<script type="text/javascript">
+    // Update answer buttons
+    $(".update-answer").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+    });
+
+
+    // Delete book buttons
+          $(".delete-answer").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      })
+
+</script>

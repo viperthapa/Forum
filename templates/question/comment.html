@@ -24,7 +24,9 @@
     
 
     <br><br>
-    <!-- comment within a comment  -->
+    <!-- 
+        ############################# answerform ##############
+    -->
 
     {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
     {% for answer in answers %}
@@ -50,15 +52,13 @@
             </footer>
         </blockquote>
     
-    <!-- comment within a comment form -->
+    <!-- 
+        
+    ################################    replyform  ###########################
+    -->
     <div class="reply-next" style="display: none;">
         {% for reply in answer.replies.all %}
-            <!-- user:{{ reply.user_a }}<br>
-            answer:{{ reply.answer }}<br>
-            liked:{{ reply.like_answer }} -->
-
             
-
             <blockquote class="blockquote ml-5">
                 <p class="mb-0"><small>{{ reply.answer }}</small></p><br>
                 <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ reply.user_a|capfirst }}</cite></small>

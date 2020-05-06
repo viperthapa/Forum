@@ -29,6 +29,11 @@ urlpatterns = [
          AnswerUpdateView.as_view(), name='answerupdate'),
 
 
+    #deleteview of answer
+    path('answer/delete/<int:pk>/',
+         AnswerDeleteView.as_view(), name='answerdelete'),
+
+
 
 
     

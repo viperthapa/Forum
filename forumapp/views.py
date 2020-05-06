@@ -326,6 +326,16 @@ class AnswerUpdateView(UpdateView):
 
 
 
+"""
+answer delete
+"""
+class AnswerDeleteView(DeleteView):
+    template_name = 'answer/answerdelete.html'
+    model = Answer
+    success_message = 'Success: Answer was deleted.'
+
+    success_url = reverse_lazy("forumapp:home")
+
 
 
 

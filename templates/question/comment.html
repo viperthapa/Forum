@@ -30,7 +30,11 @@
 
     {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
     {% for answer in answers %}
+
         <blockquote class="blockquote">
+            <!-- {{ answer.id }}
+            question id{{ answer.question.id }} -->
+
             <p class="mb-0"><small>{{ answer.answer }}</small></p>
 
             <!-- edit  -->
@@ -58,6 +62,7 @@
     -->
     <div class="reply-next" style="display: none;">
         {% for reply in answer.replies.all %}
+                <!-- {{ reply.question.id }} -->
             
             <blockquote class="blockquote ml-5">
                 <p class="mb-0"><small>{{ reply.answer }}</small></p><br>

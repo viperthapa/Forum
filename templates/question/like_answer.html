@@ -1,5 +1,7 @@
 <form action="/user/like/answer/" method="post">
     {% csrf_token %}
+    <input type="hidden" name="question_id" value="{{ answer.question.id }}">
+
     <input type="hidden" name="a_id" value="{{ answer.id }}">
     {% if request.user not in answer.like_answer.all %}    
         <button class="btn btn-outline-dark btn-sm ml-2">like</button>
@@ -11,8 +13,7 @@
     {% endif %}
     
     <span class="pull-right text-muted">{{ answer.like_answer.count }}likes</span>
-    answered:{{ answer.user_a.user.username }}
-    logged in:{{ request.user }}
+    
 
     <br>
     {% if answer.user_a.user.username == request.user.username %}

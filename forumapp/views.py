@@ -273,7 +273,11 @@ answer liked
 def LikeAnswerView(request):
     print('this is answer like view')
     user = request.user
+    # question = Answer.objects.get(question_id = )
     if request.method == "POST":
+
+        question_id = request.POST.get('question_id')
+        print("this is question id buddha jayanti",question_id)
         a_id = request.POST.get('a_id')
         print("questio i d ",a_id)
         # q_id = get_object_or_404(Question, id=request.POST.get('question_id'))
@@ -297,10 +301,12 @@ def LikeAnswerView(request):
                 like.value == "like"
         like.save()
 
+    # return HttpResponseRedirect(request.path_info)
+    return redirect(reverse('forumapp:questiondetail', kwargs={'pk': question_id}))
 
-    # return HttpResponseRedirect(q_id.get_absolute_url())
+    # return HttpResponseRedirect(a_id.get_absolute_url())
 
-    return redirect('forumapp:home')
+    # return redirect('forumapp:home')
     
 
 

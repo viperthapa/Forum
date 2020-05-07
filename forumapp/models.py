@@ -75,7 +75,10 @@ class Answer(models.Model):
 
 
     def __str__(self):
-        return self.answer
+        return str(self.answer)
+
+    def get_absolute_url(self):
+        return reverse("forumapp:questiondetail", args=[self.id])
 
 
 #comment text

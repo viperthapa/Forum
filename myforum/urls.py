@@ -22,6 +22,8 @@ urlpatterns = [
     path('',include("forumapp.urls")),
     #include django summernote
     path('summernote/',include('django_summernote.urls')),
+    path('inbox/notifications/', include('notifications.urls')),
+
 
 ]
 urlpatterns += static(settings.STATIC_URL,document_root = settings.STATIC_ROOT)

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User,Group
 from django.urls import reverse
+from django.dispatch import receiver
+from .signals import new_comment
 
 
 # Create your models here.
@@ -113,6 +115,76 @@ class Like(models.Model):
 
     def __str__(self):   
         return self.user.username
+
+
+
+'''
+Notification to users
+'''
+
+'''
+    Actor: The object which performed the activity.
+    Verb: The activity.
+    Object: The object on which activity was performed.
+    Target: The object where activity was performed.
+
+
+
+LIKED = "L"
+COMMENTED = "C"
+ANSWERED = "A"
+
+NOTIFICATION_TYPES = (
+        (LIKED,("liked")),
+        (COMMENTED,("commented")),
+        (ANSWERED,("answered")),
+        
+    )
+'''
+class Notifications(models.Model):
+    # Actor: The object which performed the activity.
+    user = models.ForeignKey(NormalUser, related_name="notify_user", on_delete=models.CASCADE)
+    # verb = models.CharField(max_length=1, choices=NOTIFICATION_TYPES)
+    question = models.ForeignKey(Question,related_name='notify_answers',on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer,related_name='notify_answers',on_delete=models.CASCADE,null = True,blank = True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user.user.id)
+    
+
+@receiver(new_comment,sender=Notifications)
+def handle_new_comment(sender,**kwargs):
+    user = kwargs['user']
+    question = kwargs['question']
+
+    message = """User {} has just commented to the  {}.
+    """.format(user.fname, question.question)
+    print("\n**************************************\n")
+    print('this is latest messages',message)
+    print("\n**************************************\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #admin
 # class Admin(models.Model):

@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.db.models import Count
-
+from .signals import new_comment
 # Create your views here.
 
 
@@ -201,6 +201,18 @@ def QuestionDetailView(request,pk):
             answer = Answer.objects.create(question=questions, user_a=user_first, answer=answer,reply=reply_qs)
             print('asnwer',answer)
             answer.save()
+
+            '''
+            ############## notifications to user ##########
+            '''
+            notification = Notifications(user = user_first,question = questions)
+            notification.save()
+
+            #send the signals
+            new_comment.send(sender = notification,user = user_first,question = questions) 
+
+
+
             # return redirect('forumapp:questiondetail', pk=pk)
             return HttpResponseRedirect(questions.get_absolute_url())
 
@@ -328,8 +340,14 @@ class AnswerUpdateView(UpdateView):
     template_name = 'answer/answerupdate.html'
     model = Answer
     form_class = AnswerForm
-    success_url = reverse_lazy("forumapp:home")
+    # success_url = reverse_lazy("forumapp:home")
 
+     ##### render to the page after update #########
+    def get_success_url(self, **kwargs):
+
+        return reverse_lazy('forumapp:questiondetail', kwargs={'pk': self.object.question.pk})
+
+       
 
 
 """
@@ -341,6 +359,16 @@ class AnswerDeleteView(DeleteView):
     success_message = 'Success: Answer was deleted.'
 
     success_url = reverse_lazy("forumapp:home")
+
+    ##### render to the page after delete #########
+    def get_success_url(self, **kwargs):
+        
+        return reverse_lazy('forumapp:questiondetail', kwargs={'pk': self.object.question.pk})
+
+       
+
+    
+
 
 
 

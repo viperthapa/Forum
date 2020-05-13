@@ -372,12 +372,15 @@ class AnswerDeleteView(DeleteView):
 show notifications
 
 """
-def ShowNotification(request,pk):
-    notify = Notifications.objects.get(id = pk)
-    return render(request,'notification.html',{'notify':notify}) 
+# class NotificationListView(ListView):
+#     template_name = "forum/notification.html"
+#     queryset = Notifications.objects.all()
+#     print("queeryset",queryset)
+#     context_object_name = 'notifications'
+#     paginate_by = 10
 
-
-
+    # def get_queryset(self):
+    #     return super().get_queryset().filter(user=self.request.user)
 
 
 

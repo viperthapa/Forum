@@ -123,57 +123,24 @@ class Like(models.Model):
 Notification to users
 '''
 
-'''
-    Actor: The object which performed the activity.
-    Verb: The activity.
-    Object: The object on which activity was performed.
-    Target: The object where activity was performed.
 
 
-
-LIKED = "L"
-COMMENTED = "C"
-ANSWERED = "A"
-
-NOTIFICATION_TYPES = (
-        (LIKED,("liked")),
-        (COMMENTED,("commented")),
-        (ANSWERED,("answered")),
-        
-    )
-'''
 class Notifications(models.Model):
     # Actor: The object which performed the activity.
     user = models.ForeignKey(NormalUser, related_name="notify_user", on_delete=models.CASCADE)
     # verb = models.CharField(max_length=1, choices=NOTIFICATION_TYPES)
-    question = models.ForeignKey(Question,related_name='notify_answers',on_delete=models.CASCADE)
+    question = models.ForeignKey(Question,related_name='notify_answers',on_delete=models.CASCADE,null = True,blank = True)
+    like = models.ForeignKey(Like,related_name='notification_likes',on_delete=models.CASCADE,null = True,blank = True)
+
     message = models.TextField()
-    answer = models.ForeignKey(Answer,related_name='notify_answers',on_delete=models.CASCADE,null = True,blank = True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         return str(self.user.user.id)
     
 
-@receiver(post_save,sender=NormalUser)
-def handle_new_comment(sender,**kwargs):
-    if kwargs.get('created',False):
-        Notifications.objects.create(user = kwargs.get('instance'),
-                                    message = 'someone commeneted'
-                                    # message = "{user} commented to the {question}".format(user = 'user.fname',question = 'question.question'),
-                                    )
-
     
 
-    """
-    message =User {} has just commented to the  {}.
-    .format(user.fname, question.question)
-    print("\n**************************************\n")
-    print('this is latest messages',message)
-    print("\n**************************************\n")
-
-    """
 
 
 
@@ -190,49 +157,3 @@ def handle_new_comment(sender,**kwargs):
 
 
 
-
-
-
-
-
-#admin
-# class Admin(models.Model):
-#     admin = models.OneToOneField(User,on_delete = models.CASCADE)
-
-#     def save(self, *args, **kwargs):
-#         group, created = Group.objects.get_or_create(name='admin')
-#         self.user.groups.add(group)
-#         super().save(*args, **kwargs)
-
-
-#     def __str__(self):
-#         return self.admin
-
-
-
-
-class Report(models.Model):
-    user = models.ForeignKey(NormalUser,on_delete = models.CASCADE)
-    answer = models.ForeignKey(Answer,on_delete = models.CASCADE)
-    question = models.ForeignKey(Question,on_delete = models.CASCADE)
-    report_name = models.TextField()
-
-    def __str__(self):
-        return self.report_name
-
-   
-
-
-
-
-
-
-'''
-    username = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'username'}))
-    password = forms.CharField(widget = forms.PasswordInput(attrs={'placeholder': 'password'}))
-    confirm_password = forms.CharField(widget = forms.PasswordInput(attrs={'placeholder': 'confirm password'}))
-    fname = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'first name'}))
-    lname = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'last name'}))
-    email = forms.CharField(widget = forms.EmailField(attrs={'placeholder': 'enter email'}))
-
-'''

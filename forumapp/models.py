@@ -3,6 +3,7 @@ from django.contrib.auth.models import User,Group
 from django.urls import reverse
 from django.dispatch import receiver
 from .signals import new_comment
+from django.db.models.signals import post_save
 
 
 # Create your models here.
@@ -146,6 +147,7 @@ class Notifications(models.Model):
     user = models.ForeignKey(NormalUser, related_name="notify_user", on_delete=models.CASCADE)
     # verb = models.CharField(max_length=1, choices=NOTIFICATION_TYPES)
     question = models.ForeignKey(Question,related_name='notify_answers',on_delete=models.CASCADE)
+    message = models.TextField()
     answer = models.ForeignKey(Answer,related_name='notify_answers',on_delete=models.CASCADE,null = True,blank = True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -154,17 +156,24 @@ class Notifications(models.Model):
         return str(self.user.user.id)
     
 
-@receiver(new_comment,sender=Notifications)
+@receiver(post_save,sender=NormalUser)
 def handle_new_comment(sender,**kwargs):
-    user = kwargs['user']
-    question = kwargs['question']
+    if kwargs.get('created',False):
+        Notifications.objects.create(user = kwargs.get('instance'),
+                                    message = 'someone commeneted'
+                                    # message = "{user} commented to the {question}".format(user = 'user.fname',question = 'question.question'),
+                                    )
 
-    message = """User {} has just commented to the  {}.
-    """.format(user.fname, question.question)
+    
+
+    """
+    message =User {} has just commented to the  {}.
+    .format(user.fname, question.question)
     print("\n**************************************\n")
     print('this is latest messages',message)
     print("\n**************************************\n")
 
+    """
 
 
 

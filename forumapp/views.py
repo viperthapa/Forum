@@ -368,6 +368,16 @@ class AnswerDeleteView(DeleteView):
        
 
     
+"""
+show notifications
+
+"""
+def ShowNotification(request,pk):
+    notify = Notifications.objects.get(id = pk)
+    return render(request,'notification.html',{'notify':notify}) 
+
+
+
 
 
 

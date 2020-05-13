@@ -34,6 +34,13 @@ urlpatterns = [
          AnswerDeleteView.as_view(), name='answerdelete'),
 
 
+     #### show notifications
+     path("notify/<int:pk>/",views.ShowNotification,name='notification'),
+
+     # path("notify/<int:pk>/",views.TestNotification,name='testnotification'),
+
+
+
 
 
     

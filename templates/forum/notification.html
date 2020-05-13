@@ -1,4 +1,90 @@
 
   <li class="nav-item active pl-2">
-    <a class="nav-link" href="{% url 'forumapp:home' %}"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
+    <a class="nav-link" href="{% url 'forumapp:testnotification' %}"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
   </li>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.dropbtn {
+  /* background-color: #3498DB; */
+  /* color: white; */
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 20px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+
+.show {display: block;}
+</style>
+</head>
+<body>
+
+
+  <div class="dropdown">
+
+    <!-- <li class="nav-item active pl-2">
+      <a class="nav-link" href="{% url 'forumapp:home' %}"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
+    </li> -->
+
+    <a onclick="myFunction()" class="dropbtn"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
+
+    <!-- <button onclick="myFunction()" class="dropbtn">Dropdown</button> -->
+    <div id="myDropdown" class="dropdown-content">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>

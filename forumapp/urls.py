@@ -37,7 +37,7 @@ urlpatterns = [
      #### show notifications
      # path("notify/<int:pk>/",views.ShowNotification,name='notification'),
 
-     # path('notify/', views.NotificationListView.as_view(), name='notifications'),
+     path('notify/', views.NotificationListView.as_view(), name='notifications'),
 
 
      # path("notify/<int:pk>/",views.TestNotification,name='testnotification'),

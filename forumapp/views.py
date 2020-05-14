@@ -262,6 +262,14 @@ def LikeView(request):
             print('blog liked',question.like_question)
             question.save()
         like,created = Like.objects.get_or_create(user = user,question_id = q_id) 
+        ######notify users when somone liked questions#####
+        liked_notification = Like.objects.get(id = user.id)
+        print('liked_notification = ',liked_notification)
+
+
+        notify = Notifications.objects.create(question_id = q_id,like = liked_notification)
+        print('notify = ',notify)
+        notify.save()
         if not created:
             if like.value == "like":
                 like.value == "unlike"
@@ -372,15 +380,17 @@ class AnswerDeleteView(DeleteView):
 show notifications
 
 """
-# class NotificationListView(ListView):
-#     template_name = "forum/notification.html"
-#     queryset = Notifications.objects.all()
-#     print("queeryset",queryset)
-#     context_object_name = 'notifications'
-#     paginate_by = 10
+class NotificationListView(ListView):
+    template_name = "forum/notification.html"
+    queryset = Notifications.objects.all()
+    print("queeryset",queryset)
+    context_object_name = 'notifications'
+    paginate_by = 10
 
     # def get_queryset(self):
-    #     return super().get_queryset().filter(user=self.request.user)
+    #     user = NormalUser.objects.get(user = self.request.user)
+    #     print('user = ',user)
+    #     return super().get_queryset().filter(user=user)  
 
 
 

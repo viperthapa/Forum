@@ -127,7 +127,7 @@ Notification to users
 
 class Notifications(models.Model):
     # Actor: The object which performed the activity.
-    user = models.ForeignKey(NormalUser, related_name="notify_user", on_delete=models.CASCADE)
+    user = models.ForeignKey(NormalUser, related_name="notify_user", on_delete=models.CASCADE,null = True,blank = True)
     # verb = models.CharField(max_length=1, choices=NOTIFICATION_TYPES)
     question = models.ForeignKey(Question,related_name='notify_answers',on_delete=models.CASCADE,null = True,blank = True)
     like = models.ForeignKey(Like,related_name='notification_likes',on_delete=models.CASCADE,null = True,blank = True)
@@ -136,7 +136,7 @@ class Notifications(models.Model):
     date_created = models.DateTimeField(auto_now = True)
 
     def __str__(self):
-        return str(self.user.user.id)
+        return str(self.question.question)
     
 
     

@@ -1,4 +1,15 @@
 <h2>jdhdhdhdhdh</h2>
 {% for n in notifications %}
-        {{ n.user.fname }} commented in {{ n.question.question }}
+        Logged in user:{{ request.user }}<br>
+        asked : <h3>{{ n.question.user_q.user }}</h3>
+        
+        <!-- value of n:{{n}} -->
+        {% if n.question.user_q.user == request.user %}
+                {% if n.user %}
+                        <h2>{{ n.user.fname }} commented in {{ n.question.question }}</h2>
+                        <br>
+                {% else %}
+                        <h3>{{ n.like.user.username }} liked in {{ n.question.question }}</h3>
+                {% endif %}
+        {% endif %}
 {% endfor %}

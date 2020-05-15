@@ -1,9 +1,8 @@
-<h2>jdhdhdhdhdh</h2>
+<!-- 
 {% for n in notifications %}
         Logged in user:{{ request.user }}<br>
-        asked : <h3>{{ n.question.user_q.user }}</h3>
         
-        <!-- value of n:{{n}} -->
+        
         {% if n.question.user_q.user == request.user %}
                 {% if n.user %}
                         <h2>{{ n.user.fname }} commented in {{ n.question.question }}</h2>
@@ -12,4 +11,32 @@
                         <h3>{{ n.like.user.username }} liked in {{ n.question.question }}</h3>
                 {% endif %}
         {% endif %}
+{% endfor %} -->
+
+{% load widget_tweaks %}
+
+
+<div class="modal-header" style="background-color:whitesmoke;">
+  <h4 class="modal-title" style="color:#696969;"><i class="fa fa-bell fa-sm"></i>Notifications</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{% for n in notifications %}
+        {% if n.question.user_q.user == request.user %}
+                <div class="modal-body">
+
+                        {% if n.user %}
+                        <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i><span><b>{{ n.user.fname }}</b> commented in your questions <b><a></a>{{ n.question.question }}</b></span>
+                        {% else %}
+                        <i class="fa fa-thumbs-up fa-sm"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span><b>{{ n.like.user.username }}</b> liked your questions <b>{{ n.question.question }}</b></span>
+                        {% endif %}
+
+                        
+                        
+                </div>
+        {% endif %}
+
 {% endfor %}
+

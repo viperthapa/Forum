@@ -51,13 +51,13 @@
                 <!-- <li class="nav-item active pl-2">
                   <a class="nav-link" href="#"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
                 </li> -->
+                <button style="background: transparent;border: none">
+                  <li class="nav-item active pl-4">
+                    <a class="add-notification nav-link" data-id="{% url 'forumapp:notifications' %}"><i class="fa fa-bell fa-sm"></i>Notifications</a>
+                  </li>
+                </button>
 
-                <li class="nav-item active pl-4">
-                  <a class="nav-link" href="{% url 'forumapp:notifications' %}"><i class="fa fa-bell fa-sm"></i>Notifications <span class="sr-only">(current)</span></a>
-                </li>
 
-
-                <!-- {% include 'forum/notification.html' %} -->
 
                 
                 <!-- <li class="nav-item active">
@@ -109,6 +109,13 @@
       $('.reply-btn').click(function() {
           $(this).parent().parent().next('.reply-next').fadeToggle()
         });
+      
+
+      //notifications
+      // Update answer buttons
+      $(".add-notification").each(function () {
+          $(this).modalForm({formURL: $(this).data('id')});
+      });
 
     </script>
 

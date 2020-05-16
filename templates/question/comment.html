@@ -27,6 +27,14 @@
     <!-- 
         ############################# answerform ##############
     -->
+    {% for a in max_likes %}
+        like:{{a.answer}}<br>
+       <span class="pull-right text-muted">{{ a.like_answer.count }}likes</span>
+        
+    {% endfor %}
+
+
+    <hr>
 
     {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
     {% for answer in answers %}

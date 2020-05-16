@@ -167,7 +167,9 @@ def QuestionDetailView(request,pk):
     print('sakalalalalala',questions.id)
     print('sakalalalalala count',questions.like_question)
 
-    answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
+    # answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
+
+    answers = Answer.objects.filter(question=questions,reply=None).annotate(like_count = Count('like_answer')).order_by('-like_count')
 
     answer_count = Answer.objects.filter(question=questions) #count the answers
 
@@ -213,7 +215,6 @@ def QuestionDetailView(request,pk):
             notification.save()
 
             #send the signals
-            new_comment.send(sender = notification,user = user_first,question = questions) 
 
 
 
@@ -232,6 +233,7 @@ def QuestionDetailView(request,pk):
         'answerform1':answerform,
         # 'is_liked': is_liked,
         'answer_count':answer_count,
+        # 'max_likes':max_likes
 
         
     }

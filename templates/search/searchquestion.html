@@ -1,0 +1,58 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% block content %}
+<html>
+    <head>
+<style>
+    .main-search{
+        margin: 70px 300px;
+        
+    }
+    body{
+        background-color: whitesmoke;
+    }
+    .card-header{
+        font-size: 25px;
+    }
+</style>
+</head>
+<body>
+<div class="main-search">
+    {% if results|length %}
+        
+        {% for r in results %}
+
+        <div class="card">
+            <div class="card-header">
+                <span>Results : found <b>{{ results|length }}</b> questions</span>
+            
+            </div>
+            <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p><a href="{% url 'forumapp:questiondetail' r.pk %}"  style="color: black;">{{ r.question }}</a></p>
+                <footer class="blockquote-footer">{{r.user_q.fname}}</footer>
+            </blockquote>
+            </div>
+        </div>
+        {% endfor %}
+        
+
+    {% else %}
+
+        <div class="card">
+            <div class="card-header">
+                <span>Results : found <b>{{ results|length }}</b> questions</span>
+            
+            </div>
+            <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p><a href="#"  style="color: black;">No results</a></p>
+            </blockquote>
+            </div>
+        </div>
+    
+</div>
+{% endif %}
+{% endblock %}
+</body>
+</html>

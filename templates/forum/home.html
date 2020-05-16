@@ -17,6 +17,9 @@
             {% include 'forum/sidebar.html' %}
         </div>
         <div class="col-lg-9">
+            {% if messages %}
+                {% include 'forum/success_message.html' %}
+            {% endif %}
             <br>
             {% include 'forum/feed.html' %}
         </div>

@@ -38,16 +38,13 @@
    
     <div class="mynav">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
-            <a style="margin-left:130px;" class="navbar-brand" href="#">Forum</a>
+            <a style="margin-left:200px;" class="navbar-brand" href="#">Forum</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
                 <li class="nav-item active pl-4">
                   <a class="nav-link" href="{% url 'forumapp:home' %}"><i class="fa fa-home fa-lg"></i>Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active pl-3">
-                  <a class="nav-link" href="#"><i class="fa fa-edit fa-lg"></i>Answer</a>
-                </li>
-                 
+                
                 <!-- <li class="nav-item active pl-2">
                   <a class="nav-link" href="#"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
                 </li> -->
@@ -60,12 +57,10 @@
 
 
                 
-                <!-- <li class="nav-item active">
-                  <a class="nav-link disabled" href="#"><i class="fa fa-cog fa-sm"></i>settings</a>
-                </li> -->
-                
-                <form style="margin-left: 30px;" class="form-inline mr-3 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" size="35" aria-label="Search">
+                <!-- searching  -->
+
+                <form action="/search/question/" method="get" style="margin-left: 30px;" class="form-inline mr-3 my-lg-0">
+                    <input name="q" class="form-control mr-sm-2" type="text" placeholder="Search" size="35" aria-label="Search">
                     <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 
@@ -80,8 +75,8 @@
 
                 
                   <!-- <a href="{% url 'forumapp:questionadd' %}" style = "margin-left: 14em;padding:17px;"><button type="button" class="add-btn btn-dark">Add questions</button></a> -->
-
-                  <a style = "margin-left: 15px;font-size: 30px;color: black;" href="{% url 'forumapp:register' %}"><i class="fa fa-user-circle"></i></a>
+                  {% include 'forum/user_dropdown.html' %}
+                  <!-- <a style = "margin-left: 15px;font-size: 30px;color: black;" href="{% url 'forumapp:register' %}"><i class="fa fa-user-circle"></i></a> -->
                 
               {% else %}
                 <div>

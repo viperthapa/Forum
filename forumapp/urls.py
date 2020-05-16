@@ -42,6 +42,10 @@ urlpatterns = [
 
      # path("notify/<int:pk>/",views.TestNotification,name='testnotification'),
 
+     path('search/question/',views.SearchView, name = 'search'),
+
+     ############ logout ##########
+     path('logout/',LogoutView.as_view(),name='logout'),
 
 
 

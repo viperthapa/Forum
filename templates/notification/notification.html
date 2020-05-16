@@ -1,17 +1,3 @@
-<!-- 
-{% for n in notifications %}
-        Logged in user:{{ request.user }}<br>
-        
-        
-        {% if n.question.user_q.user == request.user %}
-                {% if n.user %}
-                        <h2>{{ n.user.fname }} commented in {{ n.question.question }}</h2>
-                        <br>
-                {% else %}
-                        <h3>{{ n.like.user.username }} liked in {{ n.question.question }}</h3>
-                {% endif %}
-        {% endif %}
-{% endfor %} -->
 
 {% load widget_tweaks %}
 
@@ -25,6 +11,7 @@
 
 {% for n in notifications %}
         {% if n.question.user_q.user == request.user %}
+                
                 <div class="modal-body">
 
                         {% if n.user %}

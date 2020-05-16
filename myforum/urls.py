@@ -23,6 +23,7 @@ urlpatterns = [
     #include django summernote
     path('summernote/',include('django_summernote.urls')),
     path('inbox/notifications/', include('notifications.urls')),
+    path('search/', include('haystack.urls')),
 
 
 ]

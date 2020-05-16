@@ -1,5 +1,5 @@
 
-from django.shortcuts import render,redirect,reverse,get_object_or_404
+from django.shortcuts import render,redirect,reverse,get_object_or_404,render_to_response
 from django.views.generic import *
 from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm
 from django.contrib.auth import login, authenticate, logout
@@ -9,7 +9,10 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.db.models import Count
-from .signals import new_comment
+from django.db.models import Q
+from django.template.context import RequestContext
+from django.contrib.messages.views import SuccessMessageMixin
+
 # Create your views here.
 
 
@@ -99,7 +102,7 @@ def LoginFormView(request):
                 return HttpResponseRedirect(reverse('forumapp:home'))
         else:
             return render(request,'user/login.html',{
-                'messages': 'your username doesnot exist 11',
+                'messages': 'your username doesnot exist',
                 'form': LoginForm
             })
             # return HttpResponse("your username did not match")
@@ -119,8 +122,9 @@ Question add
 class QuestionAddView(BSModalCreateView):
     template_name = "question/questioncreate.html"
     form_class = QuestionForm
-    success_message = "Question has been added"
     success_url = reverse_lazy('forumapp:home')
+    success_message = "Question has been added"
+
 
     def form_valid(self,form):
         print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
@@ -381,7 +385,7 @@ show notifications
 
 """
 class NotificationListView(ListView):
-    template_name = "forum/notification.html"
+    template_name = "notification/notification.html"
     queryset = Notifications.objects.all()
     print("queeryset",queryset)
     context_object_name = 'notifications'
@@ -394,8 +398,30 @@ class NotificationListView(ListView):
 
 
 
+"""
+Searching questions
+"""
+# search view 
+def SearchView(request):
+    print('this is search')
+    q = request.GET.get('q')
+    print("value of q",q)
+    if q is not None:   
+        print('6666666666666666')     
+    
+        results = Question.objects.filter(  
+            Q( question__contains = q ))          
+    return render(request,'search/searchquestion.html', {'results': results})
+
+"""
+logout
+"""
 
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('/')
 
 ##################### class based views #############
 '''

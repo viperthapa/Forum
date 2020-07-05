@@ -25,7 +25,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['questions'] = Question.objects.all()
+        context['questions'] = Question.objects.all()[:2]
         context['answers'] = Answer.objects.all()
 
         # context['answer-count'] = Question.objects.annotate(number_of_answers=Count('answer'))
@@ -386,6 +386,7 @@ class AnswerDeleteView(DeleteView):
 show notifications
 
 """
+
 class NotificationListView(ListView):
     template_name = "notification/notification.html"
     queryset = Notifications.objects.all()

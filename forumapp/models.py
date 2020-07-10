@@ -37,14 +37,16 @@ class Category(models.Model):
 #question 
 class Question(models.Model):
     user_q = models.ForeignKey(NormalUser,on_delete = models.CASCADE,null=True)
-    category = models.ForeignKey(Category,on_delete = models.CASCADE)
+    category = models.ForeignKey(Category,on_delete = models.CASCADE,null=True)
     question = models.CharField(max_length = 350,null=True)
     like_question = models.ManyToManyField(User, related_name='likes',default=None,blank=True)
-    image = models.ImageField(upload_to='question',blank=True)
+    image = models.ImageField(upload_to='question',blank=True,null=True)
     description = models.TextField(null=True,blank=True)
-    date_created = models.DateTimeField(auto_now = True)
-    date_updated = models.DateTimeField(auto_now = True)
-    views = models.PositiveIntegerField(default=0)
+    date_created = models.DateTimeField(auto_now = True,null=True)
+    date_updated = models.DateTimeField(auto_now = True,null=True)
+    views = models.PositiveIntegerField(default=0,null=True)
+
+        
 
     # is_read = models.BooleanField(default=False)
 

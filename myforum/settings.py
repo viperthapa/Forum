@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_summernote',
     'haystack',
+    'import_export'
 
 ]
 
@@ -101,7 +102,7 @@ HAYSTACK_CONNECTIONS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myforum',
+        'NAME': 'forumapp',
         'USER': 'forumuser',
         'PASSWORD': 'forum123',
         'HOST': 'localhost',

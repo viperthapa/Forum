@@ -47,17 +47,12 @@
                 <div class="card-header bg-secondary text-white">
                   Related Questions
                 </div>
+                {% for category in similar_questions %}
                 <div class="ml-4 text-dark">
-                    <p>1.what is best movie in tollywood?</p>
-                    <p>2.what is best movie in tollywood?</p>
-                    <p>3.what is best movie in tollywood?</p>
-                    <p>4.what is best movie in tollywood?</p>
-                    <p>5.what is best movie in tollywood?</p>
-                    <p>6.what is best movie in tollywood?</p>
-                    <p>7.what is best movie in tollywood?</p>
-                    <p>8.what is best movie in tollywood?</p>
-                    <p>9.what is best movie in tollywood?</p>
+                    <a href="{% url 'forumapp:questiondetail' category.id %}"><p style="color: black;">{{forloop.counter}}.{{category}}</p></a>
+                    
                 </div>
+                {% endfor %}
 
 
             </div>

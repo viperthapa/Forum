@@ -16,6 +16,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 
 
+
+
 """
 Homepage
 
@@ -25,9 +27,10 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['questions'] = Question.objects.all()[:2]
+        context['questions'] = Question.objects.all()[:4]
         context['answers'] = Answer.objects.all()
-
+        # context['users'] = NormalUser.objects.all()
+        # print('logged in user',context['users'])
         # context['answer-count'] = Question.objects.annotate(number_of_answers=Count('answer'))
 
         print(context['questions'],'*****')
@@ -165,7 +168,10 @@ def QuestionDetailView(request,pk):
     print('fbv')
     questions = get_object_or_404(Question,pk=pk)
     print('sakalalalalala',questions.id)
-    print('sakalalalalala count',questions.like_question)
+    ##show the similar posts
+    similar_questions = Question.objects.filter(category = questions.category)[:10]
+    print("similar questions = ",similar_questions)
+
 
     # answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
 
@@ -233,6 +239,7 @@ def QuestionDetailView(request,pk):
         'answerform1':answerform,
         # 'is_liked': is_liked,
         'answer_count':answer_count,
+        'similar_questions':similar_questions
         # 'max_likes':max_likes
 
         

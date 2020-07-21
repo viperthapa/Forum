@@ -171,10 +171,17 @@
                 
                 <div class="card-body">
                    {% if user.is_authenticated %} 
+                        {% for user in users %}
+                            {% if request.user.username == user.user.username %}
+                            <h5 class="card-title"><img style="border-radius: 50px" src="{{ user.image.url }}" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+
+                            <!-- <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%"> -->
+                            {% endif %}
+                        {% endfor %}
                     <!-- {{ profile }} -->
-                    <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+                    <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
                    {% endif %} 
-                    <h4 class="card-text text-dark">What is your questions ?</h4>
+                    <h4 class="card-text text-dark ml-4">What is your questions ?</h4>
                     
                 </div>
             </div>

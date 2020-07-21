@@ -46,6 +46,9 @@ class Question(models.Model):
     date_updated = models.DateTimeField(auto_now = True,null=True)
     views = models.PositiveIntegerField(default=0,null=True)
 
+    class Meta:
+        ordering = ['-id']
+
         
 
     # is_read = models.BooleanField(default=False)

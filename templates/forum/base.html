@@ -71,11 +71,11 @@
                   <div class="modal-content"></div>
                 </div>
               </div>
-                  <button class="add-btn btn btn-dark" style="margin-left: 14em;padding:8px;" type="button" name="button">Add question</button>
+                  <!-- <button class="add-btn btn btn-dark" style="margin-left: 14em;padding:8px;" type="button" name="button">Add question</button> -->
 
                 
                   <!-- <a href="{% url 'forumapp:questionadd' %}" style = "margin-left: 14em;padding:17px;"><button type="button" class="add-btn btn-dark">Add questions</button></a> -->
-                  {% include 'forum/user_dropdown.html' %}
+                  <span style="margin-left:400px;">{% include 'forum/user_dropdown.html' with users=users %}</span>
                   <!-- <a style = "margin-left: 15px;font-size: 30px;color: black;" href="{% url 'forumapp:register' %}"><i class="fa fa-user-circle"></i></a> -->
                 
               {% else %}

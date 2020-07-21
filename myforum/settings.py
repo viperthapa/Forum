@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'bootstrap_modal_forms',
     'widget_tweaks',
     'django_summernote',
-    'haystack',
     'import_export'
 
 ]
@@ -69,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'forumapp.context_processors.UserImage',
+
             ],
         },
     },
@@ -76,18 +77,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myforum.wsgi.application'
 
-# AUTH_USER_MODEL = 'forumapp.Question'
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-### haystack search #####
-HAYSTACK_CONNECTIONS = {
-              'default': {
-                    'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-                    'URL': 'http://127.0.0.1:9200/',
-                    'INDEX_NAME': 'haystack_forumapp',
-              },
-    }
+
 
 
 

@@ -8,6 +8,8 @@ urlpatterns = [
     #home page
     path("",HomeView.as_view(),name = "home"), #home page 
 
+    #home page
+
     #register page
     path('register/',RegisterView.as_view(), name='register'), #user register page
     # path('register1',views.signup_view,name='register1'),

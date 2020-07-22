@@ -49,7 +49,13 @@ urlpatterns = [
      ############ logout ##########
      path('logout/',LogoutView.as_view(),name='logout'),
 
+     ### category based display 
+     path("category/questions/<int:category_id>/",CategoryListView.as_view(),name='categorylist'),
 
+     ##view the users by admin
+     path('admin/view-questions/',QuestionView.as_view(),name='questionview'),
+
+     path('admin/view-users/',UserView.as_view(),name='userview'),
 
 
     

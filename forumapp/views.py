@@ -29,6 +29,7 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['questions'] = Question.objects.all()[:4]
         context['answers'] = Answer.objects.all()
+
         # context['users'] = NormalUser.objects.all()
         # print('logged in user',context['users'])
         # context['answer-count'] = Question.objects.annotate(number_of_answers=Count('answer'))
@@ -432,6 +433,37 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('/')
+
+
+
+class CategoryListView(ListView):
+    template_name = 'category/categorylist.html'
+    # if pagination is desired
+    def get_queryset(self):
+        return Question.objects.filter(category=self.kwargs['category_id'])[:4]
+    
+
+class QuestionView(TemplateView):
+    template_name = 'user/questionview.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['myuser'] = NormalUser.objects.all()    
+        context['answers'] = Answer.objects.all()
+        context['questions'] = Question.objects.all()[:15]
+
+
+
+        return context
+    
+
+class UserView(TemplateView):
+    template_name = 'user/userview.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['myuser'] = NormalUser.objects.all()    
+        return context
 
 ##################### class based views #############
 '''

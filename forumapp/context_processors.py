@@ -1,10 +1,13 @@
-from .models import NormalUser
+from .models import NormalUser,Category
 
 
 def UserImage(request):
     users = NormalUser.objects.all()
+    Categorys = Category.objects.all()
+    
     return {
-        'users':users
+        'users':users,
+        'Categorys':Categorys
     }
     
 

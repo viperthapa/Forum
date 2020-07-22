@@ -40,25 +40,22 @@
                 </p> 
             </div>    
                 <!-- sidebar menu end-->
-        
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <p class="sidebar-menu">
                     <span>Category</span>
                     <hr>
+                {% for category in Categorys %}
+
                     <p class="sub">
-                        <span><a class="#" href="form_component.html">education </a></span><br>
-                        <span><a class="#" href="form_validation.html">sports</a></span><br>
-                        <span><a class="#" href="form_validation.html">design</a></span><br>
-                        <span><a class="#" href="form_validation.html">politics</a></span><br>
-                        <span><a class="#" href="form_validation.html">journalism</a></span><br>
-                        <span><a class="#" href="form_validation.html">fashion and style</a></span>
+                        <span><a class="#" href="{% url 'forumapp:categorylist' category.id %}">{{category.name}}</a></span><br>
                         
 
                     </p>
+                {% endfor %}
                     </span>
                 </p> 
-            </div>    
+            </div>
                 
                     <!-- main menu end-->
             
@@ -67,3 +64,10 @@
     </div>
 </body>
   <!--sidebar end-->
+  <!-- <span><a class="#" href="form_component.html">education </a></span><br>
+  <span><a class="#" href="form_validation.html">sports</a></span><br>
+  <span><a class="#" href="form_validation.html">design</a></span><br>
+  <span><a class="#" href="form_validation.html">politics</a></span><br>
+  <span><a class="#" href="form_validation.html">journalism</a></span><br>
+  <span><a class="#" href="form_validation.html">fashion and style</a></span>
+   -->

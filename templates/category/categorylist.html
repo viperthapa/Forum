@@ -1,0 +1,29 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% block content %}
+<html>
+<head>
+    <title>home</title>
+    <style>
+        .body{
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+<body class="body">
+
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'forum/sidebar.html' %}
+        </div>
+        <div class="col-lg-9">
+            {% include 'category/allcategory.html' %}
+           
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}

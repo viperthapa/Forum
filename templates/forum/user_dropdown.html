@@ -58,6 +58,9 @@
     <div id="myDropdown" class="dropdown-content">
       <a href="#" style="background-color: #A9A9A9;">Account</a>
       <a href="#home">view</a>
+
+      {% if request.user.is_superuser %}<a href="{% url 'forumapp:userview' %}">view user</a>{% endif %}
+
       <a href="{% url 'forumapp:logout' %}">logout</a>
     </div>
   </div>

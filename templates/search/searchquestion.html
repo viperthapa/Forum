@@ -19,14 +19,15 @@
 <body>
 <div class="main-search">
     {% if results|length %}
+        <div class="card-header">
+            <span>Results : found <b>{{ results|length }}</b> questions</span>
+        
+        </div>
         
         {% for r in results %}
 
         <div class="card">
-            <div class="card-header">
-                <span>Results : found <b>{{ results|length }}</b> questions</span>
             
-            </div>
             <div class="card-body">
             <blockquote class="blockquote mb-0">
                 <p><a href="{% url 'forumapp:questiondetail' r.pk %}"  style="color: black;">{{ r.question }}</a></p>

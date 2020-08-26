@@ -4,16 +4,20 @@
 
 <div class="modal-header" style="background-color:whitesmoke;">
   <h4 class="modal-title" style="color:#696969;"><i class="fa fa-bell fa-sm"></i>Notifications</h4>
+
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 
 {% for n in notifications %}
+       <!-- user_q : {{n.question.user_q.user}}
+       user = = = = {{request.user}}<br>  -->
+
         {% if n.question.user_q.user == request.user %}
                 
                 <div class="modal-body">
-
+                        <p>test</p>
                         {% if n.user %}
                         <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i><span><b>{{ n.user.fname }}</b> commented in your questions <b><a></a>{{ n.question.question }}</b></span>
                         {% else %}

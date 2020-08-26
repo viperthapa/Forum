@@ -94,8 +94,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'forumapp',
-        'USER': 'forumuser',
-        'PASSWORD': 'forum123',
+        'USER': 'viperthapa',
+        'PASSWORD': 'shrestha',
         'HOST': 'localhost',
         'PORT': '5432',
     }

@@ -204,7 +204,9 @@ def QuestionDetailView(request,pk):
             print('%%%%%%%%%%%%%%%%%%',request.user.id)
             user_first = NormalUser.objects.get(user = request.user)
 
-            print(user_first,'@@@@@@@@@@@@@')
+            print('this is user fist = ',user_first.id)
+            print('this is  = ',request.user.id)
+
             reply_id = request.POST.get('answer_id')
             print('reply id',reply_id)
             reply_qs = None
@@ -218,8 +220,8 @@ def QuestionDetailView(request,pk):
             '''
             ############## notifications to user ##########
             '''
-            notification = Notifications(user = user_first,question = questions)
-            notification.save()
+            notification = Notifications.objects.create(user = user_first,question = questions)
+            # notification.save()
 
             #send the signals
 
@@ -259,6 +261,8 @@ question liked
 """
 def LikeView(request):
     user = request.user
+    print('normal',user.id)
+
     if request.method == "POST":
         q_id = request.POST.get('q_id')
         print("questio i d ",q_id)
@@ -275,15 +279,21 @@ def LikeView(request):
             question.like_question.add(user)
             print('blog liked',question.like_question)
             question.save()
+        user = request.user
+        normal_user = NormalUser.objects.get(user = user)
+        print('normal user',normal_user)
+        print('normal user id',normal_user.id)
+
         like,created = Like.objects.get_or_create(user = user,question_id = q_id) 
+        
         ######notify users when somone liked questions#####
-        liked_notification = Like.objects.get(id = user.id)
-        print('liked_notification = ',liked_notification)
+        # liked_notification = Like.objects.get(user = user)
+        # print('liked_notification = ',liked_notification)
 
 
-        notify = Notifications.objects.create(question_id = q_id,like = liked_notification)
-        print('notify = ',notify)
-        notify.save()
+        # notify = Notifications.objects.create(question_id = q_id,like = liked_notification)
+        # print('notify = ',notify)
+        # notify.save()
         if not created:
             if like.value == "like":
                 like.value == "unlike"
@@ -394,6 +404,7 @@ class AnswerDeleteView(DeleteView):
 show notifications
 
 """
+
 
 class NotificationListView(ListView):
     template_name = "notification/notification.html"

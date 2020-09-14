@@ -71,7 +71,7 @@ class LoginForm(forms.Form):
 class QuestionForm(BSModalForm):
     class Meta:
         model = Question
-        fields = ['category','question','image']
+        fields = ['question','image']
 
 
 """=======================================

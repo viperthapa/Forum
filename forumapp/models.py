@@ -37,7 +37,7 @@ class Category(models.Model):
 #question 
 class Question(models.Model):
     user_q = models.ForeignKey(NormalUser,on_delete = models.CASCADE,null=True)
-    category = models.ForeignKey(Category,on_delete = models.CASCADE,null=True)
+    category = models.CharField(max_length = 150)
     question = models.CharField(max_length = 350,null=True)
     like_question = models.ManyToManyField(User, related_name='likes',default=None,blank=True)
     image = models.ImageField(upload_to='question',blank=True,null=True)

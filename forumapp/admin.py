@@ -13,4 +13,4 @@ class QuestionResource(resources.ModelResource):
 class QuestionAdmin(ImportExportModelAdmin):
     resource_class = QuestionResource
 
-admin.site.register([NormalUser,Category,Answer,Comment,Like,Notifications])
+admin.site.register([NormalUser,Answer,Comment,Like,Notifications])

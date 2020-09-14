@@ -50,7 +50,20 @@ urlpatterns = [
      path('logout/',LogoutView.as_view(),name='logout'),
 
      ### category based display 
-     path("category/questions/<int:category_id>/",CategoryListView.as_view(),name='categorylist'),
+     path("category/questions/education/",CategoryEducationView.as_view(),name='categorylist'),
+
+     path("category/questions/sports/",CategorySportsView.as_view(),name='category_sports'),
+
+     path("category/questions/politics/",CategoryPoliticsView.as_view(),name='category_politics'),
+
+     path("category/questions/fashion_and_style/",CategoryFashionView.as_view(),name='category_fashion'),
+
+     path("category/questions/health/",CategoryHealthView.as_view(),name='category_health'),
+
+     path("category/questions/it/",CategoryItView.as_view(),name='category_it'),
+
+
+
 
      ##view the users by admin
      path('admin/view-questions/',QuestionView.as_view(),name='questionview'),

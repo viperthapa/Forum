@@ -446,13 +446,79 @@ class LogoutView(View):
         return redirect('/')
 
 
-
-class CategoryListView(ListView):
+"""
+category education
+"""
+class CategoryEducationView(TemplateView):
     template_name = 'category/categorylist.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['education'] = Question.objects.filter(category = "education")[:4]    
+        return context
     # if pagination is desired
-    def get_queryset(self):
-        return Question.objects.filter(category=self.kwargs['category_id'])[:4]
+    # def get_queryset(self):
+    #     return Question.objects.filter(category=self.kwargs['category_id'])[:4]
     
+
+"""
+category sports
+"""
+class CategorySportsView(TemplateView):
+    template_name = 'category/categorylist.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sports'] = Question.objects.filter(category = "sports")[:4]    
+        return context
+
+
+"""
+category politics
+"""
+class CategoryPoliticsView(TemplateView):
+    template_name = 'category/categorylist.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['politics'] = Question.objects.filter(category = "politics")[:4]    
+        return context
+
+
+"""
+category fashion and style
+"""
+class CategoryFashionView(TemplateView):
+    template_name = 'category/categorylist.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fashion'] = Question.objects.filter(category = "fashion and style")[:4]    
+        return context
+
+
+"""
+category health
+"""
+class CategoryHealthView(TemplateView):
+    template_name = 'category/categorylist.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['health'] = Question.objects.filter(category = "Health")[:4]    
+        return context
+
+
+"""
+CategoryItView
+"""
+class CategoryItView(TemplateView):
+    template_name = 'category/categorylist.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['it'] = Question.objects.filter(category = "Information and technology")[:4]    
+        return context
+
+
+
+
+
 
 class QuestionView(TemplateView):
     template_name = 'user/questionview.html'

@@ -45,14 +45,22 @@
                 <p class="sidebar-menu">
                     <span>Category</span>
                     <hr>
-                {% for category in Categorys %}
+                
 
                     <p class="sub">
-                        <span><a class="#" href="{% url 'forumapp:categorylist' category.id %}">{{category.name}}</a></span><br>
+                        <span class="ml-4"><a class="" href="{% url 'forumapp:categorylist' %}">educations</a></span><br>
+                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_sports' %}">sports</a></span><br>
+                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_politics' %}">politics</a></span><br>
+                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_fashion' %}">fashion and style</a></span><br>
+                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_health' %}">Health</a></span><br>
+                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_it' %}">Information and technology</a></span><br>
+
+                        <!-- {% if category == "education" %}<span><a class="#" href="{% url 'forumapp:categorylist' category.id %}">{{category}}</a></span><br>{% endif %} -->
+
+                       
                         
 
                     </p>
-                {% endfor %}
                     </span>
                 </p> 
             </div>

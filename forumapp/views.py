@@ -12,9 +12,9 @@ from django.db.models import Count
 from django.db.models import Q
 from django.template.context import RequestContext
 from django.contrib.messages.views import SuccessMessageMixin
-
+from forumapp.utils.prediction import prediction   
 # Create your views here.
-
+import language_check
 
 
 
@@ -123,42 +123,73 @@ def LoginFormView(request):
 Question add
 
 """
-class QuestionAddView(BSModalCreateView):
-    template_name = "question/questioncreate.html"
-    form_class = QuestionForm
-    success_url = reverse_lazy('forumapp:home')
-    success_message = "Question has been added"
+# class QuestionAddView(BSModalCreateView):
+#     print('this is add view')
+#     template_name = "question/questioncreate.html"
+#     form_class = QuestionForm
+
+#     success_url = reverse_lazy('forumapp:home')
+#     success_message = "Question has been added"
 
 
-    def form_valid(self,form):
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
-        usr = self.request.user
-        print('user = ',usr)
-        # catgry = self.request.get('dropdown',None)
-        # print('catgru=',catgry)
-        # category = Category.objects.get(name=catgry)
-        # form.instance.category = category
-        question_user = NormalUser.objects.get(user = usr)
-        print('question user',question_user)
-        form.instance.user_q = question_user
-        return super().form_valid(form)
+#     def form_valid(self,form):
+#         print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
 
-    # def form_valid(self,form):
-    #     print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
-    #     usr = self.request.user
-    #     print('user = ',usr)
-    #     # catgry = self.request.get('dropdown',None)
-    #     # print('catgru=',catgry)
-    #     # category = Category.objects.get(name=catgry)
-    #     # form.instance.category = category
-    #     user1 = User.objects.get(id=usr.id)
-    #     print('user1',user1)
-    #     question_user = NormalUser.objects.get(user_id = user1)
-    #     print('question user',question_user)
-    #     form.instance.user_a = question_user
-    #     return super().form_valid(form)
+#         usr = self.request.user
+#         print('user = ',usr)
+#         question_user = NormalUser.objects.get(user = usr)
+#         print('question user',question_user)
+#         form.instance.user_q = question_user
+#         return super().form_valid(form)
+
+#     def get_context_data(self, **kwargs):
+#         ctx = super(QuestionAddView, self).get_context_data(**kwargs)
+#         predict_test = prediction()
+#         return ctx
+# def QuestionAddView(request):
+#     print("request = ",request)
+#     if request.method == 'POST':
+#         print('this is post request')
+#         question = request.POST['question_form']
+#         print("question = = ",question)
+#         if form.is_valid():
+#              cd = form.cleaned_data
+#              # assert False
+#              return HttpResponseRedirect('/contact?submitted=True')
+#     else:
+#         print("this is else in form")
+#         form = QuestionForm() 
+#     return render(request,'question/questioncreate.html',{'form': form})
+
+def QuestionAddView(request):
+    if request.method == 'GET':
+        form = QuestionForm()
+        context = {
+            'form': form
+        }
+        print(context)
+        return render(request, 'question/questioncreate.html', context)
+
+    else:
+        if request.method == "POST":
+            question = request.POST['question_form']
+            print("gsssss",question)
+
+            tool = language_check.LanguageTool('en-US')
+            texts = question
+            matches = tool.check(texts)
+            result = language_check.correct(texts, matches)
+
+            print("the final name is ",result)
 
 
+            context = {
+                'result': result,
+                'exist':'exist'
+            }
+            return render(request, 'question/questioncreate.html',context)
+
+                     
 """
 details of question
 

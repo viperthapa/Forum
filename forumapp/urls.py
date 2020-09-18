@@ -15,7 +15,9 @@ urlpatterns = [
     # path('register1',views.signup_view,name='register1'),
     # path("login/",LoginView.as_view(),name = "login"),
     path("login/user/",views.LoginFormView,name = 'login'), #user login page
-    path('question/add/',QuestionAddView.as_view(),name = "questionadd"),
+#     path('question/add/',QuestionAddView.as_view(),name = "questionadd"),
+    path('question/add/',views.QuestionAddView,name = "questionadd"),
+
 
     # path('question/<int:pk>/details/', QuestionDetailView.as_view(), name='questiondetail'),
     path('question/<int:pk>/details/',views.QuestionDetailView,name = "questiondetail"),

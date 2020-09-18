@@ -1,7 +1,9 @@
 
+{% extends 'forum/base.html' %}
 {% load widget_tweaks %}
-
 {% load static %}
+{% block content %}
+
 
 <html>
 <head>
@@ -13,49 +15,86 @@
     </style>
 </head>
 <body class="body">
-
-  <form method="post" action="#" enctype="multipart/form-data">
+  <h1>Ask Question</h1>
+  <form method="POST">
     {% csrf_token %}
-
-    <div class="modal-header" style="background-color: whitesmoke;">
-     <div style="border-radius: 50px"></div> 
-      &nbsp;&nbsp;&nbsp;<h4 class="modal-title">{{ request.user }}</h4>
-      <div style="width:5px;height:4px;float: left;" class="user"></div>
-
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="form-group">
+      <label for="petal_width">Question</label>
+      <input type="text" class="form-control" id="petal_width" name="question_form">
+      <button style="margin-top:20px;height: 40px;width: 40%;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Submit
+      </button>  
+      <!-- <button type="submit">submit</button> -->
     </div>
 
-    <div class="modal-body">
-
-      <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
-        {% for error in form.non_field_errors %}
-          {{ error }}
-        {% endfor %}
-      </div>
-
-      {% for field in form %}
-        <div class="form-group">
-          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-          {% render_field field class="form-control" placeholder=field.label %}
-          <div class="{% if field.errors %} invalid{% endif %}">
-            {% for error in field.errors %}
-              <p class="help-block">{{ error }}</p>
-            {% endfor %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {% if exist %}
+              Do you mean:?
+              <h3 class="ml-3">{{result}}</h3>
+            {% endif %}
+          </div>
+          <div class="modal-footer ">
+            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="/question/add/"><button type="submit" class="btn btn-primary" >Confirm</button><a/>
           </div>
         </div>
-      {% endfor %}
-    </div>
-
-    <div class="modal-footer" style="background-color: whitesmoke;">
-      <button type="button" class="submit-btn btn btn-primary" formnovalidate="formnovalidate">Add</button>
+      </div>
     </div>
 
   </form>
+  <!-- <div class="container pt-5">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <h1>Ask Question</h1>
+            <form method="POST" action="/question/add/">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="petal_width">Question</label>
+                    <input type="text" class="form-control" id="petal_width" name="question_form">
+                </div>
+                <button style="margin-top:20px;height: 40px;width: 40%;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  Submit
+                </button>  
+              </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you want to add the changes to the file?
+      </div>
+      <div class="modal-footer ">
+        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="/question/add/"><button type="submit" class="btn btn-primary" >Confirm</button><a/>
+      </div>
+    </div>
+  </div>
+</div> -->
 
-   
+ 
+
+    
+    
+  
 </body>
 </html>
 
 
+{% endblock %}

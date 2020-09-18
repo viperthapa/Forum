@@ -68,10 +68,10 @@ class LoginForm(forms.Form):
 """=======================================
 -------------Question Asked Form------------------
 ======================================="""
-class QuestionForm(BSModalForm):
+class QuestionForm(forms.Form):
     class Meta:
         model = Question
-        fields = ['question','image']
+        fields = ['question']
 
 
 """=======================================

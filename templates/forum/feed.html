@@ -166,7 +166,7 @@
     <!-- top bar  -->
     <div class="col-md-8 bootstrap snippets">
         <!-- ask questions   -->
-       <a><a class="add-btn">
+       <a><a class="add-bt">
             <div class="card">
                 
                 <div class="card-body">
@@ -181,7 +181,7 @@
                     <!-- {{ profile }} -->
                     <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
                    {% endif %} 
-                    <h4 class="card-text text-dark ml-4">What is your questions ?</h4>
+                    <a href="{% url 'forumapp:questionadd' %}"><h4 class="card-text text-dark ml-4">What is your questions ?</h4></a>
                     
                 </div>
             </div>
@@ -285,7 +285,7 @@
     <script type="text/javascript">
         $(function () {
           // Log in & Sign up buttons
-          $(".add-btn").modalForm({formURL: "{% url 'forumapp:questionadd' %}"});
+          $(".add-btn").modalForm({formURL: "#"});
             
         });
     </script>

@@ -1,0 +1,42 @@
+
+{% extends 'forum/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<html>
+<head>
+
+</head>
+<body>
+
+<div class="mt-5">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{% url 'forumapp:questionadd' %}">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Result:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Do you mean?:</h5>
+                    <!-- <p id="q-id">Question: <span id="sl" value="{{obj.id}}"></span></p> -->
+                    <p name="final_que" value="{{confirm_ques}}">{{confirm_ques}}</p>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'forumapp:questionadd' %}"><button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
+                    <!-- <button type="submit" class="btn btn-primary" role="button">confirm</button> -->
+                    <button name="final_que" type="submit" value="{{confirm_ques}}" style="border-radius: 18%;background-color: cornsilk;">submit</button>
+                </div>
+            </div>
+        </form>
+
+        
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

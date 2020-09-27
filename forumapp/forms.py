@@ -86,6 +86,17 @@ class AnswerForm(forms.ModelForm):
         fields = ('answer',)
 
 
+"""=======================================
+-------------question Form------------------
+======================================="""
+
+class QuestionUpdateForm(forms.ModelForm):
+    question = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'post your aswer....', 'rows':'4', 'cols':'50'}))
+
+    class Meta:
+        model = Question
+        fields = ('question',)
+
 
 """=======================================
 -------------Question Asked Form------------------

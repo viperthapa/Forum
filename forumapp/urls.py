@@ -18,9 +18,20 @@ urlpatterns = [
 #     path('question/add/',QuestionAddView.as_view(),name = "questionadd"),
     path('question/add/',views.QuestionAddView,name = "questionadd"),
 
+    path('question/confirm/',views.QuestionConfirmView,name="question-confirm"),
 
     # path('question/<int:pk>/details/', QuestionDetailView.as_view(), name='questiondetail'),
     path('question/<int:pk>/details/',views.QuestionDetailView,name = "questiondetail"),
+
+    #editview of answer
+    path('question/update/<int:pk>/',
+         QuestionUpdateView.as_view(), name='question_update'),
+
+
+    #deleteview of answer
+    path('question/delete/<int:pk>/',
+         QuestionDeleteView.as_view(), name='question_delete'),
+
 
     #like button
     # path('user/<int:pk>/like/',views.LikeView,name="liked")

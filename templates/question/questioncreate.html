@@ -15,83 +15,85 @@
     </style>
 </head>
 <body class="body">
-  <h1>Ask Question</h1>
-  <form method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="petal_width">Question</label>
-      <input type="text" class="form-control" id="petal_width" name="question_form">
-      <button style="margin-top:20px;height: 40px;width: 40%;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Submit
-      </button>  
-      <!-- <button type="submit">submit</button> -->
-    </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {% if exist %}
-              Do you mean:?
-              <h3 class="ml-3">{{result}}</h3>
-            {% endif %}
-          </div>
-          <div class="modal-footer ">
-            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <a href="/question/add/"><button type="submit" class="btn btn-primary" >Confirm</button><a/>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </form>
-  <!-- <div class="container pt-5">
-    <div class="row justify-content-md-center">
-        <div class="col-md-4">
-            <h1>Ask Question</h1>
-            <form method="POST" action="/question/add/">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="petal_width">Question</label>
-                    <input type="text" class="form-control" id="petal_width" name="question_form">
+  <!-- nextcopied  -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="POST" action="{% url 'forumapp:questionadd' %}">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Result:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <button style="margin-top:20px;height: 40px;width: 40%;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                  Submit
-                </button>  
-              </form>
-        </div>
+                <div class="modal-body">
+                    <h5>Do you mean?:</h5>
+                    <!-- <p id="q-id">Question: <span id="sl" value="{{obj.id}}"></span></p> -->
+                    <span id="sl" name="sl-q"></span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" href="" role="button">confirm</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="card bg-light mb-3 mt-4" style="max-width: 52rem;height: 22rem;margin-left: 25em;">
+
+  <div class="container pt-5">
+      <div class="row justify-content-md-center">
+          <div class="col-md-4">
+              <h1 style="text-align: center;">Ask Question</h1>
+              <form method="POST" action="{% url 'forumapp:question-confirm' %}" id="teststs">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="sepal_length"></label>
+                      <input type="text" step="0.1" class="form-control" id="myquestion" name="myquestion" required>
+                  </div>
+                  <button class="submit-confirm btn btn-primary"  style="margin-left: 60px;" type="submit" value="Submit" data-id="#">Submit</button>
+              </form>
+          </div>
       </div>
-      <div class="modal-body">
-        Do you want to add the changes to the file?
-      </div>
-      <div class="modal-footer ">
-        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="/question/add/"><button type="submit" class="btn btn-primary" >Confirm</button><a/>
-      </div>
-    </div>
+  </div>
+</div>
+<!-- <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h5 class="card-title">Light card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div>
 </div> -->
 
- 
+
+<script>
+    $(document).on('submit', '#post-form',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:"{% url 'forumapp:question-confirm' %}",
+            data:{
+                sepal_length:$('#myquestion').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success:function(json) {
+                document.forms["post-form"].reset();
+                // document.getElementById("prediction").innerHTML = json['result']
+                document.getElementById("sl").innerHTML = json['sepal_length']
+            },
+            error : function(xhr,errmsg,err) {
+
+            }
+        });
+    });
 
     
-    
+</script>
+
+  
   
 </body>
 </html>

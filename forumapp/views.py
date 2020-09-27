@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect,reverse,get_object_or_404,render_to_response
 from django.views.generic import *
-from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm
+from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm,QuestionUpdateForm
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from .models import *
@@ -15,7 +15,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from forumapp.utils.prediction import prediction   
 # Create your views here.
 import language_check
-
+from django.http import JsonResponse
 
 
 """
@@ -160,9 +160,13 @@ Question add
 #         print("this is else in form")
 #         form = QuestionForm() 
 #     return render(request,'question/questioncreate.html',{'form': form})
-
+"""
+question add
+"""
 def QuestionAddView(request):
+    print("ct is king")
     if request.method == 'GET':
+        print("this is questiona dd view if")
         form = QuestionForm()
         context = {
             'form': form
@@ -172,24 +176,59 @@ def QuestionAddView(request):
 
     else:
         if request.method == "POST":
-            question = request.POST['question_form']
-            print("gsssss",question)
+            print("this is post method in ram")
+            print("request.POST",request)
+            # confirm_question = request.POST.get['final_que']
+            confirm_question = request.POST.get('final_que',None)
 
-            tool = language_check.LanguageTool('en-US')
-            texts = question
-            matches = tool.check(texts)
-            result = language_check.correct(texts, matches)
+            # confirm_question= request.POST.get("final_que")
 
-            print("the final name is ",result)
-
+            print("confirm_question",confirm_question)
+            
 
             context = {
-                'result': result,
-                'exist':'exist'
+                'ram':'ram'
             }
             return render(request, 'question/questioncreate.html',context)
 
-                     
+"""
+question confirm
+"""
+def QuestionConfirmView(request):
+
+    if request.method == 'POST':
+
+        # Receive data from client
+        question = request.POST.get('myquestion')
+        print("question = ",question)
+        tool = language_check.LanguageTool('en-US')
+        texts = question
+        matches = tool.check(texts)
+        confirm_ques = language_check.correct(texts, matches)
+        print("question_match = ",confirm_ques)
+        context = {
+            'confirm_ques':confirm_ques
+        }
+        # return JsonResponse({'sepal_length': sepal_length,
+        # })
+        return render(request, 'question/question_confirm.html',context)
+        # return render(request,"question/questioncreate.html",{'sepal_length':sepal_length})
+    else:
+        print("this is post method in viesw")
+        print("request.POST",request)
+            # confirm_question = request.POST.get['final_que']
+        confirm_question= request.GET.get("confirm_ques")
+        print("confirm_question",confirm_question)
+
+        context = {
+                'ram':'ram'
+        }
+        return render(request, 'question/questioncreate.html',context)
+
+
+
+
+
 """
 details of question
 
@@ -406,9 +445,10 @@ class AnswerUpdateView(UpdateView):
     # success_url = reverse_lazy("forumapp:home")
 
      ##### render to the page after update #########
+        ##### render to the page after delete #########
     def get_success_url(self, **kwargs):
-
         return reverse_lazy('forumapp:questiondetail', kwargs={'pk': self.object.question.pk})
+
 
        
 
@@ -464,6 +504,7 @@ def SearchView(request):
     
         results = Question.objects.filter(  
             Q( question__contains = q ))          
+        print("results11 = ",results)
     return render(request,'search/searchquestion.html', {'results': results})
 
 """
@@ -573,32 +614,35 @@ class UserView(TemplateView):
         context['myuser'] = NormalUser.objects.all()    
         return context
 
-##################### class based views #############
-'''
-class QuestionDetailView(DetailView):
-    template_name = 'question/questiondetails.html'
-    
+
+
+"""
+question update
+"""
+class QuestionUpdateView(UpdateView):
+    print('this is answer update')
+    template_name = 'question/questionupdate.html'
     model = Question
-    context_object_name = 'questions'
+    form_class = QuestionUpdateForm
+    # success_url = reverse_lazy("forumapp:home")
+
+     ##### render to the page after update #########
+    def get_success_url(self, **kwargs):
+        print("keargs",**kwargs)
+        return reverse_lazy('forumapp:home')
 
 
-    def get_context_data(self, **kwargs):
 
-        context = super().get_context_data(**kwargs)
-        context['answers'] = Answer.objects.filter(question=self.object.pk)
-        context['answerform'] = AnswerForm()
-        print(context['answerform'],'******************')
+"""
+question delete
+"""
+class QuestionDeleteView(DeleteView):
+    template_name = 'question/questiondelete.html'
+    model = Question
+    success_message = 'Success: question was deleted.'
 
-        print(context['answers'],'******************')
-        print('pk=',self.object.pk)
-        return context
-    
-    ############form validation ############
-    def form_valid(self,form):
-        print('this is form valid method')
-        new_answer = form.cleaned_data['answer']
-        answer = Answer.objects.create(question=self.object.pk,user=self.request.user,answer=new_answer)
-        form.instance.answer = answer
-        return super().form_valid(form)
+    ##### render to the page after delete #########
+    def get_success_url(self, **kwargs):
+        
+        return reverse_lazy('forumapp:home')
 
-'''

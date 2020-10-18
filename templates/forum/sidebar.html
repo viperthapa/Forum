@@ -30,11 +30,11 @@
             <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
                 <p class="sidebar-menu">
-                    <span>Feeds</span>
+                    <span style="color: black;font-size: large;">Feeds</span>
                     <hr>
                         <p class="sub">
-                            <span><a class="#" href="form_component.html">Latest questions </a></span><br>
-                            <span><a class="#" href="form_validation.html">Top questions</a></span>
+                            <span><a class="" style="color: black;font-size: 17px;" href="{% url 'forumapp:latestquestion' %}">Latest questions </a></span><br>
+                            <!-- <span><a class="#" href="form_validation.html">Top questions</a></span> -->
                         </p>
                         </span>
                 </p> 
@@ -48,12 +48,13 @@
                 
 
                     <p class="sub">
-                        <span class="ml-4"><a class="" href="{% url 'forumapp:categorylist' %}">educations</a></span><br>
-                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_sports' %}">sports</a></span><br>
-                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_politics' %}">politics</a></span><br>
-                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_fashion' %}">fashion and style</a></span><br>
-                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_health' %}">Health</a></span><br>
-                        <span class="ml-4"><a class="#" href="{% url 'forumapp:category_it' %}">Information and technology</a></span><br>
+
+                        <span class="ml-4"><a style="color: black;" class="" href="{% url 'forumapp:categorylist' %}"><i class="fa fa-university"></i>&nbsp;&nbsp;&nbsp;education</a></span><br>
+                        <span class="ml-4"><a style="color: black;" class="#" href="{% url 'forumapp:category_sports' %}"><i class="fa fa-futbol-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;sports</a></span><br>
+                        <span class="ml-4"><a style="color: black;" class="#" href="{% url 'forumapp:category_politics' %}"><i class="fa fa-square" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;politics</a></span><br>
+                        <span class="ml-4"><a style="color: black;" class="#" href="{% url 'forumapp:category_fashion' %}"><i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;fashion and style</a></span><br>
+                        <span class="ml-4"><a style="color: black;" class="#" href="{% url 'forumapp:category_health' %}"><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Health</a></span><br>
+                        <span class="ml-4"><a style="color: black;" class="#" href="{% url 'forumapp:category_it' %}"><i class="fa fa-desktop" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Information and <span class="ml-5">technology</span></a></span><br>
 
                         <!-- {% if category == "education" %}<span><a class="#" href="{% url 'forumapp:categorylist' category.id %}">{{category}}</a></span><br>{% endif %} -->
 

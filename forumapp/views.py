@@ -16,6 +16,8 @@ from forumapp.utils.prediction import prediction
 # Create your views here.
 import language_check
 from django.http import JsonResponse
+import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 """
@@ -42,6 +44,27 @@ class HomeView(TemplateView):
         return context
 
         # {% if question.image %}<div class="user"><img src="{{ question.normal_user.image.url }}"></div>{% endif %} 
+
+"""
+LatestQuestionView
+"""
+class LatestQuestionView(TemplateView):
+    template_name = 'forum/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['questions'] = Question.objects.all()[:4]
+        context['answers'] = Answer.objects.all()
+        
+        print(context['questions'],'*****')
+        # context['profile'] = NormalUser.objects.get(id = self.request.user.id)
+        context['form'] = AnswerForm()
+        
+        
+        return context
+
+
+
 
 ####################### login form ###############
 
@@ -166,7 +189,7 @@ question add
 def QuestionAddView(request):
     print("ct is king")
     if request.method == 'GET':
-        print("this is questiona dd view if")
+        print('this is 1st one')
         form = QuestionForm()
         context = {
             'form': form
@@ -178,8 +201,12 @@ def QuestionAddView(request):
         if request.method == "POST":
             print("this is post method in ram")
             print("request.POST",request)
+            print('this is 3rd one')
+
             # confirm_question = request.POST.get['final_que']
             confirm_question = request.POST.get('final_que',None)
+            predict = prediction(confirm_question)
+            print('p[rtedict',predict)
 
             # confirm_question= request.POST.get("final_que")
 
@@ -201,11 +228,14 @@ def QuestionConfirmView(request):
         # Receive data from client
         question = request.POST.get('myquestion')
         print("question = ",question)
+        print('this is 2nd one')
         tool = language_check.LanguageTool('en-US')
         texts = question
         matches = tool.check(texts)
         confirm_ques = language_check.correct(texts, matches)
         print("question_match = ",confirm_ques)
+
+        
         context = {
             'confirm_ques':confirm_ques
         }
@@ -240,8 +270,26 @@ def QuestionDetailView(request,pk):
     questions = get_object_or_404(Question,pk=pk)
     print('sakalalalalala',questions.id)
     ##show the similar posts
-    similar_questions = Question.objects.filter(category = questions.category)[:10]
-    print("similar questions = ",similar_questions)
+    similar_questions = Question.objects.filter(category = questions.category)
+
+    page = request.GET.get('page', 1)
+    print("this page consosts of page",page)
+
+    #page display a questions in 10 pages
+    paginator = Paginator(similar_questions, 1)
+
+    try:
+        paginated_que = paginator.page(page)
+
+    except PageNotAnInteger:
+        paginated_que = paginator.page(1)
+
+    except EmptyPage:
+        paginated_que = paginator.page(paginator.num_pages)
+
+
+    
+    
 
 
     # answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
@@ -312,7 +360,8 @@ def QuestionDetailView(request,pk):
         'answerform1':answerform,
         # 'is_liked': is_liked,
         'answer_count':answer_count,
-        'similar_questions':similar_questions
+        'similar_questions':similar_questions,
+        'paginated_que':paginated_que,
         # 'max_likes':max_likes
 
         
@@ -502,8 +551,8 @@ def SearchView(request):
     if q is not None:   
         print('6666666666666666')     
     
-        results = Question.objects.filter(  
-            Q( question__contains = q ))          
+        # results = Question.objects.filter(Q(question__icontains = q))     
+        results = Question.objects.filter(Q(question__icontains=q))     
         print("results11 = ",results)
     return render(request,'search/searchquestion.html', {'results': results})
 
@@ -625,6 +674,19 @@ class QuestionUpdateView(UpdateView):
     model = Question
     form_class = QuestionUpdateForm
     # success_url = reverse_lazy("forumapp:home")
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        q_id = self.kwargs['pk']
+        print("question set q_id",q_id)
+
+        question = Question.objects.get(id=q_id)
+        print("question set",question)
+        today_date = datetime.datetime.now()
+        question.date_updated = today_date
+        question.questions_updated = True
+        question.save()
+        return context
 
      ##### render to the page after update #########
     def get_success_url(self, **kwargs):

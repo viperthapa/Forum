@@ -165,30 +165,28 @@
 <body>
     <!-- top bar  -->
     <div class="col-md-8 bootstrap snippets">
-        {% if user.is_authenticated %} 
         <!-- ask questions   -->
-            <a class="add-bt">
-                <div class="card">
-                    
-                    <div class="card-body">
-                    {% if user.is_authenticated %} 
-                            {% for user in users %}
-                                {% if request.user.username == user.user.username %}
-                                <h5 class="card-title"><img style="border-radius: 50px" src="{{ user.image.url }}" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
-
-                                <!-- <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%"> -->
-                                {% endif %}
-                            {% endfor %}
-                        <!-- {{ profile }} -->
-                        <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
-                    {% endif %} 
-                        <a href="{% url 'forumapp:questionadd' %}"><h4 class="card-text text-dark ml-4">What is your questions ?</h4></a>
-                        
-                    </div>
-                </div>
+       <a><a class="add-btn">
+            <div class="card">
                 
-            <a> 
-        {% endif %}
+                <div class="card-body">
+                   {% if user.is_authenticated %} 
+                        {% for user in users %}
+                            {% if request.user.username == user.user.username %}
+                            <h5 class="card-title"><img style="border-radius: 50px" src="{{ user.image.url }}" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+
+                            <!-- <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%"> -->
+                            {% endif %}
+                        {% endfor %}
+                    <!-- {{ profile }} -->
+                    <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
+                   {% endif %} 
+                    <h4 class="card-text text-dark ml-4">What is your questions ?</h4>
+                    
+                </div>
+            </div>
+            
+        <a> </a>  
        
         <div class="panel">
           <div class="panel-body">
@@ -205,7 +203,7 @@
 
                 <div class="tab-content p-0">
                     <!-- begin #profile-post tab -->
-                {% for question in questions %}
+                {% for question in education %}
                     <div class="tab-pane fade active show" id="profile-post">
                     <!-- begin timeline -->
                         <ul class="timeline">
@@ -220,15 +218,15 @@
                                 <div class="timeline-body">
                                     <div class="timeline-header">
                                         {% if question.user_q.image %}<span class="userimage"><img src="{{ question.user_q.image.url }}" alt=""></span>{% endif %}
-                                        <span class="username"><a style="color: black;" href="javascript:;">{{ question.user_q.fname }}</a> <small></small></span>
+                                        <span class="username"><a href="javascript:;">{{ question.user_q.fname }}</a> <small></small></span>
                                         <br><span style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
 
-                                        <span style="color: black;" class="pull-right text-muted">{{ question.like_question.count }}likes</span>
+                                        <span class="pull-right text-muted">{{ question.like_question.count }}likes</span>
                                     </div>
                                     <div class="timeline-content">
 
                                     <p>
-                                        <a style="color: black;" class="text-dark" href="{% url 'forumapp:questiondetail' question.id %}">{{ question.question }}</a>
+                                        <a class="text-dark" href="{% url 'forumapp:questiondetail' question.id %}">{{ question.question }}</a>
                                     </p>
                                     <!-- question image  -->
                                     {% if question.image %}<img class="card-img-top" src="{{ question.image.url }}" alt="Card image cap">{% endif  %}
@@ -287,7 +285,7 @@
     <script type="text/javascript">
         $(function () {
           // Log in & Sign up buttons
-          $(".add-btn").modalForm({formURL: "#"});
+          $(".add-btn").modalForm({formURL: "{% url 'forumapp:questionadd' %}"});
             
         });
     </script>

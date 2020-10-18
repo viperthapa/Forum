@@ -1,6 +1,6 @@
 from forumapp.models import Question,Answer
 import nltk  
-import numpy as np  
+import pandas as pd  
 import random  
 import string
 import numpy as np
@@ -13,11 +13,17 @@ from nltk.corpus import stopwords
 import heapq
 from sklearn.model_selection import train_test_split
 from sklearn import svm
+from itertools import chain 
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn import svm
+from sklearn.svm import LinearSVC
+from sklearn.multiclass import OneVsRestClassifier
 
 
 
-
-def prediction():
+def prediction(confirm_question):
     #call the function for json data
     # question_ser = serializers.serialize("json", Question.objects.all()) 
 
@@ -26,110 +32,105 @@ def prediction():
         data = json.load(read_file)
 
     ##append all questions in a and categories in categories list
+   ##get the questions part only from json file
+    for q in data:
+        question = q["fields"]["question"]
+    #     print(question)
+        question = nltk.sent_tokenize(question)
+
+    ##converting to the array
     a = []
     categories = []
     for q in data:
         question = q["fields"]["question"]
         category = q["fields"]["category"]
-        categories.append(category)        
+        categories.append(category)
+       #tokenize  the sentences 
         question = nltk.sent_tokenize(question)
         a.append(question)
-    
-    #converting the 2d array into array
-    one_array = []
-    for i in a:
-        one_array.append(i[0])
 
-    que = "What would a Trump presidency mean for current international masterâ?"
-    one_array.append(que)
+    #iteration of every list
+    one_array = list(chain.from_iterable(a)) 
+    one_array.append(confirm_question)
 
-
-    #removing stopwords  and making all string lowercase
-    for i in range(len(one_array)):
-        one_array [i] = remove_stopwords(one_array[i])
+    #removing all the stop words and other unnecssary databases
+    for i in range(len(one_array )):
+        one_array [i] = remove_stopwords(one_array [i])
         one_array [i] = one_array [i].lower()
-        one_array [i] = re.sub(r'\W',' ',one_array[i])
-        one_array [i] = re.sub(r'\s+',' ',one_array[i])    
-
-
-    #tokenize the words
+        one_array [i] = re.sub(r'\W',' ',one_array [i])
+        one_array [i] = re.sub(r'\s+',' ',one_array [i])
+      
+    print('the last element of array = ',one_array[-1])
+    #get the occurence of words in overall sentences
     wordfreq = {}
     for sentence in one_array:
         tokens = nltk.word_tokenize(sentence)
+
+        
+        
         for token in tokens:
             if token not in wordfreq.keys():
                 wordfreq[token] = 1
             else:
                 wordfreq[token] += 1
 
-    #taking most frquently occured words
+    #get the exact top 60 words from list
     most_freq = heapq.nlargest(60, wordfreq, key=wordfreq.get)
-    print(most_freq)
+    filtered_numbers = [item for item in most_freq if not item.isdigit()]
 
-    #tokenize the words into different labels
-    sentence_vectors = []
-    for sentence in one_array:
-        sentence_tokens = nltk.word_tokenize(sentence)
-        stopwords = ['what', 'who','when','why','how','where','which','whom','whose','how long','how much']
-        resultwords  = [word for word in sentence_tokens if word.lower() not in stopwords]
-        print(resultwords)
-
-
-        # print('sentence taoejeje =',sentence_tokens)
-        sent_vec = []   
-        for token in most_freq:
-    #         print(token)
-            if token in resultwords:
-                sent_vec.append(1)
-            else:
-                sent_vec.append(0)
-        sentence_vectors.append(sent_vec)
-
-    # converting into numpy array
-    sentence_vectors = np.asarray(sentence_vectors)
-
-    #vectorize the given data
-    sentence_vectors_pop = []
-    sentence_vectors = []
-    for sentence in one_array:
-        sentence_tokens = nltk.word_tokenize(sentence)
-        
-        sent_vec = []
-        for token in most_freq:
-            
-            if token in sentence_tokens:
-                sent_vec.append(1)
-            else:
-                sent_vec.append(0)
-        sentence_vectors.append(sent_vec)
-    sentence_vectors_pop =  sentence_vectors.pop()
-
-    # print((sentence_vectors[0]))
     
-    #converting into numpp array
-    x = np.asarray(sentence_vectors)
-
-    #get the catrgory
-    y_cat = np.array(categories)
-    print(y_cat.shape)
-    print(y_cat)
-
-    #using svm for splittinga adata where 80% traing and 20%test data
-        #splitting a adata
-
-    X_train, X_test, y_train, y_test = train_test_split(x, y_cat) 
-
-    #predict te given model
-    clf = svm.SVC(gamma=0.001, C=100.)
-    clf.fit(x, y_cat)
-    y_pred = clf.predict([sentence_vectors_pop])
-
-    print('y prediction',y_pred)
-    print('y predict shape',y_pred.shape)
+    # CountVectorizer is used to convert a collection of text documents to a vector of term/token counts
+    vectorizer = CountVectorizer()
+    ##fitting the array
+    vectorizer.fit(filtered_numbers)
+    print(vectorizer)
 
 
+    ##collect all the data into single array
+    vectorizer.get_feature_names()
+
+    dtm_que = vectorizer.transform(most_freq)
+
+    x_test = pd.DataFrame(dtm_que.toarray(),columns=vectorizer.get_feature_names())
+
+    #get the category nad vectorized it
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(categories)
+    x = X.toarray()
+    last_element = list(x[-1])
+    print('token',last_element)
+
+
+    #craeting a array of categories
+    y = np.array(categories)
+
+    #prediction 
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.1) # 70% training and 30% test
+
+
+    print(X_train.shape)
+    print(X_test.shape)
+    print(y_train.shape)
+    print(y_test.shape)
+
+    #use set method to differentiate a unique words from a list
+    set_catgories = set(categories)
+    target_names = list(set_catgories)
+
+
+    #Create a svm Classifier
+    clf = OneVsRestClassifier(LinearSVC())
+    clf.fit(X_train, y_train)
+
+    y_pred = clf.predict([last_element])
+    print('y predicyt',y_pred)
+
+
+
+    
+    
     return {
-
+        'y_pred':y_pred
     }
     
 

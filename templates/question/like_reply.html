@@ -4,12 +4,25 @@
 
 
     <input type="hidden" name="a_id" value="{{ reply.id }}">
-    {% if request.user not in reply.like_answer.all %}    
-        <button class="btn btn-outline-dark btn-sm ml-2">like</button>
+    {% if request.user.is_authenticated %}
+    
+        {% if request.user not in reply.like_answer.all %}    
+            <button class="btn btn-outline-dark btn-sm ml-2">like</button>
 
-        <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
+            <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
+        {% else %}
+            <button class="btn btn-outline-dark btn-sm ml-2">liked</button>
+
+        {% endif %}
     {% else %}
-        <button class="btn btn-outline-dark btn-sm ml-2">liked</button>
+        {% if request.user not in reply.like_answer.all %}    
+            <button class="btn btn-outline-dark btn-sm ml-2" disabled>like</button>
+
+                <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
+        {% else %}
+                <button class="btn btn-outline-dark btn-sm ml-2" disabled>liked</button>
+
+        {% endif %}
 
     {% endif %}
     <span class="pull-right text-muted">{{ reply.like_answer.count }}likes</span>

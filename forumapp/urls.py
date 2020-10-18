@@ -9,6 +9,8 @@ urlpatterns = [
     path("",HomeView.as_view(),name = "home"), #home page 
 
     #home page
+    path('latest/question/',LatestQuestionView.as_view(),name = "latestquestion"),
+
 
     #register page
     path('register/',RegisterView.as_view(), name='register'), #user register page
@@ -17,6 +19,8 @@ urlpatterns = [
     path("login/user/",views.LoginFormView,name = 'login'), #user login page
 #     path('question/add/',QuestionAddView.as_view(),name = "questionadd"),
     path('question/add/',views.QuestionAddView,name = "questionadd"),
+
+
 
     path('question/confirm/',views.QuestionConfirmView,name="question-confirm"),
 

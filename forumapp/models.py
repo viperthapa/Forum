@@ -42,9 +42,11 @@ class Question(models.Model):
     like_question = models.ManyToManyField(User, related_name='likes',default=None,blank=True)
     image = models.ImageField(upload_to='question',blank=True,null=True)
     description = models.TextField(null=True,blank=True)
-    date_created = models.DateTimeField(auto_now = True,null=True)
+    date_created = models.DateTimeField(auto_now_add=True,null=True)
     date_updated = models.DateTimeField(auto_now = True,null=True)
     views = models.PositiveIntegerField(default=0,null=True)
+    questions_updated = models.BooleanField(default=False)
+
 
     class Meta:
         ordering = ['-id']

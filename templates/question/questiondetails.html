@@ -8,6 +8,24 @@
         .body{
             background-color: whitesmoke;
         }
+        .mypagination{
+          display: inline-block;
+          overflow-x: hidden;
+          font-size: 10px;
+        }
+        .pagination li{
+          color: black;
+          float: left;
+          padding: 8px 16px;
+          text-decoration: none;
+          transition: background-color .3s;
+          border: 1px solid #ddd;
+          font-size: 22px;
+        }
+
+
+
+
     </style>
 </head>
 <body class="body">
@@ -17,7 +35,7 @@
                 <h5 class="card-header bg-secondary text-white">Question</h5>
                 <div class="card-body">
                   <h3 class="card-title">{{ questions.id }}.{{ questions.question }}</h3><hr>
-                  <span class="card-text mt-0">posted on: {{ questions.date_created|date:"d M,Y"  }} </span><br><br><br><br><br>
+                  <span class="card-text mt-0">{% if questions.questions_updated is False %}posted on: {{ questions.date_created }}{% else %} edited : {{ questions.date_updated }}{% endif %}</span><br><br><br><br><br>
                   <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.user_q.fname }}</b></p><br>
                   <p href="#" class="#" style="margin-left: 620px;"><b>total likes : {{ questions.like_question.count }}</b></p>
                   {% if questions.user_q.user.username == request.user.username %}
@@ -27,7 +45,7 @@
                         <span class="fa fa-trash"></span></button>
                   {% endif %}
                 </div>
-              
+                <!-- |date:"d M,Y" -->
                
           
             </div><br>
@@ -58,12 +76,35 @@
                 <div class="card-header bg-secondary text-white">
                   Related Questions
                 </div>
-                {% for category in similar_questions %}
+                {% for category in paginated_que %}
                 <div class="ml-4 text-dark">
                     <a href="{% url 'forumapp:questiondetail' category.id %}"><p style="color: black;">{{forloop.counter}}.{{category}}</p></a>
                     
                 </div>
                 {% endfor %}
+                {% if paginated_que.has_other_pages %}
+                  <ul class="pagination">
+                    {% if paginated_que.has_previous %}
+                      <li><a href="?page={{ paginated_que.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in paginated_que.paginator.page_range %}
+                      <div class="mypagination">
+                        {% if paginated_que.number == i %}
+                          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                          <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                    {% if paginated_que.has_next %}
+                      <li><a href="?page={{ paginated_que.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+              {% endif %}
 
 
             </div>

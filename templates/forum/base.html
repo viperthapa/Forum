@@ -12,10 +12,7 @@
    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
 
@@ -41,7 +38,7 @@
             <a style="margin-left:200px;" class="navbar-brand" href="#">Forum</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
-                <li class="nav-item active pl-4">
+                <li class="nav-item active" style="padding-left: 11em;">
                   <a class="nav-link" href="{% url 'forumapp:home' %}"><i class="fa fa-home fa-lg"></i>Home <span class="sr-only">(current)</span></a>
                 </li>
                 
@@ -49,7 +46,7 @@
                   <a class="nav-link" href="#"><i class="fa fa-bell fa-sm"></i>Notifications<span class="sr-only">(current)</span></a>
                 </li> -->
                 <button style="background: transparent;border: none">
-                  <li class="nav-item active pl-4">
+                  <li class="nav-item active pl-1">
                     <a class="add-notification nav-link" data-id="{% url 'forumapp:notifications' %}"><i class="fa fa-bell fa-sm"></i>Notifications</a>
                   </li>
                 </button>

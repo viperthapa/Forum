@@ -12,7 +12,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.template.context import RequestContext
 from django.contrib.messages.views import SuccessMessageMixin
-from forumapp.utils.prediction import prediction   
+from forumapp.utils.predict_tag import predict_tag
 # Create your views here.
 import language_check
 from django.http import JsonResponse
@@ -36,7 +36,6 @@ class HomeView(TemplateView):
         # print('logged in user',context['users'])
         # context['answer-count'] = Question.objects.annotate(number_of_answers=Count('answer'))
 
-        print(context['questions'],'*****')
         # context['profile'] = NormalUser.objects.get(id = self.request.user.id)
         context['form'] = AnswerForm()
         
@@ -56,7 +55,6 @@ class LatestQuestionView(TemplateView):
         context['questions'] = Question.objects.all()[:4]
         context['answers'] = Answer.objects.all()
         
-        print(context['questions'],'*****')
         # context['profile'] = NormalUser.objects.get(id = self.request.user.id)
         context['form'] = AnswerForm()
         
@@ -104,7 +102,6 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         u_name = form.cleaned_data['username']
         pword = form.cleaned_data['password']
-        print("pword",pword)
         user = User.objects.create_user(u_name, '', pword)
         form.instance.user = user
         # login(self.request, user)
@@ -122,7 +119,6 @@ def LoginFormView(request):
         uname = request.POST.get('username')
         pword = request.POST.get('password')
         user = authenticate(username=uname,password=pword)
-        print("user = ",user)
         if user:
             if user is not None:
                 login(request,user)
@@ -136,7 +132,6 @@ def LoginFormView(request):
     
     else:
         form = LoginForm
-        print(form)
         return render(request,'user/login.html',{'form':form})
     
 
@@ -187,32 +182,24 @@ Question add
 question add
 """
 def QuestionAddView(request):
-    print("ct is king")
     if request.method == 'GET':
         print('this is 1st one')
         form = QuestionForm()
         context = {
             'form': form
         }
-        print(context)
         return render(request, 'question/questioncreate.html', context)
 
     else:
         if request.method == "POST":
-            print("this is post method in ram")
-            print("request.POST",request)
-            print('this is 3rd one')
-
             # confirm_question = request.POST.get['final_que']
-            confirm_question = request.POST.get('final_que',None)
-            predict = prediction(confirm_question)
-            print('p[rtedict',predict)
-
+            question = request.POST.get('final_que',None)
+            print("this is inputed questions",question)
+            predict = predict_tag(question)
+            print("precictcc",predict)
             # confirm_question= request.POST.get("final_que")
-
-            print("confirm_question",confirm_question)
-            
-
+            log_user = NormalUser.objects.get(user = request.user)
+            Question.objects.create(user_q = log_user,question = question,category = predict)            
             context = {
                 'ram':'ram'
             }
@@ -227,13 +214,10 @@ def QuestionConfirmView(request):
 
         # Receive data from client
         question = request.POST.get('myquestion')
-        print("question = ",question)
-        print('this is 2nd one')
         tool = language_check.LanguageTool('en-US')
         texts = question
         matches = tool.check(texts)
         confirm_ques = language_check.correct(texts, matches)
-        print("question_match = ",confirm_ques)
 
         
         context = {
@@ -244,12 +228,8 @@ def QuestionConfirmView(request):
         return render(request, 'question/question_confirm.html',context)
         # return render(request,"question/questioncreate.html",{'sepal_length':sepal_length})
     else:
-        print("this is post method in viesw")
-        print("request.POST",request)
             # confirm_question = request.POST.get['final_que']
         confirm_question= request.GET.get("confirm_ques")
-        print("confirm_question",confirm_question)
-
         context = {
                 'ram':'ram'
         }
@@ -266,17 +246,13 @@ details of question
 
 
 def QuestionDetailView(request,pk):
-    print('fbv')
     questions = get_object_or_404(Question,pk=pk)
-    print('sakalalalalala',questions.id)
     ##show the similar posts
     similar_questions = Question.objects.filter(category = questions.category)
-
     page = request.GET.get('page', 1)
-    print("this page consosts of page",page)
 
     #page display a questions in 10 pages
-    paginator = Paginator(similar_questions, 1)
+    paginator = Paginator(similar_questions, 10)
 
     try:
         paginated_que = paginator.page(page)
@@ -289,9 +265,6 @@ def QuestionDetailView(request,pk):
 
 
     
-    
-
-
     # answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
 
     answers = Answer.objects.filter(question=questions,reply=None).annotate(like_count = Count('like_answer')).order_by('-like_count')
@@ -314,25 +287,16 @@ def QuestionDetailView(request,pk):
 
     
     if request.method == 'POST':
-        print('appear only after form submitted')
         answer_form = AnswerForm(request.POST or None)
         if answer_form.is_valid():
             answer = request.POST.get('answer')
             
-            print('%%%%%%%%%%%%%%%%%%',request.user.id)
             user_first = NormalUser.objects.get(user = request.user)
-
-            print('this is user fist = ',user_first.id)
-            print('this is  = ',request.user.id)
-
             reply_id = request.POST.get('answer_id')
-            print('reply id',reply_id)
             reply_qs = None
             if reply_id:
                 reply_qs = Answer.objects.get(id = reply_id)
-                print('reply_qs = ',reply_qs)
             answer = Answer.objects.create(question=questions, user_a=user_first, answer=answer,reply=reply_qs)
-            print('asnwer',answer)
             answer.save()
 
             '''
@@ -380,28 +344,19 @@ question liked
 """
 def LikeView(request):
     user = request.user
-    print('normal',user.id)
 
     if request.method == "POST":
         q_id = request.POST.get('q_id')
-        print("questio i d ",q_id)
         # q_id = get_object_or_404(Question, id=request.POST.get('question_id'))
 
-        print('b idididid',q_id)
         question = Question.objects.get(id=q_id)
-        print('type og question',type)
-
-
         if user in question.like_question.all():
             question.like_question.remove(user)
         else:            
             question.like_question.add(user)
-            print('blog liked',question.like_question)
             question.save()
         user = request.user
         normal_user = NormalUser.objects.get(user = user)
-        print('normal user',normal_user)
-        print('normal user id',normal_user.id)
 
         like,created = Like.objects.get_or_create(user = user,question_id = q_id) 
         
@@ -434,27 +389,19 @@ def LikeView(request):
 answer liked
 """
 def LikeAnswerView(request):
-    print('this is answer like view')
     user = request.user
     # question = Answer.objects.get(question_id = )
     if request.method == "POST":
 
         question_id = request.POST.get('question_id')
-        print("this is question id buddha jayanti",question_id)
         a_id = request.POST.get('a_id')
-        print("questio i d ",a_id)
         # q_id = get_object_or_404(Question, id=request.POST.get('question_id'))
 
-        print('b idididid',a_id)
         answer = Answer.objects.get(id=a_id)
-        print('type og question',type)
-
-
         if user in answer.like_answer.all():
             answer.like_answer.remove(user)
         else:            
             answer.like_answer.add(user)
-            print('blog liked',answer.like_answer)
             answer.save()
         like,created = Like.objects.get_or_create(user = user,answer_id = a_id) 
         if not created:
@@ -487,7 +434,6 @@ def LikeAnswerView(request):
 Answer update
 """
 class AnswerUpdateView(UpdateView):
-    print('this is answer update')
     template_name = 'answer/answerupdate.html'
     model = Answer
     form_class = AnswerForm
@@ -547,13 +493,9 @@ Searching questions
 def SearchView(request):
     print('this is search')
     q = request.GET.get('q')
-    print("value of q",q)
-    if q is not None:   
-        print('6666666666666666')     
-    
+    if q is not None:       
         # results = Question.objects.filter(Q(question__icontains = q))     
         results = Question.objects.filter(Q(question__icontains=q))     
-        print("results11 = ",results)
     return render(request,'search/searchquestion.html', {'results': results})
 
 """

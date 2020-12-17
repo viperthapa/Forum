@@ -16,17 +16,20 @@
     
 
     <br>
-    {% if answer.user_a.user.username == request.user.username %}
+
         <span style="margin-left: 770px;">
+            {% if answer.user_a.user.username == request.user.username %}
             <button type="button" class="update-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
-                <span class="fa fa-pencil"></span></button>
-        
-            <button type="button" class="delete-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerdelete' answer.pk %}">
-            <span class="fa fa-trash"></span></button>
+            <span class="fa fa-pencil"></span></button>
+            {% endif %}
+            {% if answer.question.user_q.user.username == questions.user_q.user.username and answer.question.user_q.user.username == request.user.username  or answer.user_a.user.username == request.user.username  %}
+
+                <button type="button" class="delete-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerdelete' answer.pk %}">
+                <span class="fa fa-trash"></span></button>
+            {% endif %}
             <!-- <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><button style="display:inline-block;" class="text-default btn btn-dark"><i class="fa fa-edit fa-1x"></i></button></a>&nbsp;&nbsp; -->
             <!-- <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p> -->
         </span>
-    {% endif %}
 
 </form>
 <script type="text/javascript">

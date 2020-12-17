@@ -122,16 +122,19 @@ def prediction(confirm_question):
     clf = OneVsRestClassifier(LinearSVC())
     clf.fit(X_train, y_train)
 
-    y_pred = clf.predict([last_element])
-    print('y predicyt',y_pred)
+    y_pred_num = clf.predict([last_element])
+    print('y predicyt',type(y_pred_num))
+
+    # y_pred = np.array_str(y_pred_num)
+    # print('y pred',type(y_pred))
+    y_pred = ' '.join(y_pred_num)
+    print('y pred',y_pred)
 
 
 
     
     
-    return {
-        'y_pred':y_pred
-    }
+    return y_pred
     
 
 

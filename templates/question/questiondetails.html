@@ -35,7 +35,7 @@
                 <h5 class="card-header bg-secondary text-white">Question</h5>
                 <div class="card-body">
                   <h3 class="card-title">{{ questions.id }}.{{ questions.question }}</h3><hr>
-                  <span class="card-text mt-0">{% if questions.questions_updated is False %}posted on: {{ questions.date_created }}{% else %} edited : {{ questions.date_updated }}{% endif %}</span><br><br><br><br><br>
+                  <span class="card-text mt-0">{% if questions.questions_updated is False %}posted on: {{ questions.date_created|date:"d M,Y" }}{% else %} updated : {{ questions.date_updated|date:"d M,Y" }}{% endif %}</span><br><br><br><br><br>
                   <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.user_q.fname }}</b></p><br>
                   <p href="#" class="#" style="margin-left: 620px;"><b>total likes : {{ questions.like_question.count }}</b></p>
                   {% if questions.user_q.user.username == request.user.username %}

@@ -1,62 +1,88 @@
-{% extends 'forum/base.html' %}
+{% extends 'admintemplates/adminbase.html' %}
 {% load static %}
 {% block content %}
 <html>
+
 <head>
-    <title>Admin home</title>
-    <style>
-        .body{
-            background-color: whitesmoke;
-        }
-    </style>
-   
-    
+    <title>View User</title>
+
 </head>
+
 <body class="body">
     <br>
-    <div class="container">
-        <div class="row">
-            <a href="{% url 'forumapp:userview' %}"><button type="button" class="btn btn-primary mr-2">View User</button></a>
-            <a href="{% url 'forumapp:questionview' %}"><button type="button" class="btn btn-danger">View Question</button></a>
-            <br><br>
-            <table class="table table-bordered mt-2">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">S.N</th>
-                    <th scope="col">First_Name</th>
-                    <th scope="col">Last_Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Image</th>
-
-                  </tr>
-                </thead>
-                {% for user in myuser %}
-                    <tbody>
-                        <tr>
-                            <th scope="row">{{forloop.counter}}</th>
-                            <td>{{user.fname}}</td>
-                            <td>{{user.lname}}</td>
-                            <td>{{user.email}}</td>
-                            <td>  
-                                <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%">
-                            </td>
-
-                        </tr>
-                    </tbody>
-                {% endfor %}
-              </table>
-              
-              
-       </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered mt-2">
+                            <thead class="bg-primary">
+                              <tr>
+                                <th scope="col">S.N</th>
+                                <th scope="col">First_Name</th>
+                                <th scope="col">Last_Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Delete</th>
+            
+            
+                              </tr>
+                            </thead>
+                            {% for user in myuser %}
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td>{{user.fname}}</td>
+                                        <td>{{user.lname}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>  
+                                            <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%">
+                                        </td>
+                                        <td>
+                                            <button type="button" id="delete-question btn btn-sm btn-dark" data-id="">
+                                                <span class="fa fa-pencil"></span></button>
+                                        </td>
+            
+            
+                                    </tr>
+                                </tbody>
+                            {% endfor %}
+                          </table>
         
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    <script src="{% static 'js/modal/bootstrap.min.js' %}"></script>
+    <!-- You can alternatively load the minified version -->
+    <script src="{% static 'js/modal/jquery.bootstrap.modal.forms.js' %}"></script>
     <script>
-        $(document).ready( function () {
-            $('#table_id').DataTable();
-        } );
+        
+  
+         // Delete book buttons
+         console.log("ra,")
+        $(".delete-question").each(function () {
+            $(this).modalForm({formURL: $(this).data('id')});
+        console.log("testst")
+
+      })
     </script>
 </body>
 
 </html>
 
 {% endblock %}
+
+
+

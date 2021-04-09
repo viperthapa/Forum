@@ -17,7 +17,6 @@
         {% if n.question.user_q.user == request.user %}
                 
                 <div class="modal-body">
-                        <p>test</p>
                         {% if n.user %}
                         <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i><span><b>{{ n.user.fname }}</b> commented in your questions <b><a></a>{{ n.question.question }}</b></span>
                         {% else %}

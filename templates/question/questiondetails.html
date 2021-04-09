@@ -2,59 +2,64 @@
 {% load static %}
 {% block content %}
 <html>
+
 <head>
-    <title>home</title>
-    <style>
-        .body{
-            background-color: whitesmoke;
-        }
-        .mypagination{
-          display: inline-block;
-          overflow-x: hidden;
-          font-size: 10px;
-        }
-        .pagination li{
-          color: black;
-          float: left;
-          padding: 8px 16px;
-          text-decoration: none;
-          transition: background-color .3s;
-          border: 1px solid #ddd;
-          font-size: 22px;
-        }
+  <title>home</title>
+  <style>
+    .body {
+      background-color: whitesmoke;
+    }
 
+    .mypagination {
+      display: inline-block;
+      overflow-x: hidden;
+      font-size: 10px;
+    }
 
-
-
-    </style>
+    .pagination li {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color .3s;
+      border: 1px solid #ddd;
+      font-size: 22px;
+    }
+  </style>
 </head>
-<body class="body">
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card mt-5" style="margin-left: 140px;">
-                <h5 class="card-header bg-secondary text-white">Question</h5>
-                <div class="card-body">
-                  <h3 class="card-title">{{ questions.id }}.{{ questions.question }}</h3><hr>
-                  <span class="card-text mt-0">{% if questions.questions_updated is False %}posted on: {{ questions.date_created|date:"d M,Y" }}{% else %} updated : {{ questions.date_updated|date:"d M,Y" }}{% endif %}</span><br><br><br><br><br>
-                  <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.user_q.fname }}</b></p><br>
-                  <p href="#" class="#" style="margin-left: 620px;"><b>total likes : {{ questions.like_question.count }}</b></p>
-                  {% if questions.user_q.user.username == request.user.username %}
-                    <button type="button" class="update-question btn btn-sm btn-dark"data-id="{% url 'forumapp:question_update' questions.pk %}">
-                      <span class="fa fa-pencil"></span></button>
-                    <button type="button" class="delete-question btn btn-sm btn-dark" data-id="{% url 'forumapp:question_delete' questions.pk %}">
-                        <span class="fa fa-trash"></span></button>
-                  {% endif %}
-                </div>
-                <!-- |date:"d M,Y" -->
-               
-          
-            </div><br>
-            <!-- {% if reply.user_a.user.username == request.user.username %} -->
-                
-            <!-- {% endif %} -->
-            <!-- <strong>{{ questions.like_question.count }}likes</strong> -->
 
-            <!-- <form action="{% url 'forumapp:liked' %}" method="post">
+<body class="body">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card mt-5" style="margin-left: 200px;">
+        <h5 class="card-header bg-secondary text-white">Question</h5>
+        <div class="card-body">
+          <h3 class="card-title">{{ questions.id }}.{{ questions.question }}</h3>
+          <hr>
+          <span class="card-text mt-0">{% if questions.questions_updated is False %}posted on:
+            {{ questions.date_created|date:"d M,Y" }}{% else %} updated :
+            {{ questions.date_updated|date:"d M,Y" }}{% endif %}</span><br><br><br><br><br>
+          <p href="#" class="#" style="margin-left: 620px;">Asked by:<b>{{ questions.user_q.fname }}</b></p><br>
+          <p href="#" class="#" style="margin-left: 620px;"><b>total likes : {{ questions.like_question.count }}</b></p>
+          {% if questions.user_q.user.username == request.user.username %}
+          <button type="button" class="update-question btn btn-sm btn-dark"
+            data-id="{% url 'forumapp:question_update' questions.pk %}">
+            <span class="fa fa-pencil"></span></button>
+          <button type="button" class="delete-question btn btn-sm btn-dark"
+            data-id="{% url 'forumapp:question_delete' questions.pk %}">
+            <span class="fa fa-trash"></span></button>
+          {% endif %}
+        </div>
+        <!-- |date:"d M,Y" -->
+
+
+      </div><br>
+      <!-- {% if reply.user_a.user.username == request.user.username %} -->
+
+      <!-- {% endif %} -->
+      <!-- <strong>{{ questions.like_question.count }}likes</strong> -->
+
+      <!-- <form action="{% url 'forumapp:liked' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="q_id" value="{{ questions.id }}">
               {% if request.user not in questions.like_question.all %}     
@@ -63,98 +68,101 @@
                 <button type="submit" class="btn btn-danger">liked</button>
   
               {% endif %} -->
-            </form>
-            <div class="mycomment">
-               {% include 'question/comment.html' %}
-            </div>
+      </form>
+      <div class="mycomment" style="margin-left: 50px;">
+        {% include 'question/comment.html' %}
+      </div>
 
 
-        </div>
-        <div class="col-lg-4">
-            <br>
-            <div class="card" style="width: 25rem;margin-top:24px;margin-left: 70px;">
-                <div class="card-header bg-secondary text-white">
-                  Related Questions
-                </div>
-                {% for category in paginated_que %}
-                <div class="ml-4 text-dark">
-                    <a href="{% url 'forumapp:questiondetail' category.id %}"><p style="color: black;">{{forloop.counter}}.{{category}}</p></a>
-                    
-                </div>
-                {% endfor %}
-                {% if paginated_que.has_other_pages %}
-                  <ul class="pagination">
-                    {% if paginated_que.has_previous %}
-                      <li><a href="?page={{ paginated_que.previous_page_number }}">&laquo;</a></li>
-                    {% else %}
-                      <li class="disabled"><span>&laquo;</span></li>
-                    {% endif %}
-                    {% for i in paginated_que.paginator.page_range %}
-                      <div class="mypagination">
-                        {% if paginated_que.number == i %}
-                          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                        {% else %}
-                          <li><a href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %}
-                      </div>
-                    {% endfor %}
-                    {% if paginated_que.has_next %}
-                      <li><a href="?page={{ paginated_que.next_page_number }}">&raquo;</a></li>
-                    {% else %}
-                      <li class="disabled"><span>&raquo;</span></li>
-                    {% endif %}
-                  </ul>
-              {% endif %}
-
-
-            </div>
-
-        </div>
     </div>
+    <div class="col-lg-4">
+      <br>
+      <div class="card" style="width: 25rem;margin-top:24px;margin-left: 70px;">
+        <div class="card-header bg-secondary text-white">
+          Related Questions
+        </div>
+        {% for category in paginated_que %}
+        <div class="ml-4 text-dark">
+          <a href="{% url 'forumapp:questiondetail' category.id %}">
+            <p style="color: black;">{{forloop.counter}}.{{category}}</p>
+          </a>
 
-    <script type="text/javascript">
-        
-  
-  
-        //this is cool effect when users click the reply button
-        $('.reply-btn').click(function() {
-            $(this).parent().parent().next('.reply-next').fadeToggle()
-          });
+        </div>
+        {% endfor %}
+        {% if paginated_que.has_other_pages %}
+        <ul class="pagination">
+          {% if paginated_que.has_previous %}
+          <li><a href="?page={{ paginated_que.previous_page_number }}">&laquo;</a></li>
+          {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+          {% endif %}
+          {% for i in paginated_que.paginator.page_range %}
+          <div class="mypagination">
+            {% if paginated_que.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          </div>
+          {% endfor %}
+          {% if paginated_que.has_next %}
+          <li><a href="?page={{ paginated_que.next_page_number }}">&raquo;</a></li>
+          {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+          {% endif %}
+        </ul>
+        {% endif %}
 
 
-        //ajax calls after submit button
-        $(document).on('submit', '.comment', function(event){
-          event.preventDefault();
-          console.log('hehehehehehe');
-          console.log($(this).serialize());
-          $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function(response) {
-              $('.mycomment').html(response['form']);
-              
-            },
-            error: function(rs, e) {
-              console.log(rs.responseText);
-            },
-          });
-        });
+      </div>
 
-        $(".update-question").each(function () {
-          $(this).modalForm({formURL: $(this).data('id')});
-        });
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    //this is cool effect when users click the reply button
+    $('.reply-btn').click(function () {
+      $(this).parent().parent().next('.reply-next').fadeToggle()
+    });
 
 
-        // Delete book buttons
-            $(".delete-question").each(function () {
-                $(this).modalForm({formURL: $(this).data('id')});
-            })
+    //ajax calls after submit button
+    $(document).on('submit', '.comment', function (event) {
+      event.preventDefault();
+      console.log('hehehehehehe');
+      console.log($(this).serialize());
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (response) {
+          $('.mycomment').html(response['form']);
 
-  
-      </script>
+        },
+        error: function (rs, e) {
+          console.log(rs.responseText);
+        },
+      });
+    });
+
+    $(".update-question").each(function () {
+      console.log("ram")
+      $(this).modalForm({
+        formURL: $(this).data('id')
+      });
+    });
+
+
+    // Delete book buttons
+    $(".delete-question").each(function () {
+      $(this).modalForm({
+        formURL: $(this).data('id')
+      });
+    })
+  </script>
 </body>
+
 </html>
 
 {% endblock %}

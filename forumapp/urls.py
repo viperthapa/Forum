@@ -83,9 +83,15 @@ urlpatterns = [
 
 
      ##view the users by admin
+     
+
+     path("admin-home/",AdminHome.as_view(),name="adminhome"),
      path('admin/view-questions/',QuestionView.as_view(),name='questionview'),
 
      path('admin/view-users/',UserView.as_view(),name='userview'),
+
+     
+     
 
 
     

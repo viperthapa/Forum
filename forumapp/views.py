@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect,reverse,get_object_or_404,render_to_response
 from django.views.generic import *
-from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm,QuestionUpdateForm
+from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm,QuestionUpdateForm,QuestionFilter
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from .models import *
@@ -18,6 +18,7 @@ import language_check
 from django.http import JsonResponse
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 
 """
@@ -112,7 +113,6 @@ class RegisterView(CreateView):
 
 """
 login form
-
 """
 def LoginFormView(request):
     if request.method == "POST":
@@ -125,7 +125,7 @@ def LoginFormView(request):
                 return HttpResponseRedirect(reverse('forumapp:home'))
         else:
             return render(request,'user/login.html',{
-                'messages': 'your username doesnot exist',
+                'messages': 'Your username doesnot exist',
                 'form': LoginForm
             })
             # return HttpResponse("your username did not match")
@@ -181,6 +181,7 @@ Question add
 """
 question add
 """
+@login_required(login_url='/login/user/')
 def QuestionAddView(request):
     if request.method == 'GET':
         print('this is 1st one')
@@ -243,8 +244,6 @@ def QuestionConfirmView(request):
 details of question
 
 """
-
-
 def QuestionDetailView(request,pk):
     questions = get_object_or_404(Question,pk=pk)
     ##show the similar posts
@@ -342,6 +341,7 @@ def QuestionDetailView(request,pk):
 """
 question liked
 """
+@login_required(login_url='/login/user/')
 def LikeView(request):
     user = request.user
 
@@ -388,6 +388,7 @@ def LikeView(request):
 """
 answer liked
 """
+@login_required(login_url='/login/user/')
 def LikeAnswerView(request):
     user = request.user
     # question = Answer.objects.get(question_id = )
@@ -471,7 +472,6 @@ show notifications
 
 """
 
-
 class NotificationListView(ListView):
     template_name = "notification/notification.html"
     queryset = Notifications.objects.all()
@@ -496,13 +496,12 @@ def SearchView(request):
     if q is not None:       
         # results = Question.objects.filter(Q(question__icontains = q))     
         results = Question.objects.filter(Q(question__icontains=q))     
+
     return render(request,'search/searchquestion.html', {'results': results})
 
 """
 logout
 """
-
-
 class LogoutView(View):
     def get(self, request):
         logout(request)
@@ -611,7 +610,7 @@ class UserView(TemplateView):
 question update
 """
 class QuestionUpdateView(UpdateView):
-    print('this is answer update')
+    print('ram is gud boy')
     template_name = 'question/questionupdate.html'
     model = Question
     form_class = QuestionUpdateForm
@@ -649,4 +648,31 @@ class QuestionDeleteView(DeleteView):
     def get_success_url(self, **kwargs):
         
         return reverse_lazy('forumapp:home')
+
+###-------------------------------- Admin section start --------------------------####
+class AdminHome(TemplateView):
+    template_name = "admintemplates/adminhome.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['questions'] = Question.objects.all()
+        context['users'] = User.objects.all()
+        #category
+        category = []
+        question_list = Question.objects.all()
+        for item in question_list:
+            category.append(item.category)
+
+        # ram = set(category)
+        context['pol'] = category.count("politics")
+        context['fas'] = category.count("fashion and style")
+        context['edu'] = category.count("education")
+        context['hea'] = category.count("Health")
+        context['inf'] = category.count("Information and technology")
+        context['spo'] = category.count("sports")
+        print("polll",context['pol'])
+
+
+
+        return context
 

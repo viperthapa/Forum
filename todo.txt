@@ -1,0 +1,4 @@
+1.login error messages to red
+2.admin dashboard integration using datatables
+3.regoster error messages to red
+

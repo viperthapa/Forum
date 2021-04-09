@@ -1,300 +1,328 @@
 <!--sidebar start-->
 {% load static %}
+
 <head>
     <style>
-        .mar-top{
+        .mar-top {
             margin-top: 10px;
         }
-        .panel{
+
+        .panel {
             background-color: white;
             margin-bottom: 20px;
         }
 
 
 
-    .timeline {
-        list-style-type: none;
-        margin-top: 5px;
-        padding: 0;
-        position: relative;
-        
-    }
+        .timeline {
+            list-style-type: none;
+            margin-top: 5px;
+            padding: 0;
+            position: relative;
 
-    .timeline:before {
-        content: '';
-        position: absolute;
-        top: 5px;
-        bottom: 5px;
-        width: 5px;
-        background: #2d353c;
-        left: 20%;
-        margin-left: -2.5px
-    }
+        }
 
-    .timeline>li {
-        position: relative;
-        min-height: 50px;
-        /* padding: 20px 0 */
-    }
+        .timeline:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            bottom: 5px;
+            width: 5px;
+            background: #2d353c;
+            left: 20%;
+            margin-left: -2.5px
+        }
 
-  
-
-    .timeline .timeline-body {
-        width: 100%;
-        margin: 0px 0px 8px 0px;
-        background: white;;
-        position: relative;
-        padding: 20px 25px;
-        border-radius: 6px
-    }
-
-    .timeline .timeline-body:before {
-        content: '';
-        display: block;
-        position: absolute;
-        border: 10px solid transparent;
-        border-right-color: #fff;
-        left: -20px;
-        top: 20px
-    }
-
-    .timeline .timeline-body>div+div {
-        margin-top: 15px
-    }
+        .timeline>li {
+            position: relative;
+            min-height: 50px;
+            /* padding: 20px 0 */
+        }
 
 
-    .timeline-header {
-        padding-bottom: 10px;
-        border-bottom: 1px solid #e2e7eb;
-        line-height: 30px
-    }
 
-    .timeline-header .userimage {
-        float: left;
-        width: 34px;
-        height: 34px;
-        border-radius: 50px;
-        overflow: hidden;
-        margin: -2px 10px -2px 0
-    }
+        .timeline .timeline-body {
+            width: 100%;
+            margin: 0px 0px 8px 0px;
+            background: white;
+            ;
+            position: relative;
+            padding: 20px 25px;
+            border-radius: 6px
+        }
 
-    .timeline-header .username {
-        font-size: 16px;
-        font-weight: 600
-    }
+        .timeline .timeline-body:before {
+            content: '';
+            display: block;
+            position: absolute;
+            border: 10px solid transparent;
+            border-right-color: #fff;
+            left: -20px;
+            top: 20px
+        }
 
-    .timeline-header .username,
-    .timeline-header .username a {
-        color: #2d353c
-    }
-
-    .timeline img {
-        max-width: 100%;
-        display: block
-    }
-
-    .timeline-content {
-        letter-spacing: .25px;
-        line-height: 22px;
-        font-size: 20px
-    }
-
-    .timeline-content:after,
-    .timeline-content:before {
-        content: '';
-        display: table;
-        clear: both
-    }
-
-    .timeline-title {
-        margin-top: 0
-    }
-
-    .timeline-footer {
-        background: white;
-        border-top: 2px solid #e2e7ec;
-        padding-top: 30px
-    }
-
-    .timeline-footer a:not(.btn) {
-        color: #575d63
-    }
-
-    .timeline-likes {
-        color: #6d767f;
-        font-weight: 600;
-        font-size: 12px;
-    }
-
-    .timeline-likes .stats-right {
-        float: right
-    }
-
-    .timeline-likes .stats-total {
-        display: inline-block;
-        line-height: 20px;
-        font-size: 15px;
-    }
-
-    
-
-    .timeline-comment-box {
-        background: white;
-        margin-left: -25px;
-        margin-right: -25px;
-        padding: 20px 25px
-    }
-
-    .timeline-comment-box .user {
-        float: left;
-        width: 34px;
-        height: 34px;
-        overflow: hidden;
-        border-radius: 50px
-    }
-
-    .timeline-comment-box .user+.input {
-        margin-left: 44px
-    }
+        .timeline .timeline-body>div+div {
+            margin-top: 15px
+        }
 
 
-        
+        .timeline-header {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e7eb;
+            line-height: 30px
+        }
+
+        .timeline-header .userimage {
+            float: left;
+            width: 34px;
+            height: 34px;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: -2px 10px -2px 0
+        }
+
+        .timeline-header .username {
+            font-size: 16px;
+            font-weight: 600
+        }
+
+        .timeline-header .username,
+        .timeline-header .username a {
+            color: #2d353c
+        }
+
+        .timeline img {
+            max-width: 100%;
+            display: block
+        }
+
+        .timeline-content {
+            letter-spacing: .25px;
+            line-height: 22px;
+            font-size: 20px
+        }
+
+        .timeline-content:after,
+        .timeline-content:before {
+            content: '';
+            display: table;
+            clear: both
+        }
+
+        .timeline-title {
+            margin-top: 0
+        }
+
+        .timeline-footer {
+            background: white;
+            border-top: 2px solid #e2e7ec;
+            padding-top: 30px
+        }
+
+        .timeline-footer a:not(.btn) {
+            color: #575d63
+        }
+
+        .timeline-likes {
+            color: #6d767f;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .timeline-likes .stats-right {
+            float: right
+        }
+
+        .timeline-likes .stats-total {
+            display: inline-block;
+            line-height: 20px;
+            font-size: 15px;
+        }
+
+
+
+        .timeline-comment-box {
+            background: white;
+            margin-left: -25px;
+            margin-right: -25px;
+            padding: 20px 25px
+        }
+
+        .timeline-comment-box .user {
+            float: left;
+            width: 34px;
+            height: 34px;
+            overflow: hidden;
+            border-radius: 50px
+        }
+
+        .timeline-comment-box .user+.input {
+            margin-left: 44px
+        }
     </style>
 
 </head>
+
 <body>
     <!-- top bar  -->
     <div class="col-md-8 bootstrap snippets">
-        {% if user.is_authenticated %} 
-        <!-- ask questions   -->
-            <a class="add-bt">
-                <div class="card">
-                    
-                    <div class="card-body">
-                    {% if user.is_authenticated %} 
-                            {% for user in users %}
-                                {% if request.user.username == user.user.username %}
-                                <h5 class="card-title"><img style="border-radius: 50px" src="{{ user.image.url }}" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+        {% if request.user.groups.all %}
+        {% for group in request.user.groups.all %}
+        {% if group.name == 'normal_user' %}
 
-                                <!-- <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%"> -->
-                                {% endif %}
-                            {% endfor %}
-                        <!-- {{ profile }} -->
-                        <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
-                    {% endif %} 
-                        <a href="{% url 'forumapp:questionadd' %}"><h4 class="card-text text-dark ml-4">What is your questions ?</h4></a>
-                        
+        {% if user.is_authenticated %}
+        <!-- ask questions   -->
+        <a class="add-bt">
+            <div class="card">
+
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                    {% for user in users %}
+                    {% if request.user.username == user.user.username %}
+                    <h5 class="card-title"><img style="border-radius: 50px" src="{{ user.image.url }}" width="35px"
+                            height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
+
+                    <!-- <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%"> -->
+                    {% endif %}
+                    {% endfor %}
+                    <!-- {{ profile }} -->
+                    <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
+                    {% endif %}
+                    <a href="{% url 'forumapp:questionadd' %}">
+                        <h4 class="card-text text-dark ml-4">What is your questions ?</h4>
+                    </a>
+                </div>
+            </div>
+
+            <a>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                <div class="panel">
+                    <div class="panel-body">
+
+                        <!-- <i style = "margin-left: 20px;font-size: 30px;"><i class="fa fa-user-circle"></i></a> -->
+
                     </div>
                 </div>
-                
-            <a> 
-        {% endif %}
-       
-        <div class="panel">
-          <div class="panel-body">
 
-            <!-- <i style = "margin-left: 20px;font-size: 30px;"><i class="fa fa-user-circle"></i></a> -->
-           
-          </div>
-        </div>
+                <!-- begin of head content  -->
+                <div id="content" class="content content-full-width">
 
-        <!-- begin of head content  -->
-        <div id="content" class="content content-full-width">
+                    <div class="#">
 
-            <div class="#">
+                        <div class="tab-content p-0">
+                            <!-- begin #profile-post tab -->
+                            {% for question in questions %}
+                            <div class="tab-pane fade active show" id="profile-post">
+                                <!-- begin timeline -->
+                                <ul class="timeline">
+                                    <li>
+                                        <!-- begin timeline-time -->
 
-                <div class="tab-content p-0">
-                    <!-- begin #profile-post tab -->
-                {% for question in questions %}
-                    <div class="tab-pane fade active show" id="profile-post">
-                    <!-- begin timeline -->
-                        <ul class="timeline">
-                            <li>
-                            <!-- begin timeline-time -->
-                                
-                                <!-- end timeline-time -->
-                                <!-- begin timeline-icon -->
-                                
-                                <!-- end timeline-icon -->
-                                <!-- begin timeline-body -->
-                                <div class="timeline-body">
-                                    <div class="timeline-header">
-                                        {% if question.user_q.image %}<span class="userimage"><img src="{{ question.user_q.image.url }}" alt=""></span>{% endif %}
-                                        <span class="username"><a style="color: black;" href="javascript:;">{{ question.user_q.fname }}</a> <small></small></span>
-                                        <br><span style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
+                                        <!-- end timeline-time -->
+                                        <!-- begin timeline-icon -->
 
-                                        <span style="color: black;" class="pull-right text-muted">{{ question.like_question.count }}likes</span>
-                                    </div>
-                                    <div class="timeline-content">
+                                        <!-- end timeline-icon -->
+                                        <!-- begin timeline-body -->
+                                        <div class="timeline-body">
+                                            <div class="timeline-header">
+                                                {% if question.user_q.image %}<span class="userimage"><img
+                                                        src="{{ question.user_q.image.url }}" alt=""></span>{% endif %}
+                                                <span class="username"><a style="color: black;"
+                                                        href="javascript:;">{{ question.user_q.fname }}</a>
+                                                    <small></small></span>
+                                                <br><span
+                                                    style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
 
-                                    <p>
-                                        <a style="color: black;" class="text-dark" href="{% url 'forumapp:questiondetail' question.id %}">{{ question.question }}</a>
-                                    </p>
-                                    <!-- question image  -->
-                                    {% if question.image %}<img class="card-img-top" src="{{ question.image.url }}" alt="Card image cap">{% endif  %}
+                                                <span style="color: black;"
+                                                    class="pull-right text-muted">{{ question.like_question.count }}likes</span>
+                                            </div>
+                                            <div class="timeline-content">
 
-                                    </div>
-                                    <div class="timeline-likes">
-                                    <div class="stats-right">
-                                        <!-- <span class="stats-text">259 Shares</span> -->
-                                    </div>
+                                                <p>
+                                                    <a style="color: black;" class="text-dark"
+                                                        href="{% url 'forumapp:questiondetail' question.id %}">{{ question.question }}</a>
+                                                </p>
+                                                <!-- question image  -->
+                                                {% if question.image %}<img class="card-img-top"
+                                                    src="{{ question.image.url }}" alt="Card image cap">{% endif  %}
 
-                                    </div>
-                                    <div class="timeline-footer">
-                                        <!-- results.part_set.count() -->
-                                        
-                                        <span class="#">
-                                            <form action="{% url 'forumapp:liked' %}" method="post">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="q_id" value="{{ question.id }}">
-                                                {% if request.user not in question.like_question.all %}    
-                                                     <!-- <button type="submit" class="btn btn-primary">Like</button>  -->
-                                                    <button class="m-r-15 text-inverse-lighter" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;color:#484848;padding-right: 190px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>like</button>
+                                            </div>
+                                            <div class="timeline-likes">
+                                                <div class="stats-right">
+                                                    <!-- <span class="stats-text">259 Shares</span> -->
+                                                </div>
+
+                                            </div>
+                                            <div class="timeline-footer">
+                                                <!-- results.part_set.count() -->
+
+                                                <span class="#">
+                                                    <form action="{% url 'forumapp:liked' %}" method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="q_id" value="{{ question.id }}">
+                                                        {% if request.user not in question.like_question.all %}
+                                                        <!-- <button type="submit" class="btn btn-primary">Like</button>  -->
+                                                        <button class="m-r-15 text-inverse-lighter"
+                                                            style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;color:#484848;padding-right: 190px;"><i
+                                                                class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>like</button>
 
 
-                                                     <!-- <a type="submit"  href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 5px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp; -->
-                                                {% else %}
+                                                        <!-- <a type="submit"  href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 5px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp; -->
+                                                        {% else %}
 
-                                                    <button class="btn btn-danger" style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;color:black;padding-right: 190px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>liked</button>
-                                            
-                                                {% endif %}
-                                                <a href="#comment" class="m-r-15 text-inverse-lighter" style="padding-right: 160px;"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i>  {{ question.related_question.all.count }} Comments</a> 
-                                                <a href="#comment" class="m-r-15 text-inverse-lighter"><i class="fa fa-eye fa-fw fa-lg m-r-3"></i> {{ question.views }} views</a> 
-                                             <!-- <strong>{{ question.like_question.count }}likes</strong>  -->
-                                            </form>
-                                           
-                                           
-                                        </span>
-                                        <!-- <a href="#comment"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</span>&nbsp;&nbsp; -->
-                       
-                                         <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a> -->
-                                    </div>
-                                    
-                                    
-                                </div>
-                                <!-- image related  -->
-                            
-                               
-                            </li> 
-                        </ul>
-                    </div> 
-                </div>    
-                {% endfor %}
-            </div>   
-        </div>  
-         
-    </a>
-    <script type="text/javascript">
-        $(function () {
-          // Log in & Sign up buttons
-          $(".add-btn").modalForm({formURL: "#"});
-            
-        });
-    </script>
-        
-   
+                                                        <button class="btn btn-danger"
+                                                            style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;color:black;padding-right: 190px;"><i
+                                                                class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>liked</button>
+
+                                                        {% endif %}
+                                                        <a href="#comment" class="m-r-15 text-inverse-lighter"
+                                                            style="padding-right: 160px;"><i
+                                                                class="fa fa-comments fa-fw fa-lg m-r-3"></i>
+                                                            {{ question.related_question.all.count }} Comments</a>
+                                                        <a href="#comment" class="m-r-15 text-inverse-lighter"><i
+                                                                class="fa fa-eye fa-fw fa-lg m-r-3"></i>
+                                                            {{ question.views }} views</a>
+                                                        <!-- <strong>{{ question.like_question.count }}likes</strong>  -->
+                                                    </form>
+
+
+                                                </span>
+                                                <!-- <a href="#comment"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</span>&nbsp;&nbsp; -->
+
+                                                <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a> -->
+                                            </div>
+
+
+                                        </div>
+                                        <!-- image related  -->
+
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </a>
+            <script type="text/javascript">
+                $(function () {
+                    // Log in & Sign up buttons
+                    $(".add-btn").modalForm({
+                        formURL: "#"
+                    });
+
+                });
+            </script>
+
+
 </body>
-  <!--sidebar end-->
+<!--sidebar end-->
 <!--
   <form action="{% url 'forumapp:liked' %}" method="post">
     {% csrf_token %}

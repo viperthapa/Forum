@@ -2,123 +2,132 @@
 <head>
     <style>
 
-    </style>    
+    </style>
 </head>
+
 <body>
-<div style="margin-left: 150px;">
+    <div style="margin-left: 150px;">
 
-    <!-- comment form-->
-    <form method="post" id="answer-form" action="#">
-        {% csrf_token %}
-        {{ answerform1.as_p }}
-        {% if request.user.is_authenticated %}
+        <!-- comment form-->
+        <form method="post" id="answer-form" action="#">
+            {% csrf_token %}
+            {{ answerform1.as_p }}
+            {% if request.user.is_authenticated %}
             <input type="submit" value="Submit" class="btn btn-outline-success">
-        {% else %}
+            {% else %}
             <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
-        {% endif %}
+            {% endif %}
 
 
-    </form>
+        </form>
 
 
-    
 
-    <br><br>
-    <!-- 
+
+        <br><br>
+        <!-- 
         ############################# answerform ##############
     -->
-    {% for a in max_likes %}
+        {% for a in max_likes %}
         like:{{a.answer}}<br>
-       <span class="pull-right text-muted">{{ a.like_answer.count }}likes</span>
-        
-    {% endfor %}
+        <span class="pull-right text-muted">{{ a.like_answer.count }}likes</span>
+
+        {% endfor %}
 
 
-    <hr>
+        <hr>
 
-    {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
-    {% for answer in answers %}
+        {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
+        {% for answer in answers %}
 
         <blockquote class="blockquote">
             <!-- {{ answer.id }}
             question id{{ answer.question.id }} -->
 
+
             <p class="mb-0"><small>{{ answer.answer }}</small></p>
 
-            
+
             <span>
 
             </span>
-            <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ answer.user_a|capfirst }}</cite></small>
-                    <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2" style="display: inline-block;">Reply</button>
-                    
-                    <button style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_answer.html' %}</button>
-                    <hr>
-                
-           
+            <footer class="blockquote-footer"><small>by <cite
+                        title="Source Title">{{ answer.user_a|capfirst }}</cite></small>
+                <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2"
+                    style="display: inline-block;">Reply</button>
+
+                <button
+                    style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_answer.html' %}</button>
+
+                {% include 'answer/mark_best.html' %}
+
+                <hr>
+
+
 
             </footer>
+
         </blockquote>
-    
-    <!-- 
+
+        <!-- 
         
     ################################    replyform  ###########################
     -->
-    <div class="reply-next" style="display: none;">
-        {% for reply in answer.replies.all %}
-                <!-- {{ reply.question.id }} -->
-            
-            <blockquote class="blockquote ml-5">
-                <p class="mb-0"><small>{{ reply.answer }}</small></p><br>
-                <footer class="blockquote-footer"><small>by <cite title="Source Title">{{ reply.user_a|capfirst }}</cite></small>
-                    <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2" style="display: inline-block;">Reply</button>
+        <div class="reply-next" style="display: none;">
+            {% for reply in answer.replies.all %}
+            <!-- {{ reply.question.id }} -->
 
-                    <button style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_reply.html' %}</button>
+            <blockquote class="blockquote ml-5">
+                <p class="mb-0"><small>{{ reply.answer }}ram</small></p><br>
+                <footer class="blockquote-footer"><small>by <cite
+                            title="Source Title">{{ reply.user_a|capfirst }}</cite></small>
+                    <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2"
+                        style="display: inline-block;">Reply</button>
+
+                    <button
+                        style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_reply.html' %}</button>
                     <hr>
                 </footer>
             </blockquote>
-        {% endfor %}
-        
-        <div class="form-group row ml-5">
-            <form method="post" class="reply-form" action="#">
-                {% csrf_token %}
-                <input type="hidden" name="answer_id" value="{{ answer.id }}">
-                {{ answerform1.as_p }}
-                {% if request.user.is_authenticated %}
+            {% endfor %}
+
+            <div class="form-group row ml-5">
+                <form method="post" class="reply-form" action="#">
+                    {% csrf_token %}
+                    <input type="hidden" name="answer_id" value="{{ answer.id }}">
+                    {{ answerform1.as_p }}
+                    {% if request.user.is_authenticated %}
                     <input type="submit" value="Submit" class="btn btn-outline-success">
-                {% else %}
+                    {% else %}
                     <input type="submit" value="Submit" class="btn btn-outline-success" disabled>
-                {% endif %}
-            </form>
+                    {% endif %}
+                </form>
+            </div>
         </div>
+        {% endfor %}
+
     </div>
-    {% endfor %}
+    <script type="text/javascript">
+        //ajax calls after submit button
+        $(document).on('submit', '.comment', function (event) {
+            event.preventDefault();
+            console.log('hehehehehehe');
+            console.log($(this).serialize());
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    $('.mycomment').html(response['form']);
 
-</div>
-<script type="text/javascript">
-        
-
-    //ajax calls after submit button
-    $(document).on('submit', '.comment', function(event){
-      event.preventDefault();
-      console.log('hehehehehehe');
-      console.log($(this).serialize());
-      $.ajax({
-        type: 'POST',
-        url: $(this).attr('action'),
-        data: $(this).serialize(),
-        dataType: 'json',
-        success: function(response) {
-          $('.mycomment').html(response['form']);
-          
-        },
-        error: function(rs, e) {
-          console.log(rs.responseText);
-        },
-      });
-    });
-
-
-</script>
+                },
+                error: function (rs, e) {
+                    console.log(rs.responseText);
+                },
+            });
+        });
+    </script>
 </body>
+
 </html>

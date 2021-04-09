@@ -141,13 +141,13 @@
         
         <div class="tab-content">
             {% if messages %}
-             <li>{{ messages }}</li>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <span style="color: red;">{{messages}}</span> 
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
             {% endif %}
-            <div id="signup">
-                <br>
+            <div id="signup">              
                 <br>  
-
-                
                 <form action="#" method="POST"  enctype="multipart/form-data">
                     {% csrf_token %}
                 

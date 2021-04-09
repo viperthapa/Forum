@@ -1,0 +1,156 @@
+{% extends 'admintemplates/adminbase.html' %}
+{% load static %}
+{% block content %}
+<html>
+        <title>{% block title %}Dashboard{% endblock %}</title>
+
+
+<head>
+    <style>
+        .card{
+            background-color: #191919;
+            margin: 10px;
+            text-align: center;
+            height: 150px;
+            padding: 20px;
+            }
+        .text-default{
+            color: white;
+        }
+        .card a {
+                text-decoration: none;
+                color: white;
+        }
+    </style>
+    <script src="{% static 'adminstatic/js/chart1.min.js' %}"></script>
+    
+
+</head> 
+<body>     
+ 
+    <div style="margin: 0px;" class="row">
+        <div class="col-md-4">    
+            <div class="card">
+                    <a>
+                        <div class="card-body">
+                                <i class="fa fa-user fa-4x" style="color:#fff"></i>
+                                <p><a href="">{{users.count}} Users</a></p>
+                        </div>
+                   </a>
+            </div>
+            
+        </div>
+
+        <div class="col-md-4">
+                <div class="card">
+                        <i class="fa fa-th fa-4x" style="color:#fff"></i>
+                        <div class="card-body">
+                        <p><a href="">{{questions.count}} Questions</a></p>
+                        </div>
+                </div>
+                
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                    <i class="fa fa-dollar fa-4x" style="color:#fff"></i>
+                    <div class="card-body">
+                    <p><a href="">6 Categories</a></p>
+                    </div>
+            </div>
+            
+        </div>
+        
+            
+    </div>
+    <div class="position-relative mb-4" style="margin-top: 100px;">
+        <canvas id="visitors-charts" height="300"></canvas>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js">	
+    </script>
+    <script>
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for employer in allemployers %}"{{ employer.company }}" ,{% endfor %}],
+            datasets: [{
+                label: 'job statistics',
+                data: [{% for employer in allemployers %} {{ employer.job_set.all.count }} ,{% endfor %}],
+                backgroundColor: [
+                    '#33FF5B',
+                    '#5B33FF',
+                    '#5B33FF',
+                    '#33FF5B',
+    
+                    // 'rgba(255, 99, 132, 0.2)',
+                    // 'rgba(54, 162, 235, 0.2)',
+                    // 'rgba(255, 206, 86, 0.2)',
+                    // 'rgba(75, 192, 192, 0.2)',
+                   
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var job = document.getElementById('jobchart');
+    var jobchart = new Chart(job, {
+        type: 'pie',
+        data: {
+            labels: [{% for job in alljobs %}"{{ job.title }}" ,{% endfor %}],
+            datasets: [{
+                label: 'job statistics',
+                data: [{% for job in alljobs %} {{ job.jobapplication_set.all.count }} ,{% endfor %}],
+                backgroundColor: [
+                    'purple',
+                    'red',
+                    'blue',
+                    'green',
+                    'violet',
+                    'brown'
+    
+                    // 'rgba(255, 99, 132, 0.2)',
+                    // 'rgba(54, 162, 235, 0.2)',
+                    // 'rgba(255, 206, 86, 0.2)',
+                    // 'rgba(75, 192, 192, 0.2)',
+                   
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+</body>     
+</html>    
+{% endblock %}
+

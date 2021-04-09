@@ -3,6 +3,7 @@ from .models import *
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 # from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
 from bootstrap_modal_forms.forms import BSModalForm
+import django_filters
 
 
 
@@ -18,13 +19,6 @@ class UserForm(forms.ModelForm):
     lname= forms.CharField(widget= forms.TextInput(attrs={'placeholder':'Enter your last name'}))
     email= forms.EmailField(widget= forms.EmailInput(attrs={'placeholder':'Enter your email'}))
     image = forms.ImageField()
-        # username = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'username'}))
-    # password = forms.CharField(widget = forms.PasswordInput(attrs={'placeholder': 'password'}))
-    # confirm_password = forms.CharField(widget = forms.PasswordInput(attrs={'placeholder': 'confirm password'}))
-    # fname = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'first name'}))
-    # lname = forms.CharField(widget = forms.CharField(attrs={'placeholder': 'last name'}))
-    # email = forms.CharField(widget = forms.EmailField(attrs={'placeholder': 'enter email'}))
-
 
     class Meta:
         model = NormalUser
@@ -51,6 +45,14 @@ class UserForm(forms.ModelForm):
         return confirm_password
 
 
+    #check the validation of email
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email.endswith('@gmail.com'):
+            raise forms.ValidationError("Provide a valid email address")
+        if User.objects.filter(email=email):
+            raise forms.ValidationError("Email already exists")
+        return email
 
 
 """=======================================
@@ -108,3 +110,10 @@ class QuestionLikeForm(forms.ModelForm):
 
 
        
+"""
+Question search
+"""
+class QuestionFilter(django_filters.FilterSet):
+    class Meta:
+        model = Question
+        fields = ['question']

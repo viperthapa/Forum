@@ -3,45 +3,56 @@
     <input type="hidden" name="question_id" value="{{ answer.question.id }}">
 
     <input type="hidden" name="a_id" value="{{ answer.id }}">
-    {% if request.user not in answer.like_answer.all %}    
-        <button class="btn btn-outline-dark btn-sm ml-2">like</button>
+    {% if request.user not in answer.like_answer.all %}
+    <button class="btn btn-outline-dark btn-sm ml-2">like</button>
 
-        <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
+    <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
     {% else %}
-        <button class="btn btn-outline-dark btn-sm ml-2">liked</button>
+    <button class="btn btn-outline-dark btn-sm ml-2">liked</button>
 
     {% endif %}
-    
+
     <span class="pull-right text-muted">{{ answer.like_answer.count }}likes</span>
-    
+
 
     <br>
 
-        <span style="margin-left: 770px;">
-            {% if answer.user_a.user.username == request.user.username %}
-            <button type="button" class="update-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerupdate' answer.pk %}">
+    <span style="margin-left: 770px;">
+        {% if answer.user_a.user.username == request.user.username %}
+        <button type="button" class="update-answer btn btn-sm btn-dark"
+            data-id="{% url 'forumapp:answerupdate' answer.pk %}">
             <span class="fa fa-pencil"></span></button>
-            {% endif %}
-            {% if answer.question.user_q.user.username == questions.user_q.user.username and answer.question.user_q.user.username == request.user.username  or answer.user_a.user.username == request.user.username  %}
+        {% endif %}
+        {% if answer.question.user_q.user.username == questions.user_q.user.username and answer.question.user_q.user.username == request.user.username  or answer.user_a.user.username == request.user.username  %}
 
-                <button type="button" class="delete-answer btn btn-sm btn-dark" data-id="{% url 'forumapp:answerdelete' answer.pk %}">
-                <span class="fa fa-trash"></span></button>
-            {% endif %}
-            <!-- <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><button style="display:inline-block;" class="text-default btn btn-dark"><i class="fa fa-edit fa-1x"></i></button></a>&nbsp;&nbsp; -->
-            <!-- <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p> -->
-        </span>
+        <button type="button" class="delete-answer btn btn-sm btn-dark"
+            data-id="{% url 'forumapp:answerdelete' answer.pk %}">
+            <span class="fa fa-trash"></span></button>
+        {% endif %}
+        
+
+
+        <!-- <a data-id="{% url 'forumapp:answerupdate' answer.pk %}" class="update-answer" ><button style="display:inline-block;" class="text-default btn btn-dark"><i class="fa fa-edit fa-1x"></i></button></a>&nbsp;&nbsp; -->
+        <!-- <p style="display:inline-block;" class="text-dark"><i class="fa fa-trash"></i></p> -->
+    </span>
+
 
 </form>
 <script type="text/javascript">
     // Update answer buttons
     $(".update-answer").each(function () {
-        $(this).modalForm({formURL: $(this).data('id')});
+        $(this).modalForm({
+            formURL: $(this).data('id')
+        });
     });
 
 
     // Delete book buttons
-          $(".delete-answer").each(function () {
-        $(this).modalForm({formURL: $(this).data('id')});
-      })
+    $(".delete-answer").each(function () {
+        $(this).modalForm({
+            formURL: $(this).data('id')
+        });
+    })
 
+    //mark as the best answer
 </script>

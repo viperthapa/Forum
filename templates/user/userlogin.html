@@ -164,13 +164,25 @@
 
                     <div class="field-wrap">
                         <p>{{ form.email }}</p>
+                        {% if form.errors.email %}
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <span style="color: red;">{{ form.errors.email }}</span> 
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endif %}
+
                         
                         <!-- <input class="text-secondary" name="username" type="text" value="{{ username }}" placeholder="enter username"/> -->
                     </div>
         
                     <div class="field-wrap">
                         <p>{{ form.username }}</p>
-                        <span>{{ form.errors.username }}</span>
+                        {% if form.errors.username %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <span style="color: red;">{{ form.errors.username }}</span> 
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                        {% endif %}
 
                         
                         <!-- <input class="text-secondary" name="email" type="text" value="{{ email }}" placeholder="enter email"/> -->
@@ -184,7 +196,12 @@
                     </div>
                     <div class="field-wrap">
                         <p>{{ form.confirm_password }}</p>
-                        <span>{{ form.errors.confirm_password }}</span>
+                        {% if form.errors.confirm_password %}
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <span style="color: red;">{{ form.errors.confirm_password }}</span> 
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                        {% endif %}
 
                         <!-- <input class="text-secondary" name="password" value="{{ password }}" placeholder="confirm password" type="password"/> -->
                     </div>

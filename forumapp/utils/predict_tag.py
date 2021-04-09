@@ -83,7 +83,7 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 
 #training the given models for 700 times as number of epochs helps to find accuaracy
-model.fit(training, output, n_epoch=400, batch_size=8, show_metric=True)
+model.fit(training, output, n_epoch=5, batch_size=8, show_metric=True)
 model.save("model.tflearn")
 
 
@@ -103,7 +103,6 @@ def bag_of_words(s, words):
     return numpy.array(bag)
 
 def predict_tag(question):
-    print('executed in this')
     for question in question:
         results = model.predict([bag_of_words(question, words)])
         results_index = numpy.argmax(results)

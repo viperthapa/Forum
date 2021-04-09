@@ -79,7 +79,7 @@ class Answer(models.Model):
     answer = models.TextField()
     date_created = models.DateTimeField(auto_now = True)
     date_updated = models.DateTimeField(auto_now = True)
-    mark_best = models.IntegerField(default=0)
+    mark_best = models.BooleanField(default=False)
     like_answer = models.ManyToManyField(User, related_name='likes_answer',default=None,blank=True)
 
 

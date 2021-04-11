@@ -90,6 +90,15 @@ urlpatterns = [
 
      path('admin/view-users/',UserView.as_view(),name='userview'),
 
+     #user delete
+     path('admin/users/delete/<int:pk>/',
+         UserDeleteView.as_view(), name='userdelete'),
+
+         #deleteview of answer
+     path('admin/question/delete/<int:pk>/',
+         QuestionAdminDeleteView.as_view(), name='question-admin-delete'),
+
+
      
      
 

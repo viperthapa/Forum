@@ -48,14 +48,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
             <!-- /.navbar-header -->
             
+
+
+            
             <ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-                        
-	        		<a href="#" style="color: white;" data-toggle="dropdown">Welcome : {{ request.user.username }}</a>
-	        		<ul class="dropdown-menu">
-						<li class="m_2"><a href=""><i class="fa fa-lock"></i> Logout</a></li>	
-                        <p>ram</p>
-	        		</ul>
+                    <a href="{% url 'forumapp:logout' %}" style="color:white;font-size: 25px;">logout</a>
+
 	      		</li>
 			</ul>
 			
@@ -94,6 +93,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="graphs">
 
         {% block content %}
+            
         {% endblock %}
 
 		
@@ -101,6 +101,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
        </div>
       <!-- /#page-wrapper -->
    </div>
-    
+
+   <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+            }
+        }
+    </script>
+   
 </body>
 </html>

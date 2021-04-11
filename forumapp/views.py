@@ -19,7 +19,7 @@ from django.http import JsonResponse
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
+from autocorrect import Speller
 
 """
 Homepage
@@ -122,7 +122,10 @@ def LoginFormView(request):
         if user:
             if user is not None:
                 login(request,user)
-                return HttpResponseRedirect(reverse('forumapp:home'))
+                if user.is_superuser:
+                    return HttpResponseRedirect(reverse('forumapp:adminhome'))
+                else:
+                    return HttpResponseRedirect(reverse('forumapp:home'))
         else:
             return render(request,'user/login.html',{
                 'messages': 'Your username doesnot exist',
@@ -215,10 +218,14 @@ def QuestionConfirmView(request):
 
         # Receive data from client
         question = request.POST.get('myquestion')
-        tool = language_check.LanguageTool('en-US')
-        texts = question
-        matches = tool.check(texts)
-        confirm_ques = language_check.correct(texts, matches)
+        spell = Speller(lang='en')
+        confirm_ques = spell(question)
+        print("confirm_ques###########",confirm_ques)
+        # tool = language_check.LanguageTool('en-US')
+        # texts = question
+        # matches = tool.check(texts)
+        # confirm_ques = language_check.correct(texts, matches)
+
 
         
         context = {
@@ -505,7 +512,7 @@ logout
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('/')
+        return redirect('/login/user/')
 
 
 """
@@ -589,10 +596,7 @@ class QuestionView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['myuser'] = NormalUser.objects.all()    
         context['answers'] = Answer.objects.all()
-        context['questions'] = Question.objects.all()[:15]
-
-
-
+        context['questions'] = Question.objects.all().order_by("-id")[:15]
         return context
     
 
@@ -671,8 +675,27 @@ class AdminHome(TemplateView):
         context['inf'] = category.count("Information and technology")
         context['spo'] = category.count("sports")
         print("polll",context['pol'])
-
-
-
         return context
+
+
+
+class UserDeleteView(SuccessMessageMixin,DeleteView):
+    """
+    user delete
+    """
+    template_name = 'admintemplates/user-delete.html'
+    model = NormalUser
+    success_url = reverse_lazy("forumapp:userview")
+    success_message = 'User has been successfully  deleted.'
+
+
+class QuestionAdminDeleteView(SuccessMessageMixin,DeleteView):
+    """
+    Question delete
+    """
+    template_name = 'admintemplates/admin-question-delete.html'
+    model = Question
+    success_url = reverse_lazy("forumapp:questionview")
+    success_message = 'Question has been successfully  deleted.'
+
 

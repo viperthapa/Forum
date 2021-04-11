@@ -9,18 +9,24 @@
 </head>
 
 <body class="body">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="w-100 h-50" id="messages" style="margin-left: 16em;padding:0.5rem;background-color: blue;color: white;">
+
+                {{ message|safe }}
+            </li>
+        {% endfor %}
+    {% endif %}
     <br>
+    <br>
+    <div class="modal" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
     <div class="content">
         <div class="container-fluid">
-            <div class="row mb-3">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
@@ -35,16 +41,23 @@
         
                                 </tr>
                             </thead>
-                            {% for ans in answers %}
+                            {% for ques in questions %}
                             <tbody>
                                 <tr>
                                     <th scope="row">{{forloop.counter}}</th>
-                                    <td>{{ans.user_a}}</td>
-                                    <td>{{ans.question}}</td>
-                                    <td>{{ans.answer}}</td>
+                                    <td>{{ques.user_q.fname}}</td>
+                                    <td>{{ques.question}}</td>
                                     <td>
-                                        <button type="button" id="delete-questions" class="delete-question btn btn-sm btn-dark" data-id="{% url 'forumapp:question_delete' ans.pk %}">
-                                            <span class="fa fa-pencil"></span></button>
+                                        {% for ans in ques.related_question.all %}
+                                            {% if ans %}{{forloop.counter}}.{{ans.answer}}<br>{% else %}None{% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        <a>
+                                            <button class="del-ques btn-primary" type='button' data-id="{% url 'forumapp:question-admin-delete' ques.pk %}">
+                                            <i class="fa fa-trash"></i>
+                                            </button>
+                                        </a>
                                     </td>
         
         
@@ -62,16 +75,28 @@
     <script src="{% static 'js/modal/bootstrap.min.js' %}"></script>
     <!-- You can alternatively load the minified version -->
     <script src="{% static 'js/modal/jquery.bootstrap.modal.forms.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         
   
          // Delete book buttons
-         console.log("ra,")
-        $("#delete-questions").each(function () {
-            $(this).modalForm({formURL: $(this).data('id')});
-        console.log("testst")
+         console.log("hehe")
+    //delete
+    $(".del-ques").each(function () {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
 
-      })
+    // #sucess messages hide
+    var message_ele = document.getElementById("messages");
+    console.log("message_ele",message_ele)
+    setTimeout(function(){ 
+        message_ele.style.display = "none"; 
+    }, 3000);
+    // Timeout is 3 sec, you can change it 
+
     </script>
 </body>
 

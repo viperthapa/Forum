@@ -4,23 +4,21 @@
 <html>
 
 <head>
+
     <title>View User</title>
 
 </head>
 
 <body class="body">
+    <div class="modal" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
     <br>
+    <!-- modal pop up end  -->
     <div class="content">
         <div class="container-fluid">
-            <div class="row mb-3">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
@@ -48,8 +46,12 @@
                                             <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%">
                                         </td>
                                         <td>
-                                            <button type="button" id="delete-question btn btn-sm btn-dark" data-id="">
-                                                <span class="fa fa-pencil"></span></button>
+                                            <a><button class="delete-user btn-primary" type='button' data-id="{% url 'forumapp:userdelete' user.pk %}">
+                                                <i class="fa fa-trash"></i>
+                                                </button>
+                                            </a>
+                                            <!-- <button type="button" id="delete-user btn btn-sm btn-dark" data-id="">
+                                                <span class="fa fa-pencil"></span></button> -->
                                         </td>
             
             
@@ -67,16 +69,19 @@
     <script src="{% static 'js/modal/bootstrap.min.js' %}"></script>
     <!-- You can alternatively load the minified version -->
     <script src="{% static 'js/modal/jquery.bootstrap.modal.forms.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         
   
          // Delete book buttons
-         console.log("ra,")
-        $(".delete-question").each(function () {
-            $(this).modalForm({formURL: $(this).data('id')});
-        console.log("testst")
-
-      })
+         console.log("hehe")
+    //delete
+    $(".delete-user").each(function () {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
     </script>
 </body>
 

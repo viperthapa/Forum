@@ -7,20 +7,20 @@
     {% if request.user.is_authenticated %}
     
         {% if request.user not in reply.like_answer.all %}    
-            <button class="btn btn-outline-dark btn-sm ml-2">like</button>
+            <button class="btn btn-outline-dark btn-sm ml-2">like1</button>
 
             <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
         {% else %}
-            <button class="btn btn-outline-dark btn-sm ml-2">liked</button>
+            <button class="btn btn-outline-dark btn-sm ml-2">liked1</button>
 
         {% endif %}
     {% else %}
         {% if request.user not in reply.like_answer.all %}    
-            <button class="btn btn-outline-dark btn-sm ml-2" disabled>like</button>
+            <button class="btn btn-outline-dark btn-sm ml-2" disabled>like2</button>
 
                 <!-- <button type="button" name="button" class="btn btn-outline-dark btn-sm ml-2">like</button> -->
         {% else %}
-                <button class="btn btn-outline-dark btn-sm ml-2" disabled>liked</button>
+                <button class="btn btn-outline-dark btn-sm ml-2" disabled>liked2</button>
 
         {% endif %}
 

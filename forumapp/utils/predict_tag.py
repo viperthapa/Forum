@@ -47,7 +47,6 @@ training = [] #for patterns
 output = [] #for tags
 
 out_empty = [0 for _ in range(len(labels))] #intaializing the labels with all 0
-print("ou empty",out_empty)
 
 for x, doc in enumerate(docs_x):
     bag = []
@@ -89,7 +88,6 @@ model.save("model.tflearn")
 
 #coverting the user input into bag of words
 def bag_of_words(s, words):
-    print(s)
     bag = [0 for _ in range(len(words))]
 
     s_words = nltk.word_tokenize(s)
@@ -102,16 +100,17 @@ def bag_of_words(s, words):
             
     return numpy.array(bag)
 
+
 def predict_tag(question):
-    for question in question:
-        results = model.predict([bag_of_words(question, words)])
-        results_index = numpy.argmax(results)
-        tag = labels[results_index]
-        print("tag",tag)
+    print("question@@@@@@@@@@@",question)
+    print("question$$$$$$$$$$$$",words)
+    results = model.predict([bag_of_words(question, words)])
+    print("results",results)
+    results_index = numpy.argmax(results)
+    tag = labels[results_index]
+    print("tag###############3",tag)
+    return tag
 
-        return tag
-
-# predict()
 
 
 

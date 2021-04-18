@@ -166,11 +166,11 @@
     <!-- top bar  -->
     <div class="col-md-8 bootstrap snippets">
         <!-- ask questions   -->
-       <a><a class="add-btn">
+        {% if user.is_authenticated %} 
+        <a class="add-btn">
             <div class="card">
                 
                 <div class="card-body">
-                   {% if user.is_authenticated %} 
                         {% for user in users %}
                             {% if request.user.username == user.user.username %}
                             <h5 class="card-title"><img style="border-radius: 50px" src="{{ user.image.url }}" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5>
@@ -178,15 +178,13 @@
                             <!-- <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%"> -->
                             {% endif %}
                         {% endfor %}
-                    <!-- {{ profile }} -->
-                    <!-- <h5 class="card-title"><img style="border-radius: 50px" src="https://bootdey.com/img/Content/avatar/avatar3.png" width="35px" height="45px">&nbsp;&nbsp;{{ request.user }}</h5> -->
-                   {% endif %} 
                     <h4 class="card-text text-dark ml-4">What is your questions ?</h4>
                     
                 </div>
             </div>
             
-        <a> </a>  
+        </a>  
+        {% endif %}
        
         <div class="panel">
           <div class="panel-body">

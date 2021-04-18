@@ -18,7 +18,7 @@
                 
                 <div class="modal-body">
                         {% if n.user %}
-                        <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i><span><b>{{ n.user.fname }}</b> commented in your questions <b><a></a>{{ n.question.question }}</b></span>
+                        <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i><span><b>{{ n.user.fname }}</b> commented in your questions <b><a class="text-dark" href="{% url 'forumapp:questiondetail' n.question.id %}">{{ n.question.question }}</a></b></span>
                         {% else %}
                         <i class="fa fa-thumbs-up fa-sm"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span><b>{{ n.like.user.username }}</b> liked your questions <b>{{ n.question.question }}</b></span>
                         {% endif %}

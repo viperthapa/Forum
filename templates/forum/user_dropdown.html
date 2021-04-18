@@ -48,7 +48,7 @@
     <!-- <a style = "margin-left: 15px;font-size: 30px;color: black;" href="{% url 'forumapp:register' %}"><i class="fa fa-user-circle"></i></a> -->
     {% for user in users %}
       {% if request.user.username == user.user.username %}
-      <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%">
+      <img src="{{ user.image.url }}" alt="img" style="width:80px;border-radius:80%;height: 90px;">
       {% endif %}
     {% endfor %}
 

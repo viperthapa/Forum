@@ -36,7 +36,9 @@
                                     <th scope="col">S.N</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Question</th>
+                                    <th scope="col">Category</th>
                                     <th scope="col">Answer</th>
+                                    <th scope="col">Likes</th>
                                     <th scope="col">Delete</th>
         
                                 </tr>
@@ -47,11 +49,13 @@
                                     <th scope="row">{{forloop.counter}}</th>
                                     <td>{{ques.user_q.fname}}</td>
                                     <td>{{ques.question}}</td>
+                                    <td>{{ques.category}}</td>
                                     <td>
                                         {% for ans in ques.related_question.all %}
                                             {% if ans %}{{forloop.counter}}.{{ans.answer}}<br>{% else %}None{% endif %}
                                         {% endfor %}
                                     </td>
+                                    <td>{{ques.like_question.count}}</td>
                                     <td>
                                         <a>
                                             <button class="del-ques btn-primary" type='button' data-id="{% url 'forumapp:question-admin-delete' ques.pk %}">

@@ -17,26 +17,20 @@
             {% include 'forum/sidebar.html' %}
         </div>
         <div class="col-lg-9">
-            
+            <br><br>
             {% if education %}
-                <p>education</p>
                 {% include 'category/education.html' %}
             {% elif sports %}
-                <p>sports</p>
                 {% include 'category/sports.html' %}
             
             {% elif politics %}
-                <p>politics</p>
                 {% include 'category/politics.html' %}
             {% elif fashion %}
-                <p>politics</p>
                 {% include 'category/fashion.html' %}
             {% elif health %}
-                <p>health</p>
                 {% include 'category/health.html' %}
             
             {% elif it %}
-                <p>politics</p>
                 {% include 'category/it.html' %}
             {% else %}
                 <p></p>

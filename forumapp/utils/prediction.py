@@ -52,6 +52,7 @@ def prediction(confirm_question):
     #iteration of every list
     one_array = list(chain.from_iterable(a)) 
     one_array.append(confirm_question)
+    print("categories@@@@@@@@@@@@@@@@@@@@@@@@@",categories)
 
     #removing all the stop words and other unnecssary databases
     for i in range(len(one_array )):

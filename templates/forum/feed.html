@@ -47,7 +47,7 @@
             background: white;
             ;
             position: relative;
-            padding: 20px 25px;
+            padding: 20px 45px;
             border-radius: 6px
         }
 
@@ -220,13 +220,6 @@
                                 <!-- begin timeline -->
                                 <ul class="timeline">
                                     <li>
-                                        <!-- begin timeline-time -->
-
-                                        <!-- end timeline-time -->
-                                        <!-- begin timeline-icon -->
-
-                                        <!-- end timeline-icon -->
-                                        <!-- begin timeline-body -->
                                         <div class="timeline-body">
                                             <div class="timeline-header">
                                                 {% if question.user_q.image %}<span class="userimage"><img
@@ -234,13 +227,16 @@
                                                 <span class="username"><a style="color: black;"
                                                         href="javascript:;">{{ question.user_q.fname }}</a>
                                                     <small></small></span>
+                                                <br>
+                                                <span style="color: black;"
+                                                    class="pull-right text-muted">{{ question.category }}</span>
                                                 <br><span
                                                     style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
-
-                                                <span style="color: black;"
-                                                    class="pull-right text-muted">{{ question.like_question.count }}likes</span>
+                                                <!-- <span style="color: black;"
+                                                    class="pull-right text-muted">{{ question.like_question.count }}likes</span> -->
+                                                
                                             </div>
-                                            <div class="timeline-content">
+                                            <div class="timeline-content"  style="margin: 30px 0px 60px 0px;">
 
                                                 <p>
                                                     <a style="color: black;" class="text-dark"
@@ -251,16 +247,11 @@
                                                     src="{{ question.image.url }}" alt="Card image cap">{% endif  %}
 
                                             </div>
-                                            <div class="timeline-likes">
-                                                <div class="stats-right">
-                                                    <!-- <span class="stats-text">259 Shares</span> -->
-                                                </div>
-
-                                            </div>
+                                            
                                             <div class="timeline-footer">
                                                 <!-- results.part_set.count() -->
 
-                                                <span class="#">
+                                                <span class="" style="padding-left: 120px !important;">
                                                     <form action="{% url 'forumapp:liked' %}" method="post">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="q_id" value="{{ question.id }}">
@@ -279,11 +270,11 @@
                                                                 class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>liked</button>
 
                                                         {% endif %}
-                                                        <a href="#comment" class="m-r-15 text-inverse-lighter"
+                                                        <a href="{% url 'forumapp:questiondetail' question.id %}" class="m-r-15 text-inverse-lighter"
                                                             style="padding-right: 160px;"><i
                                                                 class="fa fa-comments fa-fw fa-lg m-r-3"></i>
                                                             {{ question.related_question.all.count }} Comments</a>
-                                                        <a href="#comment" class="m-r-15 text-inverse-lighter"><i
+                                                        <a href="#" class="m-r-15 text-inverse-lighter" style="padding-right: 0px;margin-right: 0px;"><i
                                                                 class="fa fa-eye fa-fw fa-lg m-r-3"></i>
                                                             {{ question.views }} views</a>
                                                         <!-- <strong>{{ question.like_question.count }}likes</strong>  -->
@@ -322,18 +313,3 @@
 
 
 </body>
-<!--sidebar end-->
-<!--
-  <form action="{% url 'forumapp:liked' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="q_id" value="{{ question.id }}">
-    {% if request.user not in question.like_question.all %}    
-         <a href="javascript:;" class="m-r-15 text-inverse-lighter" style="margin-left: 5px;padding-right: 200px;"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> like</a>&nbsp;&nbsp;
-     <button type="submit" class="btn btn-primary">Like</button> 
-    {% else %}
-      <button type="submit" class="btn btn-danger">Dislike</button>
-
-    {% endif %}
- <strong>{{ question.like_question.count }}likes</strong> 
-</form>
--->

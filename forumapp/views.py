@@ -273,7 +273,7 @@ def QuestionDetailView(request,pk):
     
     # answers = Answer.objects.filter(question=questions,reply=None).order_by('-id')
 
-    answers = Answer.objects.filter(question=questions,reply=None).annotate(like_count = Count('like_answer')).order_by('-like_count')
+    answers = Answer.objects.filter(question=questions,reply=None).annotate(like_count = Count('like_answer')).order_by('-mark_best')
 
     answer_count = Answer.objects.filter(question=questions) #count the answers
 
@@ -403,36 +403,51 @@ def LikeAnswerView(request):
 
         question_id = request.POST.get('question_id')
         a_id = request.POST.get('a_id')
-        # q_id = get_object_or_404(Question, id=request.POST.get('question_id'))
+        markbest_id = request.POST.get('markbest_id')
+        print("mark best id",markbest_id)
+        print("a id id",a_id)
 
-        answer = Answer.objects.get(id=a_id)
-        if user in answer.like_answer.all():
-            answer.like_answer.remove(user)
-        else:            
-            answer.like_answer.add(user)
-            answer.save()
-        like,created = Like.objects.get_or_create(user = user,answer_id = a_id) 
-        if not created:
-            if like.value == "like":
-                like.value == "unlike"
-            else:
-                like.value == "like"
-        like.save()
+
+        if a_id:
+            answer = Answer.objects.get(id=a_id)
+            if user in answer.like_answer.all():
+                answer.like_answer.remove(user)
+            else:            
+                answer.like_answer.add(user)
+                answer.save()
+            like,created = Like.objects.get_or_create(user = user,answer_id = a_id) 
+            if not created:
+                if like.value == "like":
+                    like.value == "unlike"
+                else:
+                    like.value == "like"
+            like.save()
+        else:
+            return None
 
     # return HttpResponseRedirect(request.path_info)
     return redirect(reverse('forumapp:questiondetail', kwargs={'pk': question_id}))
 
-    # return HttpResponseRedirect(a_id.get_absolute_url())
-
-    # return redirect('forumapp:home')
     
 
+@login_required(login_url='/login/user/')
+def AcceptAnswerView(request):
+    question_id = request.POST.get('question_id')
+    print("question id",question_id)
+    # question = Answer.objects.get(question_id = )
+    if request.method == "POST":
+        answer_id = request.POST.get('markbest_id',None)
+        print("mark best id",answer_id)
+        answer = Answer.objects.get(id=answer_id)
+        if answer.mark_best is False:
+            answer.mark_best = True
+            answer.save()
+        else:
+            answer.mark_best = False
+            answer.save()
+    return redirect(reverse('forumapp:questiondetail', kwargs={'pk': question_id}))
 
 
-
-    # user = request.user
-    # like_created = Like.objects.create(question = questions_id,user = user,is_read = True)
-    # print("like created",like_created)
 
    
 

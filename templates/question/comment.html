@@ -1,6 +1,15 @@
 <html>
 <head>
     <style>
+        .checkmark{
+             display: inline-block;
+              transform: rotate(45deg);
+              height: 25px;
+              width: 12px;
+              margin-left: 98%; 
+              border-bottom: 7px solid #78b13f;
+              border-right: 7px solid #78b13f;
+        }
 
     </style>
 </head>
@@ -25,9 +34,6 @@
 
 
         <br><br>
-        <!-- 
-        ############################# answerform ##############
-    -->
         {% for a in max_likes %}
         like:{{a.answer}}<br>
         <span class="pull-right text-muted">{{ a.like_answer.count }}likes</span>
@@ -37,7 +43,7 @@
 
         <hr>
 
-        {{ answer_count.count }} Comment{{ answers|pluralize }}<br><br>
+        {{ answer_count.count }} Answer{{ answers|pluralize }}<br><br>
         {% for answer in answers %}
 
         <blockquote class="blockquote">
@@ -45,21 +51,26 @@
             question id{{ answer.question.id }} -->
 
 
+            <!-- mark as best answer -->
+            {% if answer.mark_best %}
+                <div class="checkmark"></div>
+            {% endif %}
+
             <p class="mb-0"><small>{{ answer.answer }}</small></p>
+
+
 
 
             <span>
 
             </span>
-            <footer class="blockquote-footer"><small>by <cite
+            <footer class="pl-2">- <small>by <cite
                         title="Source Title">{{ answer.user_a|capfirst }}</cite></small>
-                <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2"
-                    style="display: inline-block;">Reply</button>
-
-                <button
-                    style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_answer.html' %}</button>
-
-                {% include 'answer/mark_best.html' %}
+                <!-- <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2"
+                    style="display: inline-block;">Reply</button> -->
+                <br>
+                <br>
+                <button style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_answer.html' %}</button>
 
                 <hr>
 
@@ -73,7 +84,7 @@
         
     ################################    replyform  ###########################
     -->
-        <div class="reply-next" style="display: none;">
+        <div class="#" style="display: none;">
             {% for reply in answer.replies.all %}
             <!-- {{ reply.question.id }} -->
 
@@ -81,8 +92,6 @@
                 <p class="mb-0"><small>{{ reply.answer }}ram</small></p><br>
                 <footer class="blockquote-footer"><small>by <cite
                             title="Source Title">{{ reply.user_a|capfirst }}</cite></small>
-                    <button type="button" name="button" class="reply-btn btn btn-outline-dark btn-sm ml-2"
-                        style="display: inline-block;">Reply</button>
 
                     <button
                         style="background: none;border: none;margin: 0px;padding: 0px;">{% include 'question/like_reply.html' %}</button>

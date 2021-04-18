@@ -43,6 +43,10 @@ urlpatterns = [
 
     path('user/like/answer/',views.LikeAnswerView,name="liked_answer"),
 
+    #mark as best answer
+    path('accept/answer/',views.AcceptAnswerView,name="accept_answer"),
+
+
     #editview of answer
     path('answer/update/<int:pk>/',
          AnswerUpdateView.as_view(), name='answerupdate'),

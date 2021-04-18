@@ -1,4 +1,5 @@
-1.login error messages to red
-2.admin dashboard integration using datatables
-3.regoster error messages to red
+1.rating should be added 
+2.user dashboard
+3.cosine similarity
+
 

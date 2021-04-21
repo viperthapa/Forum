@@ -13,6 +13,7 @@ from django.db.models import Q
 from django.template.context import RequestContext
 from django.contrib.messages.views import SuccessMessageMixin
 from forumapp.utils.predict_tag import predict_tag
+
 # Create your views here.
 import language_check
 from django.http import JsonResponse

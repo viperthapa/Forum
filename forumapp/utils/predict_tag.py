@@ -8,7 +8,8 @@ from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 from tensorflow.python.framework import ops
 from nltk.corpus import stopwords
-
+import tensorflow as tf
+import keras
 
 #load the json files
 with open(r"/home/ramthapa/Documents/7th_project/forum.json",'r') as file:
@@ -47,7 +48,7 @@ training = [] #for patterns
 output = [] #for tags
 
 out_empty = [0 for _ in range(len(labels))] #intaializing the labels with all 0
-
+print("training",training)
 for x, doc in enumerate(docs_x):
     bag = []
 
@@ -70,6 +71,10 @@ for x, doc in enumerate(docs_x):
 training = numpy.array(training)
 output = numpy.array(output)
 
+print("output",output)
+print("training",training)
+
+
 
 #training a given model using tf
 ops.reset_default_graph()
@@ -80,10 +85,13 @@ net = tflearn.fully_connected(net, len(output[0]), activation="softmax")
 net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
-
 #training the given models for 700 times as number of epochs helps to find accuaracy
 model.fit(training, output, n_epoch=5, batch_size=8, show_metric=True)
 model.save("model.tflearn")
+
+print("output",net)
+print("training",training)
+
 
 
 #coverting the user input into bag of words
@@ -106,10 +114,21 @@ def predict_tag(question):
     print("question$$$$$$$$$$$$",words)
     results = model.predict([bag_of_words(question, words)])
     print("results",results)
+    
     results_index = numpy.argmax(results)
     tag = labels[results_index]
     print("tag###############3",tag)
-    return tag
+    index = results_index
+    print(index,"******************************")
+
+    index_value = results[0][index]
+    print("index_value",index_value)
+
+
+    # prediction = tf.math.argmax(results_index, axis=1)
+    # print("prediction",prediction)
+    return None
+    
 
 
 

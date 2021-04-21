@@ -1,0 +1,67 @@
+[{
+    "model": "forumapp.normaluser",
+    "pk": 5,
+    "fields": {
+        "user": 6,
+        "fname": "ram",
+        "lname": "thapa",
+        "email": "ramthapa@gmail.com",
+        "image": "user/IMG_0810.JPG",
+        "date_created": "2021-04-11T07:14:04.769Z"
+    }
+}, {
+    "model": "forumapp.normaluser",
+    "pk": 6,
+    "fields": {
+        "user": 7,
+        "fname": "sam",
+        "lname": "thapa",
+        "email": "sam@gmail.com",
+        "image": "user/Cropped_20201108_211921.jpg",
+        "date_created": "2021-04-11T07:14:47.950Z"
+    }
+}, {
+    "model": "forumapp.normaluser",
+    "pk": 7,
+    "fields": {
+        "user": 8,
+        "fname": "hari",
+        "lname": "thapa",
+        "email": "hari@gmail.com",
+        "image": "user/IMG_0660.JPG",
+        "date_created": "2021-04-11T07:15:25.422Z"
+    }
+}, {
+    "model": "forumapp.normaluser",
+    "pk": 8,
+    "fields": {
+        "user": 9,
+        "fname": "richa",
+        "lname": "khadka",
+        "email": "richa@gmail.com",
+        "image": "user/khadka.jpg",
+        "date_created": "2021-04-13T01:03:25.807Z"
+    }
+}, {
+    "model": "forumapp.normaluser",
+    "pk": 9,
+    "fields": {
+        "user": 10,
+        "fname": "shreya",
+        "lname": "pokhrel",
+        "email": "shreya@gmail.com",
+        "image": "user/IMG_0696.JPG",
+        "date_created": "2021-04-15T00:51:50.276Z"
+    }
+}, {
+    "model": "forumapp.normaluser",
+    "pk": 10,
+    "fields": {
+        "user": 11,
+        "fname": "richa",
+        "lname": "khadka",
+        "email": "richa@gmail.com",
+        "image": "user/khadka_po9tiPy.jpg",
+        "date_created": "2021-04-15T14:59:54.985Z"
+    }
+}]

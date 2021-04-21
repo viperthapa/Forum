@@ -46,6 +46,9 @@ class Question(models.Model):
     date_updated = models.DateTimeField(auto_now = True,null=True)
     views = models.PositiveIntegerField(default=0,null=True)
     questions_updated = models.BooleanField(default=False)
+    accuracy = models.DecimalField(max_digits=20, decimal_places=4, default=0.0)
+
+
 
 
     class Meta:

@@ -40,9 +40,6 @@ INSTALLED_APPS = [
     'forumapp',
     'bootstrap_modal_forms',
     'widget_tweaks',
-    'django_summernote',
-    'import_export',
-    'django_filters',
 
 ]
 

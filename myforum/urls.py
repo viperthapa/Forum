@@ -21,7 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("forumapp.urls")),
     #include django summernote
-    path('summernote/',include('django_summernote.urls')),
 
 
 ]

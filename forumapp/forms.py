@@ -1,6 +1,5 @@
 from django import forms
 from .models import *
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 # from bootstrap_modal_forms.mixins import PopRequestMixin, CreateUpdateAjaxMixin
 from bootstrap_modal_forms.forms import BSModalForm
 import django_filters

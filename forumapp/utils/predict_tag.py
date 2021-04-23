@@ -86,7 +86,7 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 #training the given models for 700 times as number of epochs helps to find accuaracy
-model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
+model.fit(training, output, n_epoch=5, batch_size=8, show_metric=True)
 model.save("model.tflearn")
 
 print("output",net)

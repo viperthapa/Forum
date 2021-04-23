@@ -36,23 +36,23 @@
             "digital codes to audio signals and vice versa, your computer",
             "memory types in decreasing order of their accessing speed?",
             "utility program", "4G wireless technology, expand LTE",
-            "First Automatic Teller Machine Access The Machine","access point",
-            "accessibility","ActiveX","application","ASCII file","AT command set","bandwidth","BCP",
-            "binary file","BinHex","bit","bluetooth","BMP","bookmark","boolean logic","browser","buffered",
-            "cable modem","cache","captcha","CD-ROM","CGI","chat","client","cloud computing","cookie",
-            "daemon","database","data center","defragmentation","directory","DNS","domain","EAP",
-            "e-mail","emoticon","emulation","Ethernet","EPS","finger","firewall",
-            "FireWire","flash drive","flash memory",
-            "font","GIF","gigabyte (Gig or GB)","GPS","greyware","GUI","hard disk","hardware",
-            "help desk","eLearning","e-mail","emulation","encryption","Ethernet","expansion card",
-            "firewall","FireWire","GPS",
-            "greyware","hardware","HTML","HTTP","hyperlink","hypertext","IMAP","Internet","Internet Domain Management",
-            "IP address","IRC","IRQ","Java","JavaScript","JPEG","Kbps","Kerberos","LAN",
-            "laser printer","LINUX","ListProcessor","MaaS","MAC","Macintosh","network","network adapter","network hub",
-            "online","OpenType","packet","palette","password","PDA","program","PPP","protocol",
-            "RAM","registry","router","SaaS","SMTP","spam","SSID","TCP/IP","token","Twitter",
-            "twisted pair cable","two-factor authentication","username","URL","VoIP","VPN",
-            "Windows","wireless (networking)","XHTML","python","django","XML","WYSIWYG","WWW","WPA"
+            "First Automatic Teller Machine Access The Machine", "access point",
+            "accessibility", "ActiveX", "application", "ASCII file", "AT command set", "bandwidth", "BCP",
+            "binary file", "BinHex", "bit", "bluetooth", "BMP", "bookmark", "boolean logic", "browser", "buffered",
+            "cable modem", "cache", "captcha", "CD-ROM", "CGI", "chat", "client", "cloud computing", "cookie",
+            "daemon", "database", "data center", "defragmentation", "directory", "DNS", "domain", "EAP",
+            "e-mail", "emoticon", "emulation", "Ethernet", "EPS", "finger", "firewall",
+            "FireWire", "flash drive", "flash memory",
+            "font", "GIF", "gigabyte (Gig or GB)", "GPS", "greyware", "GUI", "hard disk", "hardware",
+            "help desk", "eLearning", "e-mail", "emulation", "encryption", "Ethernet", "expansion card",
+            "firewall", "FireWire", "GPS",
+            "greyware", "hardware", "HTML", "HTTP", "hyperlink", "hypertext", "IMAP", "Internet", "Internet Domain Management",
+            "IP address", "IRC", "IRQ", "Java", "JavaScript", "JPEG", "Kbps", "Kerberos", "LAN",
+            "laser printer", "LINUX", "ListProcessor", "MaaS", "MAC", "Macintosh", "network", "network adapter", "network hub",
+            "online", "OpenType", "packet", "palette", "password", "PDA", "program", "PPP", "protocol",
+            "RAM", "registry", "router", "SaaS", "SMTP", "spam", "SSID", "TCP/IP", "token", "Twitter",
+            "twisted pair cable", "two-factor authentication", "username", "URL", "VoIP", "VPN",
+            "Windows", "wireless (networking)", "XHTML", "python", "django", "XML", "WYSIWYG", "WWW", "WPA"
 
          ]
       },
@@ -88,9 +88,9 @@
             "women get more tooth problems during pregnancy?", "heart attacks always cause chest pain?", " cancer mortality rates rising?",
             "most harmful pseudo-science?", "healthier than whole fruit?", "hydrogen peroxide be used to treat wounds?",
             "corona virus", "corona virus", "corona virus", "covid 19", "covid-19", "santizer", "mask",
-            "OSHA","wellness","revive","recovery","HMO","break","delicate","bad",
-            "rehabilitate","toast","undernourished","rally","fit","DPH","fat farm","noisome","dietetics","NHS","do","relapse","convalescent",
-            "regimen","hypochondria","good","Best","public health","health care","fitness","HSE","frailty","infirm","pine","shape","ash","inquire","fitness","HSE","frailty","infirm","pine","shape","ash","inquire",
+            "OSHA", "wellness", "revive", "recovery", "HMO", "break", "delicate", "bad",
+            "rehabilitate", "toast", "undernourished", "rally", "fit", "DPH", "fat farm", "noisome", "dietetics", "NHS", "do", "relapse", "convalescent",
+            "regimen", "hypochondria", "good", "Best", "public health", "health care", "fitness", "HSE", "frailty", "infirm", "pine", "shape", "ash", "inquire", "fitness", "HSE", "frailty", "infirm", "pine", "shape", "ash", "inquire"
          ]
       },
       {
@@ -118,8 +118,12 @@
             "purpose of education", "parents and community members to support my students", "social media ‘do’ in education?",
             "best college in kathmandu", "what is the most important part in bsccsit", "teacher's personality affect their success",
             "teaching career", "online course effective", "technology in education", "quality of online courses", " bills were passed in Rajya Sabha in the winter session of Parliament?",
-            ""
-
+            "teaching", "pedagogy", "instruction", "training", "department of education", "breeding", "education department", "Educational Activity", "curriculum", "schooling", "literacy", "curricula", "schools", "educator",
+            "E-Learning", "E-Literate", "E-Refund", "Early Alert", "Education Reform", "Education Research", "Education System", "Educational Psychology", "Educational Technology", "ELL Students", "Entry/Exit Ticket", "Exit Exam", "Experiential Learning", "Experiential Learning", "Extracurricular",
+            "Memorization Techniques", "Metacognition in the Classroom", "Mid-term", "Minor Degree", "Minute Paper", "MOOC", "Muddiest Point", "Multicultural Education", "Multiple Intelligences", "Multiple Measures", "Networked Learning", "Norm-Referenced Assessment", "Norm-Referenced Test", "OER", "Office Hours", "One Minute Quiz",
+            "Online Class", "Online Instruction", "Online Learning", "Online Lecture", "Open Classroom", "Opportunity Gap", "P", "Partial Outlines", "Pausing in Lecture", "Pedagogy", "Peer Review", "Performance Assessment", "Personalized Learning", "PhD", "Philosophy of Education", "Philosophy of Teaching", "Plagiarism", "Posters and gallery walk", "Postsecondary Education", "Power Standards", "Prerequisite Course", "Prior Knowledge", "Problem-based learning", "Proctor", "Proctored Test", "Professional Development", "Professor", "Programmed Instruction", "Project-Based Learning", "Provost", "Public Scholarship", "Quick Write", "Quiz", "Reflective Essay", "Reflective Practice", "Relative Grading", "Remote Classrooms", "Remote Learning", "Remote Proctoring", "Remote Teaching", "Remote Testing",
+            "Resilient Pedagogy", "Resume", "Retrieval Practice", "Revised Bloom’s Taxonomy", "Rote Learning", "Rote Memory", "Rubric", "Sage on the Stage", "Scaffolding in Education", "Scantron", "Scholarship of Teaching and Learning", "Scientific Inquiry", "Scope and Sequence", "SCORM", "Self-Paced Learning", "Senior Lecturer", "Service Learning", "Social Loafing", "Socratic Questioning", "SoTL", "Standardized Test", "STEM", "Student Achievement", "Student Affairs", "Student Centered Learning", "Student Debt", "Student Empowerment", "Student Engagement", "Student Enrollment", "Student Identification", "Student Orientation", "Student Response System", "Student Success", "Summative Assessment", "Supplemental Instruction", "Syllabus", "Synchronous Learning", "Synchronous Learning", "Synchronous Online Learning",
+            "Synchronous Online Learning Tools", "Synchronous Online Teaching", "Synchronous Sessions"
          ]
       },
       {
@@ -146,7 +150,18 @@
             "appointed as Prime Minister of Tunisia by Tunisian President Kais Saied to form govt in 1 month",
             "Mahdi Mohammed Gulaid is appointed as interim Prime Minister of which country", " bills were passed in Rajya Sabha in the winter session of Parliament?",
             "he reservation to SCs and STs in Lok Sabha and state assemblies", " reservation for SC/STs in Lok Sabha, state assemblies has been extended by how much period",
-            "Constitution of India the President has the power of pardon or remission", "longest serving Chief Minister of any Indian state"
+            "Constitution of India the President has the power of pardon or remission", "longest serving Chief Minister of any Indian state", "Act of Settlement", "Act of Union", "Ad Valorem",
+            "Agrarian Revolution", "Aggression", "Alliance", "Appeal", "Appropriation Bill", "Armed Neutrality", "Autonomy", "Balance Of Trade",
+            "Balance Of Power", "Ballot", "Benevolent Despotism", "Bill Of Rights", "Blockade (Naval)", "Buffer-State", "Bull (Papal)", "Bullion", "Bureaucracy", "By Law", "Bye Laws", "Candidate", "Casting Vote", "Census", "Centralised Monarchy", "Chamber Of Commerce", "Chancellor of the Exchequer",
+            "Charter of Liberties", "Chronology", "Circumnavigation", "Citizen", "Citizenship", "City Fathers", "Civics", "Civil Disobedience", "Civil War", "Coalition Ministry", "Code", "Commonwealth", "Consensus",
+            "Constituency", "Constitution", "Constitutional Monarchy", "Constitutional Theory", "Constitution, Federal", "Consumer", "Contraband Articles", "Convention", "Crown Colony", "Crusade",
+            "Culture", "Currency", "Curfew", "Customs Duties", "Deadlock, Administrative", "Debt Relief Act", "Declaration of Rights", "Delegate", "Demagogue", "Democracy", "Dependency", "Depreciation of Money", "Despotic Government", "Diarchy", "Direct Taxation", "Divine Right", "Doctrine of Lapse", "Domicile", "Doomsday Book",
+            "Economic Structure", "Election", "Electorate", "Embassy", "Emigrants", "Emigration", "Empire", "Envoy", "Excommunication", "Executive Council", "Exploitation", "Exploration", "Famine Relief",
+            "Fanaticism", "Federal Constitution", "Feudal System", "Fiduciary", "Fief", "Floating Debt", "Flying Shuttle", "Forced Loan", "Foreign Office", "Foreign Policy", "Franchise", "Freeholders", "Free State",
+            "Free Trade", "Guild", "Gold Standard", "Government, Responsible", "Grand Alliance", "Grants-In-Aid", "Great Charter of Liberties", "Habeas Corpus Act", "High Treason", "Home Government", "Home Office", "Hostage", "Immigrant", "Immigration", "Impeachment", "Imperialism", "Incidence of Taxation", "Independents", "Individual Liberty", "Indulgence", "Industrial Revolution", "Initiative, Private", "Initiative, Public", "Inscription", "Interdict", "Interpellations", "Joint Stock Company", "Journey Man",
+            "Judicial Service", "Jurisdiction", "Labour, Division Of", "Labour Legislation", "Laissez-Faire", "Land Tenure", "Legal Tender", "Legislative Council", "Letters Patent", "Liberty of The Press", "Limited Liability", "Limited Monarchy", "Magna Carta", "Mandatory State", "Manorial System", "Martial Law", "Military Occupation",
+            "Minority Minute (To Record in A Minute Book)", "Mobocracy", "Negotiation", "Neolithic Age", "No-Confidence Motion", "Nomination", "Non-Aggression", "Non-Co-Operation", "Non-Intervention Policy", "Non-Official Element", "No Tax Campaign", "Opposition, The", "Orders in Council", "Ordinance", "Palaeolithic Age", "Passive Resistance", "Petition of Right", "Policy", "Poor Rate", "Preferential Tariff", "Protective Duties"
+
          ]
       },
       {
@@ -168,7 +183,19 @@
             "feel/think those words describe your style?", "How can you use those past/previous style elements to recreate the style you want now?",
             "wrong trousers?", "What's the top jacket for spring?", "What, exactly, is a tea dress?",
             "bag?", "OK, but what about a truly bonkers bag?", "Do I really need a new dress?",
-            "miniskirt?", "Which is the best tatto center?", "What's the best news about spring fashion?"
+            "miniskirt?", "Which is the best tatto center?", "What's the best news about spring fashion?", "Accent", "Accessories", "Acid wash", "Achromatic colours", "Androgynous style", "Anime", "Antique style", "Anti Pill", "Army look", "Art deco", "Art Nouveau",
+            "Academic costume", "Accent", "Accent shades", "Accessory", "Accessorizing", "Active sportswear", "Adaptation", "Advanced colours", "a la mode", "Accouterments", "American Style", "Apparel", "Apparel manufacturing",
+            "Asymmetrical", "Atelier", "Attire", "Athletic clothing", "Au naturel", "Avant-Garde", "Body clothes", "Balance / symmetry", "Bespoke", "Barfly apparel", "Beaumonde", "Black tie event", "Bling", "Body-con clothing", "Boutique", "Boyfriend style", "Bib and tucker",
+            "Border print", "Bohemian style of fashion (Boho)", "Business Formal dress code", "Business Casual dress code", "Bulky clothing", "Capsule wardrobe", "Cut of a garment", "Camouflage clothing", "Care label", "Casual wear", "Catwalk", "Channel suit",
+            "Chic", "Chinois", "Cine mode", "City wear", "Cocktail dress code", "Collection", "Colour coordination", "Classic", "Clique", "Collection", "Colour blocking", "Colorway", "Cosplay", "Country look", "Cool colours", "Contemporary style", "Continental style", "Contrast", "Conservative styles", "Cosmetic colours",
+            "Cosmopolitan", "Costume", "Couturier", "Composite style", "Costume jewelry", "Distressing", "Draping", "Dandy style", "Deadstock", "Design elements", "Double Denim Trend", "Earth colors", "Eclectic style of fashion", "Electric colours", "Elegant dressing style", "Ensemble",
+            "Eponymous fashion brand", "Ethnic", "Exotic", "Embellishing", "Ensemble", "Designer", "Display", "Effortless dressing", "Fabric swatches", "Fabric Finishes", "Fad", "Fashion 2.0", "Fashion capitals", "Fashion Cycle", "Fashion Faux Pas", "Fashion Forecast", "Fashion forward",
+            "Fashion icon", "Fashion Line", "Fashion press", "Fashion show", "Fashion house", "Fashionista", "Fashion icon", "Fashion sense", "Fashion police", "Fashion sketch", "Fashion subcultures", "Fashion tribe", "Fashion victim", "Fabric Prints", "Face of the fabric", "Fashion Label", "Fatigues", "Flat sketches", "Florals", "Formal clothing ( evening clothes)",
+            "Foundation", "Garcon look", "Genderqueer", "Gradation", "Greek Chic", "Groufit", "Grunge", "Haberdashery", "High stepper", "Hand of a fabric", "Haute Couture ", "Heavy metal fashion", "High Fashion", "Hippie stylev", "Hosiery", "Hourglass figure", "House", "Hot number", "Imitationv", "Iridescent colours", "Impact colours", "Jewel tones", "Kawaii", "Kitsch", "Knock Off",
+            "Lagenlook style ( Layered style)", "Limited edition clothing", "Line", "Look Book", "Long line clothing", "Loungewear", "Made to measure garments", "Marine style", "Mass produced / Fashion", "Masculine style", "Melange", "Minimalisv", "Monotone clothing", "Mood Board", "Motif", "Muslin", "Neutral Colours", "Off the rack", "Ombre", "Over size", "Passe", "Paninaro", "Panache",
+            "Pantone colours", "Pattern", "Pret-a- porter", "Peek-a-boo style", "Peasant style", "Placement prints", "Post modern fashion", "Print on print", "Ready to wear or RTW", "Retro", "Retrofuturism", "Reversible clothing", "Rockability fashion", "Safari style", "Sample", "Silhouette",
+            "Seamstress", "Selvedge", "Sanforized clothing", "Sleek style", "Slip on clothes", "Slim fit", "Sloper", "Slogan", "Sportswear"
+
 
          ]
       },
@@ -200,7 +227,11 @@
             "Indian Premier League (IPL 2017) first match on 5 April, 2017 was held in", "The National Game of Japan is",
             "1st non test playing country to beat India in an international match", "Gambit ' is associated with",
             "nickname of what Australian player", "The Indian football team made its first appearance at Olympics in",
-            "MS Dhoni make his ODI debut", "Oval stadium in England is associated with"
+            "MS Dhoni make his ODI debut", "Oval stadium in England is associated with",
+            "sporting,", "sportscast", "athletics", "sportsman", "athletic", "sportswoman", "sport", "captain", "park", "field", "jock", "kick", "pass", "board", "aquatic", "break", "event", "meet", "coach", "volley", "bench", "sporty",
+            "sportswriter", "misplay", "sportive", "gymnasium", "start", "gym", "athlete", "sneaker", "title", "track", "line", "home", "return", "draft", "ring", "foul", "forehanded", "sporting editor", "arena", "referee", "franchise",
+            "game", "press box", "hook", "shoot", "fumble", "block", "away", "mark", "stadium", "discus", "wicket", "call", "squad", "gate", "attack", "smash", "forward", "field day",
+            "watercraft", "muff", "sportsmanship"
          ]
       }
    ]

@@ -200,11 +200,13 @@ def QuestionAddView(request):
             # confirm_question = request.POST.get['final_que']
             question = request.POST.get('final_que',None)
             print("this is inputed questions",question)
-            predict = predict_tag(question)
+            predict,predict_accuracy = predict_tag(question)
             print("precictcc",predict)
+            print("precictc accuracy",type(predict_accuracy))
+
             # confirm_question= request.POST.get("final_que")
             log_user = NormalUser.objects.get(user = request.user)
-            Question.objects.create(user_q = log_user,question = question,category = predict)            
+            Question.objects.create(user_q = log_user,question = question,category = predict,accuracy=float(predict_accuracy))            
             context = {
                 'ram':'ram'
             }

@@ -12,9 +12,9 @@ import tensorflow as tf
 import keras
 
 #load the json files
-with open(r"/home/ramthapa/Documents/7th_project/forum.json",'r') as file:
+with open(r"/home/ramthapa/Documents/7th_project/myforum_old/forum_new.json",'r') as file:
     data = json.load(file)
-
+    print("data++++++++++++",data)
 
 #creating an empty array for category and questions
 words = []
@@ -86,7 +86,7 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 #training the given models for 700 times as number of epochs helps to find accuaracy
-model.fit(training, output, n_epoch=5, batch_size=8, show_metric=True)
+model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
 model.save("model.tflearn")
 
 print("output",net)
@@ -96,6 +96,8 @@ print("training",training)
 
 #coverting the user input into bag of words
 def bag_of_words(s, words):
+    print("question^^^^^^^^^^^^^^^^",words)
+
     bag = [0 for _ in range(len(words))]
 
     s_words = nltk.word_tokenize(s)
@@ -111,7 +113,6 @@ def bag_of_words(s, words):
 
 def predict_tag(question):
     print("question@@@@@@@@@@@",question)
-    print("question$$$$$$$$$$$$",words)
     results = model.predict([bag_of_words(question, words)])
     print("results",results)
     
@@ -127,7 +128,7 @@ def predict_tag(question):
 
     # prediction = tf.math.argmax(results_index, axis=1)
     # print("prediction",prediction)
-    return None
+    return tag,index_value
     
 
 

@@ -229,14 +229,14 @@
                                                     <small></small></span>
                                                 <br>
                                                 <span style="color: black;"
-                                                    class="pull-right text-muted">{{ question.category }}</span>
+                                                    class="pull-right">{{ question.category|capfirst }}(accuracy:{{question.accuracy}})</span>
                                                 <br><span
                                                     style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ question.date_created|date:"d M,Y" }}</span>
                                                 <!-- <span style="color: black;"
                                                     class="pull-right text-muted">{{ question.like_question.count }}likes</span> -->
-                                                
+
                                             </div>
-                                            <div class="timeline-content"  style="margin: 30px 0px 60px 0px;">
+                                            <div class="timeline-content" style="margin: 30px 0px 60px 0px;">
 
                                                 <p>
                                                     <a style="color: black;" class="text-dark"
@@ -247,7 +247,7 @@
                                                     src="{{ question.image.url }}" alt="Card image cap">{% endif  %}
 
                                             </div>
-                                            
+
                                             <div class="timeline-footer">
                                                 <!-- results.part_set.count() -->
 
@@ -270,11 +270,13 @@
                                                                 class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>liked</button>
 
                                                         {% endif %}
-                                                        <a href="{% url 'forumapp:questiondetail' question.id %}" class="m-r-15 text-inverse-lighter"
+                                                        <a href="{% url 'forumapp:questiondetail' question.id %}"
+                                                            class="m-r-15 text-inverse-lighter"
                                                             style="padding-right: 160px;"><i
                                                                 class="fa fa-comments fa-fw fa-lg m-r-3"></i>
                                                             {{ question.related_question.all.count }} Comments</a>
-                                                        <a href="#" class="m-r-15 text-inverse-lighter" style="padding-right: 0px;margin-right: 0px;"><i
+                                                        <a href="#" class="m-r-15 text-inverse-lighter"
+                                                            style="padding-right: 0px;margin-right: 0px;"><i
                                                                 class="fa fa-eye fa-fw fa-lg m-r-3"></i>
                                                             {{ question.views }} views</a>
                                                         <!-- <strong>{{ question.like_question.count }}likes</strong>  -->

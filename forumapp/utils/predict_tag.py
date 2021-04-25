@@ -86,7 +86,7 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 #training the given models for 700 times as number of epochs helps to find accuaracy
-model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
+model.fit(training, output, n_epoch=200, batch_size=8, show_metric=True)
 model.save("model.tflearn")
 
 print("output",net)
@@ -96,8 +96,6 @@ print("training",training)
 
 #coverting the user input into bag of words
 def bag_of_words(s, words):
-    print("question^^^^^^^^^^^^^^^^",words)
-
     bag = [0 for _ in range(len(words))]
 
     s_words = nltk.word_tokenize(s)

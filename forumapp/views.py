@@ -1,24 +1,37 @@
 
-from django.shortcuts import render,redirect,reverse,get_object_or_404,render_to_response
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.views.generic import *
 from .forms import UserForm,LoginForm,QuestionForm,AnswerForm,QuestionLikeForm,QuestionUpdateForm
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy
 from .models import *
-from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
-from bootstrap_modal_forms.generic import BSModalCreateView
 from django.db.models import Count
 from django.db.models import Q
-from django.template.context import RequestContext
-from django.contrib.messages.views import SuccessMessageMixin
-from forumapp.utils.predict_tag import predict_tag
-# Create your views here.
-import language_check
-from django.http import JsonResponse
+from forumapp.utils.predict_tag import predict_category
+import language_tool_python
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseRedirect
+import os
+from django.conf import settings
 
+def get_model_and_vectorizer():
+    model = None
+    vectorizer = None
+    model_path = os.path.join(settings.BASE_DIR, 'question_model.pkl')
+    vectorizer_path = os.path.join(settings.BASE_DIR, 'vectorizer.pkl')
+    try:
+        with open(model_path, 'rb') as mf:
+            model = pickle.load(mf)
+        with open(vectorizer_path, 'rb') as vf:
+            vectorizer = pickle.load(vf)
+    except FileNotFoundError:
+        # Model files not present — we'll handle below and show a friendly error
+        model = None
+        vectorizer = None
+    return model, vectorizer
+
+get_model_and_vectorizer()
 
 """
 Homepage
@@ -32,17 +45,9 @@ class HomeView(TemplateView):
         context['questions'] = Question.objects.all()[:4]
         context['answers'] = Answer.objects.all()
 
-        # context['users'] = NormalUser.objects.all()
-        # print('logged in user',context['users'])
-        # context['answer-count'] = Question.objects.annotate(number_of_answers=Count('answer'))
-
-        # context['profile'] = NormalUser.objects.get(id = self.request.user.id)
         context['form'] = AnswerForm()
         
-        
         return context
-
-        # {% if question.image %}<div class="user"><img src="{{ question.normal_user.image.url }}"></div>{% endif %} 
 
 """
 LatestQuestionView
@@ -55,7 +60,6 @@ class LatestQuestionView(TemplateView):
         context['questions'] = Question.objects.all()[:4]
         context['answers'] = Answer.objects.all()
         
-        # context['profile'] = NormalUser.objects.get(id = self.request.user.id)
         context['form'] = AnswerForm()
         
         
@@ -72,21 +76,6 @@ login form
 """
 class LoginRegisterView(TemplateView):
     template_name = 'user/userlogin.html'
-# def RegisterView(request):
-#     if request.method == "POST":
-#         form_class = UserForm
-#         print('this is form class')
-#         uname = request.POST.get('username')
-#         pword = request.POST.get('password')
-#         user = authenticate(request,username = uname,password = pword)
-#         print(user)
-#         if user is not None:
-#             login(request,user)
-#             return render('forumapp:home')
-
-#     else:
-#         form = UserForm
-#     return render(request,'userlogin.html',)
 
 
 
@@ -134,54 +123,16 @@ def LoginFormView(request):
         form = LoginForm
         return render(request,'user/login.html',{'form':form})
     
+import pickle
 
-
-
-"""
-Question add
-
-"""
-# class QuestionAddView(BSModalCreateView):
-#     print('this is add view')
-#     template_name = "question/questioncreate.html"
-#     form_class = QuestionForm
-
-#     success_url = reverse_lazy('forumapp:home')
-#     success_message = "Question has been added"
-
-
-#     def form_valid(self,form):
-#         print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77')
-
-#         usr = self.request.user
-#         print('user = ',usr)
-#         question_user = NormalUser.objects.get(user = usr)
-#         print('question user',question_user)
-#         form.instance.user_q = question_user
-#         return super().form_valid(form)
-
-#     def get_context_data(self, **kwargs):
-#         ctx = super(QuestionAddView, self).get_context_data(**kwargs)
-#         predict_test = prediction()
-#         return ctx
-# def QuestionAddView(request):
-#     print("request = ",request)
-#     if request.method == 'POST':
-#         print('this is post request')
-#         question = request.POST['question_form']
-#         print("question = = ",question)
-#         if form.is_valid():
-#              cd = form.cleaned_data
-#              # assert False
-#              return HttpResponseRedirect('/contact?submitted=True')
-#     else:
-#         print("this is else in form")
-#         form = QuestionForm() 
-#     return render(request,'question/questioncreate.html',{'form': form})
 """
 question add
 """
 def QuestionAddView(request):
+    # Load model and vectorizer from project BASE_DIR so the files are found
+    # regardless of current working directory when Django runs.
+    model, vectorizer = get_model_and_vectorizer()
+
     if request.method == 'GET':
         print('this is 1st one')
         form = QuestionForm()
@@ -193,17 +144,26 @@ def QuestionAddView(request):
     else:
         if request.method == "POST":
             # confirm_question = request.POST.get['final_que']
-            question = request.POST.get('final_que',None)
-            print("this is inputed questions",question)
-            predict = predict_tag(question)
-            print("precictcc",predict)
+            question = request.POST.get('final_que', None)
+
+
+            # Ensure model/vectorizer are available
+            if model is None or vectorizer is None:
+                form = QuestionForm()
+                context = {
+                    'form': form,
+                    'error': 'Model or vectorizer not found. Run the training script to create question_model.pkl and vectorizer.pkl in the project root.'
+                }
+                return render(request, 'question/questioncreate.html', context)
+
+            question_vector = vectorizer.transform([question])
+            prediction = model.predict(question_vector)[0]
+            print("precictcc****", prediction)
+            # fallback/alternative prediction (existing project code)
             # confirm_question= request.POST.get("final_que")
-            log_user = NormalUser.objects.get(user = request.user)
-            Question.objects.create(user_q = log_user,question = question,category = predict)            
-            context = {
-                'ram':'ram'
-            }
-            return render(request, 'question/questioncreate.html',context)
+            log_user = NormalUser.objects.get(user=request.user)
+            Question.objects.create(user_q=log_user, question=question, category=prediction)
+            return render(request, 'question/questioncreate.html', {'form': QuestionForm()})
 
 """
 question confirm
@@ -214,26 +174,19 @@ def QuestionConfirmView(request):
 
         # Receive data from client
         question = request.POST.get('myquestion')
-        tool = language_check.LanguageTool('en-US')
-        texts = question
-        matches = tool.check(texts)
-        confirm_ques = language_check.correct(texts, matches)
+        # tool = language_tool_python.LanguageTool('en-US')
+        # texts = question
+        # matches = tool.check(texts)
+        # confirm_ques = tool.correct(texts) #TODO: Fix this later
 
         
         context = {
-            'confirm_ques':confirm_ques
+            'confirm_ques':question
         }
-        # return JsonResponse({'sepal_length': sepal_length,
-        # })
         return render(request, 'question/question_confirm.html',context)
         # return render(request,"question/questioncreate.html",{'sepal_length':sepal_length})
     else:
-            # confirm_question = request.POST.get['final_que']
-        confirm_question= request.GET.get("confirm_ques")
-        context = {
-                'ram':'ram'
-        }
-        return render(request, 'question/questioncreate.html',context)
+        return render(request, 'question/questioncreate.html',{})
 
 
 
@@ -474,15 +427,22 @@ show notifications
 
 class NotificationListView(ListView):
     template_name = "notification/notification.html"
-    queryset = Notifications.objects.all()
-    print("queeryset",queryset)
     context_object_name = 'notifications'
     paginate_by = 10
 
-    # def get_queryset(self):
-    #     user = NormalUser.objects.get(user = self.request.user)
-    #     print('user = ',user)
-    #     return super().get_queryset().filter(user=user)  
+    def get_queryset(self):
+        # Only return notifications for the currently-logged-in NormalUser.
+        # If the user is anonymous or there is no NormalUser record, return an
+        # empty queryset so the template can show a single "No new notifications" message.
+        if not self.request.user.is_authenticated:
+            return Notifications.objects.none()
+
+        try:
+            normal_user = NormalUser.objects.get(user=self.request.user)
+        except NormalUser.DoesNotExist:
+            return Notifications.objects.none()
+
+        return Notifications.objects.filter(user=normal_user).order_by('-id')
 
 
 

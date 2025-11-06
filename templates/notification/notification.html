@@ -10,24 +10,21 @@
   </button>
 </div>
 
-{% for n in notifications %}
-       <!-- user_q : {{n.question.user_q.user}}
-       user = = = = {{request.user}}<br>  -->
-
-        {% if n.question.user_q.user == request.user %}
-                
+{% if notifications %}
+        {% for n in notifications %}
                 <div class="modal-body">
-                        <p>test</p>
                         {% if n.user %}
-                        <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i><span><b>{{ n.user.fname }}</b> commented in your questions <b><a></a>{{ n.question.question }}</b></span>
+                                <i class="fa fa-comment">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                <span><b>{{ n.user.fname }}</b> commented on your question <b>{{ n.question.question }}</b></span>
                         {% else %}
-                        <i class="fa fa-thumbs-up fa-sm"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span><b>{{ n.like.user.username }}</b> liked your questions <b>{{ n.question.question }}</b></span>
+                                <i class="fa fa-thumbs-up fa-sm"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span><b>{{ n.like.user.username }}</b> liked your question <b>{{ n.question.question }}</b></span>
                         {% endif %}
-
-                        
-                        
                 </div>
-        {% endif %}
-
-{% endfor %}
+        {% endfor %}
+{% else %}
+        <div class="modal-body">
+                <span>No new notifications</span>
+        </div>
+{% endif %}
 

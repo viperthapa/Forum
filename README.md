@@ -1,25 +1,74 @@
-# Description of project
+# Forum — Q&A web portal (Django)
 
-## Forum
+This repository contains a simple online discussion forum (a Q&A-style web portal) built with Django. It includes standard forum features and a small TF-IDF + Logistic Regression model used to predict the category of a question.
 
-This is a online discussion forum web portal just like Q&A sections built with python django as backend and Html,css and javascript as frontend with simple machine learning predictions using tensorflow with svm for prediction a question in a specific category.
+## Highlights
 
-## Features
+- User registration and login
+- Ask questions and post answers
+- Like and comment on questions/answers
+- Mark best answers and track total views
+- Automatic category prediction for questions (TF-IDF + Logistic Regression)
 
-- Login and registration of user
-- Logged in User can ask questions,answers the others questions
-- User can like and comment in particular questions
-- Mark as a best answer,Total views in questions
-- User can delete the questions if the questions doesnot matches the asked questions by the others users
-- Automatically prediction of question
-- suggestions of similar category of questions
+## Screenshots
 
-##
+Home / Feed:
 
-To run the project in docker
 
-    git clone repo_url
-    pip install -r requirement.txt
-    python manage.py migrate
-    python manage.py createsuperuser
-    python manage.py runserver
+![Forum feed](images/feed.svg)
+
+Question detail / Notifications:
+
+![Question detail](images/detail.svg)
+
+> Replace the two placeholder images in `images/` with real screenshots (same filenames) to show real UI.
+
+## Quick start (local)
+
+Prerequisites:
+
+- Python 3.10+ 
+- pip
+
+Steps:
+
+```bash
+# clone the repo
+# git clone <repo_url>
+cd Forum
+
+# create a virtualenv (optional — the repo includes `myformenv_new/` but creating a fresh one is recommended)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# install requirements
+pip install -r requirements.txt
+
+# apply migrations and create a superuser
+python manage.py migrate
+python manage.py createsuperuser
+
+# run the dev server
+python manage.py runserver
+```
+
+## Training the question classifier
+
+The small training script is at `forumapp/utils/train.py`. It will create two files:
+
+- `question_model.pkl` — the trained sklearn model
+- `vectorizer.pkl` — the TF-IDF vectorizer
+
+Run it from the project root so the pickles are saved in the project directory (or run it with the desired working directory):
+
+```bash
+./myformenv_new/bin/python forumapp/utils/train.py
+# or with an activated venv:
+python forumapp/utils/train.py
+```
+## Contributing
+
+If you'd like help adding tests or converting the training script into a Django management command, open an issue or submit a PR.
+
+---
+README last updated: 2025-11-06

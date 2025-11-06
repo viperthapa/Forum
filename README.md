@@ -15,11 +15,11 @@ This repository contains a simple online discussion forum (a Q&A-style web porta
 Home / Feed:
 
 
-![Forum feed](images/feed.svg)
+![Forum feed](static/images/feed.png)
 
 Question detail / Notifications:
 
-![Question detail](images/detail.svg)
+![Question detail](static/images/detail.png)
 
 > Replace the two placeholder images in `images/` with real screenshots (same filenames) to show real UI.
 
